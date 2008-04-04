@@ -18,7 +18,9 @@ public class MimeMessageParseTest extends TestCase {
 		String[] fileNames = dir.list();
 		for (int i = 0; i < fileNames.length; i++) {
 			String fileName = fileNames[i];
+			if (fileName.indexOf(".".charAt(0))==0) continue; //omijamy pliki katalogi z . na poczatku
 			FileInputStream is = null;
+			System.out.println(fileName);
 			try {
 				is = new FileInputStream(resourceDirName + "/" +fileName);
 			} catch (FileNotFoundException e) {
