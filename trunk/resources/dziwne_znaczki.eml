@@ -1,0 +1,34 @@
+X-Account-Key: account2
+X-UIDL: UID26741-1102858392
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                 
+Return-Path: <zbychu@astronet.pl>
+X-Original-To: zbychu@astronet.pl
+Delivered-To: zbychu@astronet.pl
+Received: from localhost (localhost [127.0.0.1])
+	by mizar.astronet.pl (Postfix) with ESMTP id 926665340F3
+	for <zbychu@astronet.pl>; Sun, 17 Feb 2008 14:54:06 +0100 (CET)
+Received: from mizar.astronet.pl ([127.0.0.1])
+ by localhost (mizar [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 26631-04 for <zbychu@astronet.pl>; Sun, 17 Feb 2008 14:54:06 +0100 (CET)
+Received: from [192.168.0.101] (chello062179058145.chello.pl [62.179.58.145])
+	by mizar.astronet.pl (Postfix) with ESMTP id 5C2B25340F1
+	for <zbychu@astronet.pl>; Sun, 17 Feb 2008 14:54:06 +0100 (CET)
+Message-ID: <47B83C7D.2050301@astronet.pl>
+Date: Sun, 17 Feb 2008 14:54:05 +0100
+From: Zbigniew Artemiuk <zbychu@astronet.pl>
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+MIME-Version: 1.0
+To: Zbigniew Artemiuk <zbychu@astronet.pl>
+Subject: Bardzo =?ISO-8859-2?Q?d=B3ugi_temat_ze_specjalnymi_znaka?=
+ =?ISO-8859-2?Q?mi_=22=22_=5B=5D_=28=29*_i_ciekawe_jak_to_?=
+ =?ISO-8859-2?Q?zostanie_zinterpretowane_bo_nikt_tego_nie_wie?=
+ =?ISO-8859-2?Q?_o_jeszcze_malpa_=40?=
+Content-Type: text/plain; charset=ISO-8859-2; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: amavisd-new at astronet.pl
+
+ole
+
+

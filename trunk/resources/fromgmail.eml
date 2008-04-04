@@ -1,0 +1,57 @@
+X-Account-Key: account2
+X-UIDL: UID27490-1102858392
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                 
+Return-Path: <zbigniew.artemiuk@gmail.com>
+X-Original-To: zbychu@astronet.pl
+Delivered-To: zbychu@astronet.pl
+Received: from localhost (localhost [127.0.0.1])
+	by mizar.astronet.pl (Postfix) with ESMTP id 65CF55340BD
+	for <zbychu@astronet.pl>; Fri, 29 Feb 2008 17:30:51 +0100 (CET)
+Received: from mizar.astronet.pl ([127.0.0.1])
+ by localhost (mizar [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 14739-09 for <zbychu@astronet.pl>; Fri, 29 Feb 2008 17:30:51 +0100 (CET)
+Received: from wr-out-0506.google.com (wr-out-0506.google.com [64.233.184.231])
+	by mizar.astronet.pl (Postfix) with ESMTP id C5AF05340A2
+	for <zbychu@astronet.pl>; Fri, 29 Feb 2008 17:30:50 +0100 (CET)
+Received: by wr-out-0506.google.com with SMTP id 68so6338981wri.3
+        for <zbychu@astronet.pl>; Fri, 29 Feb 2008 08:30:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type;
+        bh=kGb+cOk2Et3/g94ipz1+gOrbhdaoYKcLXg+b3PYDLEc=;
+        b=vhCRLTlyc4jN3zT2p4V553SLr8RZROzsEmHtCa03s/LENzxfAxz1X0DrjewnfYURFej4PDuJIkQbeinpP6KOEOPx3SX/45g1UAXPYvlscJi8OAbSMKwEOjExe7ccI44o6gBDRItqhfD8WwSBic8wsEQblMW30vpURWOztWaUhWM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type;
+        b=pyu3ZdbSXmx1X8ZfgBrJFLAo3JT9d+St3NEW9+knU3WVfFH871AMILE0qV3I6KjmZqA5DvTtPPZYPD9TQyJvqthTkYCnFPwpsq92x8IWmaD0BWc1gjvCRtlCXGinkfGj2RTNLZzJ8Kxy2AGv0xO9GBDfvW8losxRJsNXmPHXBO4=
+Received: by 10.141.35.21 with SMTP id n21mr6491961rvj.115.1204302648034;
+        Fri, 29 Feb 2008 08:30:48 -0800 (PST)
+Received: by 10.70.7.11 with HTTP; Fri, 29 Feb 2008 08:30:47 -0800 (PST)
+Message-ID: <d25dd2600802290830q4a88a30ay2b82b24892be0905@mail.gmail.com>
+Date: Fri, 29 Feb 2008 17:30:47 +0100
+From: "Zbigniew Artemiuk" <zbigniew.artemiuk@gmail.com>
+To: zbychu@astronet.pl
+Subject: d
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_9730_16081103.1204302648018"
+X-Virus-Scanned: amavisd-new at astronet.pl
+
+------=_Part_9730_16081103.1204302648018
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+d
+
+------=_Part_9730_16081103.1204302648018
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+d
+
+------=_Part_9730_16081103.1204302648018--
+
