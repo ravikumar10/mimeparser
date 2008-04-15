@@ -5,12 +5,12 @@ import java.io.InputStream;
 
 import com.sun.mail.util.LineInputStream;
 
-public class Preambula {
+public class Preamble {
 	
 	private String preamble;
-	private boolean isPreambuleABondary = false;
+	private boolean isPreambleABondary = false;
 	
-	public Preambula(InputStream inputStream, String boundary) {
+	public Preamble(InputStream inputStream, String boundary) {
 		parse(inputStream, boundary);
 	}
 	
@@ -47,10 +47,11 @@ public class Preambula {
 				     * the boundary and save it as preambule
 				     * 
 				     * we set the flag in preambule tha point that
-				     * this is not standard preambule
+				     * this is not standard preamble but this is
+				     * maybe a boundary
 				     */
 				    if (line.startsWith("--")) {
-				    	this.isPreambuleABondary=true;
+				    	this.isPreambleABondary=true;
 				    	this.preamble=line;
 				    	break;
 				    } else {
@@ -92,11 +93,11 @@ public class Preambula {
 	}
 
 	public boolean isPreambuleABondary() {
-		return isPreambuleABondary;
+		return isPreambleABondary;
 	}
 
 	public void setPreambuleABondary(boolean isPreambuleABondary) {
-		this.isPreambuleABondary = isPreambuleABondary;
+		this.isPreambleABondary = isPreambuleABondary;
 	}
 	
 }

@@ -6,8 +6,8 @@ import mail.util.ParameterList;
 
 public class ContentType {
 
-	private String primaryType;	// primary type
-    private String subType;	// subtype
+	private String primaryType;	// primary type like text
+    private String subType;	// subtype line plain
     private ParameterList list;	// parameter list
 
     /**
