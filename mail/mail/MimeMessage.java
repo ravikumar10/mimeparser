@@ -14,10 +14,15 @@ import mail.exceptions.ParseException;
  */
 public class MimeMessage {
 	
-	MimeMultiPart multipart;
-	Preambula preambula;
-	MimeMessageHeaders headers;
 	final String BOUNDARY = "boundary";
+	final String MULTIPART_TYPE = "multipart";
+	
+	/**
+	 * can be single part or multipart
+	 */
+	Part part;
+	
+	MimeMessageHeaders headers;
 	String boundary;
 	
 	/**
@@ -28,11 +33,18 @@ public class MimeMessage {
 	public void createMimeMessage(InputStream inputStream) throws ParseException {
 		
 		headers = new MimeMessageHeaders(inputStream);
-		getBoundaryLine(headers.getContentType());
-		preambula = new Preambula(inputStream, this.boundary);
-		multipart = new MimeMultiPart(inputStream, headers.getContentType(), preambula.isPreambuleABondary()?preambula.getPreamble():this.boundary);
+		ContentType ct = headers.getContentType();
 		
+		if (ct==null) throw new ParseException("No content type in message");
 		
+		if (ct.getBaseType().equals(MULTIPART_TYPE)) {
+			getBoundaryLine(ct);
+			part = new MimeMultiPart(inputStream, ct, this.boundary);
+		} else {
+			part = new MimePart(inputStream, ct); 
+		}
+		
+		 
 	}
 	
 	public void getBoundaryLine(ContentType contentType) throws ParseException {
@@ -42,14 +54,8 @@ public class MimeMessage {
 			boundary = contentType.getParameter(this.BOUNDARY);
 			if (boundary!=null) {
 				this.boundary = "--" + boundary;
-			} else {
-				throw new ParseException("No boundary");
-			}
-		} else {
-			throw new ParseException("No content type in message");
-			// moze juz na wczesniejszym etapie rzucac ten wyjatek?
-		}
-		
+			} 
+		} 
 	}
 	
 	
