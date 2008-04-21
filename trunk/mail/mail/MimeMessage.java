@@ -19,11 +19,18 @@ public class MimeMessage {
 	
 	/**
 	 * can be single part or multipart
+	 * it's some kind of root part
 	 */
 	Part part;
 	
 	MimeMessageHeaders headers;
 	String boundary;
+	
+	public MimeMessage() {}
+	
+	public MimeMessage(InputStream inputStream) throws ParseException {
+		createMimeMessage(inputStream);
+	}
 	
 	/**
 	 * creates mimeMessage from inputStream by parsing headers and message body
@@ -37,7 +44,7 @@ public class MimeMessage {
 		
 		if (ct==null) throw new ParseException("No content type in message");
 		
-		if (ct.getBaseType().equals(MULTIPART_TYPE)) {
+		if (ct.getPrimaryType().equals(MULTIPART_TYPE)) {
 			getBoundaryLine(ct);
 			part = new MimeMultiPart(inputStream, ct, this.boundary);
 		} else {
@@ -53,11 +60,27 @@ public class MimeMessage {
 		if (contentType!=null) {
 			boundary = contentType.getParameter(this.BOUNDARY);
 			if (boundary!=null) {
+				//TODO!! nie wszystkie maile sa takie fajne ze maja boundary 
+				// z -- dodatkowym
 				this.boundary = "--" + boundary;
 			} 
 		} 
 	}
-	
-	
+
+	public Part getPart() {
+		return part;
+	}
+
+	public void setPart(Part part) {
+		this.part = part;
+	}
+
+	public MimeMessageHeaders getHeaders() {
+		return headers;
+	}
+
+	public void setHeaders(MimeMessageHeaders headers) {
+		this.headers = headers;
+	}
 	
 }

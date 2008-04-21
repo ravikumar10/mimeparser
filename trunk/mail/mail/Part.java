@@ -6,41 +6,39 @@ import mail.exceptions.ParseException;
 
 public abstract class Part {
 
-	final String BOUNDARY = "boundary";
+	protected final String BOUNDARY = "boundary";
 	
 	//glownych siedem predefiniowanych Content-Typeow
+	protected final String MULTIPART_TYPE = "multipart";
+	protected final String TEXT_TYPE = "text";
+	protected final String MESSAGE_TYPE = "message";
+	protected final String IMAGE_TYPE = "image";
+	protected final String AUDIO_TYPE = "audio";
+	protected final String VIDEO_TYPE = "video";
+	protected final String APPLICATION_TYPE = "application";
 	
-	final String MULTIPART_TYPE = "multipart";
-	final String TEXT_TYPE = "text";
-	final String MESSAGE_TYPE = "message";
-	final String IMAGE_TYPE = "image";
-	final String AUDIO_TYPE = "audio";
-	final String VIDEO_TYPE = "video";
-	final String APPLICATION_TYPE = "application";
+	/**
+	 * content of the message got from input stream
+	 * saved in memory as bytes
+	 */
+	protected byte[] content;
+	
 	
 	/**
 	 * body of message as a string
 	 */
-	String body;
+	protected String body;
 	
 	/**
 	 * simple content type 
 	 */
-	ContentType contentType;
+	protected ContentType contentType;
 	
 	/**
 	 * 
 	 */
-	InputStream inputStream;
-	
-	/**
-	 * Content is extracted from got input stream 
-	 * amount of bytes which indicates the body of this part
-	 * (if it's top part it represends all content
-	 * beetween opening boundary line and ending boundary line)
-	 */
-	InputStream content;
-	
+	protected InputStream inputStream;
+		
 	public InputStream getInputStream() {
 		return inputStream;
 	}
