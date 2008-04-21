@@ -1,0 +1,41 @@
+Received: by 10.78.153.6 with HTTP; Mon, 21 Apr 2008 13:04:12 -0700
+(PDT)
+Message-ID:
+<d25dd2600804211304q2caee7b5y430025ce22e06db2@mail.gmail.com>
+Date: Mon, 21 Apr 2008 22:04:12 +0200
+From: "Zbigniew Artemiuk" <zbigniew.artemiuk@gmail.com>
+To: zbigniew.artemiuk@gmail.com
+Subject: Test2
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_11229_3558044.1208808252863"
+Delivered-To: zbigniew.artemiuk@gmail.com
+
+------=_Part_11229_3558044.1208808252863
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+Testowy mail z mniejszym zalacznikiem
+
+------=_Part_11229_3558044.1208808252863
+Content-Type: application/octet-stream; name=.bash_profile
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ffbh7f3w
+Content-Disposition: attachment; filename=.bash_profile
+
+ZXhwb3J0IFBBVEg9L2hvbWUvemJ5Y2h1L2FwcHMvbWF2ZW4vbWF2ZW4tMi4wLjcvYmluLzovaG9t
+ZS96YnljaHUvYXBwcy9qYXZhX3N1bl8xLjYvamRrMS42LjBfMDMvYmluOi9ob21lL3pieWNodS9h
+cHBzL2phdmFfc3VuXzEuNi9qZGsxLjYuMF8wMy9qcmUvYmluOi9ob21lL3pieWNodS9iaW46L3Vz
+ci9sb2NhbC9zYmluOi91c3IvbG9jYWwvYmluOi91c3Ivc2JpbjovdXNyL2Jpbjovc2JpbjovYmlu
+Oi91c3IvZ2FtZXM6L2hvbWUvemJ5Y2h1L2FwcHMvbnMvbnMtYWxsaW5vbmUtMi4zMy9iaW46L2hv
+bWUvemJ5Y2h1L2FwcHMvbnMvbnMtYWxsaW5vbmUtMi4zMy90Y2w4LjQuMTgvdW5peDovaG9tZS96
+YnljaHUvYXBwcy9ucy9ucy1hbGxpbm9uZS0yLjMzL3RrOC40LjE4L3VuaXgKZXhwb3J0IEpBVkFf
+SE9NRT0vaG9tZS96YnljaHUvYXBwcy9qYXZhX3N1bl8xLjYvamRrMS42LjBfMDMvanJlCmFsaWFz
+IG1hdmVuPW12bgpleHBvcnQgTERfTElCUkFSWV9QQVRIPS9ob21lL3pieWNodS9hcHBzL25zL25z
+LWFsbGlub25lLTIuMzMvb3RjbC0xLjEzOi9ob21lL3pieWNodS9hcHBzL25zL25zLWFsbGlub25l
+LTIuMzMvbGliCmV4cG9ydCBUQ0xfTElCUkFSWT0vaG9tZS96YnljaHUvYXBwcy9ucy9ucy1hbGxp
+bm9uZS0yLjMzL3RjbDguNC4xOC9saWJyYXJ5Cg==
+------=_Part_11229_3558044.1208808252863--
+
+
