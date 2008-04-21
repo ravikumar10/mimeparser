@@ -1,5 +1,8 @@
 package mail.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class StringUtils {
 	
 	/**
@@ -47,6 +50,39 @@ public class StringUtils {
 		for (int i = 0; i < size;)
 		    bytes[i] = (byte) chars[i++];
 		return bytes;
+	}
+	
+	public static String InputStreamToString(InputStream inputStream) {
+		
+		String ret = "";
+		
+		
+		char[] buf, lineBuffer; 
+		buf = lineBuffer = new char[128];
+		int room = buf.length;
+		int offset = 0;
+		int c;
+		
+		try {
+			while ((c = inputStream.read()) != -1) {
+				if (--room < 0) { // No room, need to grow.
+			    	buf = new char[offset + 128];
+			    	room = buf.length - offset - 1;
+			    	System.arraycopy(lineBuffer, 0, buf, 0, offset);
+			    	lineBuffer = buf;
+			    }
+			    buf[offset++] = (char)c;
+			}
+		    if ((c == -1) && (offset == 0))
+			    return null;
+			
+			return String.copyValueOf(buf, 0, offset);
+			
+		} catch (IOException ex) {
+			
+		}
+		
+		return ret;
 	}
 	
 	public static void main(String[] args) {
