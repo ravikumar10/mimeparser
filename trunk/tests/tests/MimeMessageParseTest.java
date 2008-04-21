@@ -96,9 +96,9 @@ public class MimeMessageParseTest extends TestCase {
 	
 	
 	public void testMimeMultipartMessage() {
-		
+		String filename = "multipart_text.eml";
 //		String filename = "multipart_mixed.eml";
-		String filename = "test_multipart.eml";
+//		String filename = "test_multipart.eml";
 		SharedFileInputStream is = null;
 		System.out.println(filename);
 		try {

@@ -23,12 +23,6 @@ public abstract class Part {
 	 */
 	protected byte[] content;
 	
-	
-	/**
-	 * body of message as a string
-	 */
-	protected String body;
-	
 	/**
 	 * simple content type 
 	 */
@@ -38,7 +32,21 @@ public abstract class Part {
 	 * 
 	 */
 	protected InputStream inputStream;
+	
+	/**
+	 * inside multipart can have some headers there are the same as 
+	 * in main message
+	 */
+	protected MimeMessageHeaders headers;
 		
+	public MimeMessageHeaders getHeaders() {
+		return headers;
+	}
+
+	public void setHeaders(MimeMessageHeaders headers) {
+		this.headers = headers;
+	}
+
 	public InputStream getInputStream() {
 		return inputStream;
 	}
@@ -53,14 +61,6 @@ public abstract class Part {
 
 	public void setContentType(ContentType contentType) {
 		this.contentType = contentType;
-	}
-
-	public String getBody() {
-		return body;
-	}
-
-	public void setBody(String body) {
-		this.body = body;
 	}
 	
 	public abstract void parse () throws ParseException;
