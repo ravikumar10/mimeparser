@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import mail.exceptions.ParseException;
@@ -28,12 +29,12 @@ public class MimeMultiPart extends Part {
 	/**
 	 * part may contains other multiparts or can be simple part
 	 */
-	List<Part> parts;
+	List<Part> parts = new ArrayList<Part>();
 	
 	/**
 	 * our super part (parent) null if we are top part
 	 */
-	MimeMultiPart parent;
+	Part parent;
 	
 	/**
 	 * boundary line is boundary get from ContentType + "--"
@@ -55,8 +56,7 @@ public class MimeMultiPart extends Part {
 		
 		LineInputStream lis = new LineInputStream(this.inputStream);
 		
-		//parsowanie miemow jest jak szukanie wzorca w tekscie
-		// wzorcem jest boundaryline a tekstem to tresc wiadomosci 
+		boundaryLine=headers.getContentType().getBoundaryLine();
 		
 		preamble = new Preamble(inputStream, boundaryLine);
 		//sytuacja ponizej zachodzi jest boundaryLine jest nullem
@@ -70,31 +70,21 @@ public class MimeMultiPart extends Part {
 		//i ten input Stream przekazujemy do analizy parta
 		//korzystamy z algorytmu boyre'a moore'a
 		
-		
 		byte[] boundaryBytes = StringUtils.getBytes(boundaryLine);
 		int boundaryLenght = boundaryBytes.length;
 		
-		// boundary
-		System.out.println("Boundary: " + boundaryLine);
-		
-		
 		// initialize Bad Character Shift table
 	    int[] bcs = initializeBadCharacterShiftTable(boundaryBytes);
+	    
 	    //initialize Good Sufix Shift table
 	    int[] good_suffix_shift = initializeGoodSuffixShiftTable(boundaryBytes);
 		
 	    //sliding window
 	    byte[] slidingWindowBuffer = new byte[boundaryLenght];
 	    
-	    
-	    // rzut na sharedinputstream'a bo tam mozna
-	    // sprawdzac pozycje ;]
 	    SharedInputStream sin = null;
 	    if (inputStream instanceof SharedInputStream)
 		    sin = (SharedInputStream)inputStream;
-	    
-	    
-	    
 	    
 	    ByteArrayOutputStream bufferOut = null;
 	    
@@ -103,18 +93,12 @@ public class MimeMultiPart extends Part {
 	    	//inputStream.read(slidingWindowBuffer, 0, slidingWindowBuffer.length);
 			
 	    	long shiftPosition = sin.getPosition();
-	    	long positionBegin = 0;
-	    	//pozycja jako offset od poczatku
 	    	
-	    	long positionEnd = 0;
 		    int i,j=0;
 		    int shift=0;
-		    boolean complete = false;
 		    
 		    byte[] tmpBuffer = new byte[tmpBufferSize];
 		    int positionInTmpBuffer = 0;
-		    
-		    byte[] part = null; 
 		    
 		    int slidingWindowBufferLenght = slidingWindowBuffer.length;
 		    inputStream.mark(5*slidingWindowBufferLenght);//marking
@@ -122,133 +106,84 @@ public class MimeMultiPart extends Part {
 		    
 		    for(;;) {
 		    	
+		    	for (i=boundaryLenght-1; i>=0 && boundaryBytes[i] == slidingWindowBuffer[i]; i--){}
 		    	
-		    	for (i=boundaryLenght-1; i>=0 && boundaryBytes[i] == slidingWindowBuffer[i]; i--) {
-//		    		System.out.println(i+j);
-//		    		System.out.println("Sliding window buffer \n" + new String(slidingWindowBuffer));
-		    	}
+		    	
 		    	if (i<0) {
-//		    		System.out.print("before + shift" + j);
-//		    		System.out.println("J" + j);
-		    		//System.out.println(new String( new byte[]{slidingWindowBuffer[i],text[j+1]}));
-//		    		System.out.println("Buffor: " + new String(slidingWindowBuffer));
+		    		System.out.println("Part: " + new String(tmpBuffer));
 		    		shift = good_suffix_shift[0];
-		    		positionEnd=j;
 		    		j += shift; // po boundary line jest \n
-		    		
-		    		System.out.println("Buffer: " + new String(tmpBuffer));
 		    		tmpBuffer = new byte[tmpBufferSize];
 		    		positionInTmpBuffer = 0;
-//		    		System.out.println("J" + j);
-//		    		System.out.print("after + shift" + j);
-		    		//jesli positionEnd=0 to pierwsze trafienie
-		    		// w boundary line
-//		    		if (positionEnd==0) {
-//		    			positionBegin=positionBegin+j+shift;
-//		    			System.out.println("pierwszy heat" + positionBegin);
-//		    		} else {
-//		    			positionEnd=j;
-		    			
-//		    			System.out.println("J" + j);
-		    			
-		    			//System.out.println("PositionBegin" + positionBegin);
-		    			//System.out.println("PositionEnd" + positionEnd);
-		    			//System.out.println("PB" + shiftPosition+positionBegin);
-		    			//System.out.println("PE" + shiftPosition+positionEnd);
-		    		    
-		    			analizeAndCreatePart(tmpBuffer);
-		    			//read to buffer from 
-//		    		}
-		    			positionBegin=j;
-		    		
+		    		analizeAndCreatePart(tmpBuffer);
 		    	} else {
-//		    		System.out.println("I: " + i);
 		    		shift = Math.max(good_suffix_shift[i], bcs[slidingWindowBuffer[i]] - boundaryLenght + 1 + i);
-//		    		System.out.println("Gss: " + good_suffix_shift[i]);
-//		            System.out.println("Bcs: " + (bcs[slidingWindowBuffer[i]] - boundaryLenght + 1 + i) + " " + bcs[slidingWindowBuffer[i]]);
-//		    		System.out.println("Shift" + shift);
-//		    		System.out.println("J" + j);
-//		    		System.out.println("Before shift: " + new String(slidingWindowBuffer));
 		    		j += shift;
-		    		
-		    		
-//		    		if (j > slidingWindowBufferLenght * (how_many+1)) {
-//		    			how_many++;
-//		    		}
-//		    		inputStream.reset();
-//	    			byte[] tmpBytes = new byte[j-(how_many*slidingWindowBufferLenght)];
-//		    		byte[] tmpBytes = new byte[shift];
-//	    			inputStream.read(tmpBytes, 0, shift);
-//	    			System.out.println("Tmp bytes: " + new String(tmpBytes));
-//	    			inputStream.mark(5*slidingWindowBufferLenght);//marking
-//	    			inputStream.read(slidingWindowBuffer, 0, slidingWindowBufferLenght);
-//	    			System.out.println("After shift: " + new String(slidingWindowBuffer));	
-//		    	System.out.println("");
+		    		//reseting input stream to read bytes from last shift of buffer
+		    		//to another
 		    		inputStream.reset();
 		    	}
 		    	
-		    	//moving j positions forward in stream -> save this moving to some stream
-		    	//maybe parsing meanwhile
-		    	
-		    	//shifting input stream
-		    	
-		    	
-		    	//tmp bytes to bufor do ktorego czytamy cale cialo parta
-    			//jeszcze zwiekszanie sie bufora obadac!!
+		    	//increasing tmp buffer if it's not big enough
 		    	if (positionInTmpBuffer+shiftPosition>tmpBuffer.length) {
-		    		//zwiekszamy bufor
 		    		byte[] tmp = new byte[2*tmpBuffer.length];
 		    		System.arraycopy(tmpBuffer, 0, tmp, 0, tmpBuffer.length);
 		    		tmpBuffer = tmp;
-		    		System.out.println("Increasing buffer");
 		    	}
+		    	
+		    	//reading bytes before shift to buffer in which we have all
+		    	// data from input stream
 		    	inputStream.read(tmpBuffer, positionInTmpBuffer, shift);
 		    	
+		    	//changing actual position in buffer into which we read bytes
 		    	positionInTmpBuffer+=shift;
     			
-		    	
-		    	
-		    	//z tego tmp czytamy piszemy do nowego buffora
-		    	
-    			inputStream.mark(5*slidingWindowBufferLenght);//marking
+		    	//marking our new position
+    			inputStream.mark(5*slidingWindowBufferLenght);
+    			
+    			//moving sliding window to new position
     			inputStream.read(slidingWindowBuffer, 0, slidingWindowBufferLenght);
+    			
+    			if (tmpBuffer[0]==0) break;// EOF
 		    }
 	   
 	    } catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    // m - pattern lenght
-	    // n - text lenght
-//	    j = 0;
-//        while (j <= n - m) {
-//           for (i = m - 1; i >= 0 && pattern[i] == text[i + j]; --i);
-//           if (i < 0) {
-//              System.out.print(j + " ");
-//              j += good_suffix_shift[0];
-//           }
-//           else
-//              j += Math.max(good_suffix_shift[i], bcs[text[i + j]] - m + 1 + i);
-//        }
-	    
-	    
-		
 	}
 	
 	
 	/**
 	 * This method analizes if any multipart is in contentType
 	 * in given input stream - if so it tries to create mimemultipart
-	 * - if not just creates mimepart  
+	 * - if not just creates mimepart
+	 * 
+	 * As a part we also understand all things after boundary and --
+	 * which appear at the end of the message  
 	 * @return
+	 * @throws ParseException 
 	 */
-	public void analizeAndCreatePart(byte[] content) {
+	public void analizeAndCreatePart(byte[] content) throws ParseException {
 				
+		LineInputStream lis = new LineInputStream(new ByteArrayInputStream(content));
 		
+		Part part = null;
 		
+		MimeMessageHeaders headers = new MimeMessageHeaders(inputStream);
+		ContentType ct = headers.getContentType();
+		if (ct==null) throw new ParseException("No content type in message");
+		if (ct.getPrimaryType().equals(MULTIPART_TYPE)) {
+			part = new MimeMultiPart(inputStream, headers, this);
+			//recursive creatin of mimemultipart
+		} else {
+			part = new MimePart(inputStream, ct, headers); 
+		}
 		
-		
+		//adding part
+		parts.add(part);
 	}
+	
+	
 	
 	public MimeMultiPart() {}
 	
@@ -256,11 +191,10 @@ public class MimeMultiPart extends Part {
 		this.inputStream=inputStream;
 	}
 	
-	public MimeMultiPart(InputStream inputStream, ContentType contentType, String boundary) {
-		this.contentType=contentType;
+	public MimeMultiPart(InputStream inputStream, MimeMessageHeaders mimeMessageHeaders, Part parent) {
 		this.inputStream=inputStream;
-		this.boundaryLine=boundary;
-		//boundary line
+		this.headers=mimeMessageHeaders;
+		this.parent=parent;
 		try {
 			parse();
 		} catch (ParseException e) {
@@ -325,48 +259,54 @@ public class MimeMultiPart extends Part {
         return good_suffix_shift;
 	}
 	
-	public static void algorithmBM(byte[] pattern, byte[] text) {
-		
-		 int i, j;
-         int m = pattern.length;
-         int n = text.length;
-         int shift = 0;
-
-         int[] bcs = initializeBadCharacterShiftTable(pattern);
-         int[] good_suffix_shift = initializeGoodSuffixShiftTable(pattern);
-         
-         String textString = new String(text);
-         
-         j = 0;
-         while (j <= n - m) {
-            for (i = m - 1; i >= 0 && pattern[i] == text[i + j]; --i);
-            if (i < 0) {
-               System.out.print(j + " ");
-               System.out.println(new String( new byte[]{text[j],text[j+1]}));
-               j += good_suffix_shift[0];
-               System.out.print(j + " ");
-               System.out.println(new String( new byte[]{text[j],text[j+1]}));
-            }
-            else {
-//            	System.out.println("I: " + i);
-            	shift = Math.max(good_suffix_shift[i], bcs[text[i + j]] - m + 1 + i);
-//            	System.out.println("Gss: " + good_suffix_shift[i]);
-//            	System.out.println("Bcs: " + (bcs[text[i + j]] - m + 1 + i) + " " + bcs[text[i + j]]);
-//            	System.out.println("Shift: " + shift);
-//            	System.out.println("J: " + j);
-//            	System.out.println("Before shift Substring: " + textString.substring(j, j+m));
-            	j +=shift;
-//            	System.out.println("After shift Substring: " + textString.substring(j, j+m));
-//            	System.out.println("");
-            }
-         }
-		
+	@Override
+	public String toString() {
+		for (Part part : parts) {
+			part.toString();
+		}
+		return super.toString();
 	}
 	
+	// just for test!!
+//	public static void algorithmBM(byte[] pattern, byte[] text) {
+//		
+//		 int i, j;
+//         int m = pattern.length;
+//         int n = text.length;
+//         int shift = 0;
+//
+//         int[] bcs = initializeBadCharacterShiftTable(pattern);
+//         int[] good_suffix_shift = initializeGoodSuffixShiftTable(pattern);
+//         
+//         String textString = new String(text);
+//         
+//         j = 0;
+//         while (j <= n - m) {
+//            for (i = m - 1; i >= 0 && pattern[i] == text[i + j]; --i);
+//            if (i < 0) {
+//               System.out.print(j + " ");
+//               System.out.println(new String( new byte[]{text[j],text[j+1]}));
+//               j += good_suffix_shift[0];
+//               System.out.print(j + " ");
+//               System.out.println(new String( new byte[]{text[j],text[j+1]}));
+//            }
+//            else {
+////            	System.out.println("I: " + i);
+//            	shift = Math.max(good_suffix_shift[i], bcs[text[i + j]] - m + 1 + i);
+////            	System.out.println("Gss: " + good_suffix_shift[i]);
+////            	System.out.println("Bcs: " + (bcs[text[i + j]] - m + 1 + i) + " " + bcs[text[i + j]]);
+////            	System.out.println("Shift: " + shift);
+////            	System.out.println("J: " + j);
+////            	System.out.println("Before shift Substring: " + textString.substring(j, j+m));
+//            	j +=shift;
+////            	System.out.println("After shift Substring: " + textString.substring(j, j+m));
+////            	System.out.println("");
+//            }
+//         }
+//		
+//	}
+	
 	public static void main(String[] args) {
-		
-		//byte[] pattern = StringUtils.getBytes("------=_NextPart_000_0063_01C82582.9D9C6DF0");
-		//byte[] text = StringUtils.getBytes("fsdfhsdifsdiuhfsif fsghghjjjgjgdfid sfh oifh ds ------=_NextPart_000_0063_01C82582.9D9C6DF0 fdsffs");
 		
 		String sampleBoundaryString = "--===============0507542226==";
 		String sampleContentString = "" +
@@ -406,7 +346,7 @@ public class MimeMultiPart extends Part {
 		byte[] pattern = StringUtils.getBytes(sampleBoundaryString);
 		byte[] text = StringUtils.getBytes(sampleContentString);
 		
-		MimeMultiPart.algorithmBM(pattern, text);
+//		MimeMultiPart.algorithmBM(pattern, text);
 		
 	}
 }

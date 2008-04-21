@@ -2,19 +2,22 @@ package mail;
 
 import java.io.InputStream;
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeMultipart;
+
 import mail.exceptions.ParseException;
 
 /**
  * Class represends the sense of the project mail message
- * according to Mime standards - it contains some 
- * headers and mime parts (it can be of course one mime type
- * f.e. text/plain - without any boundaries)
+ * 
+ * It's an abstract message that contains root {@link MimeMultipart}
+ * inside which points to main information and 
+ * headers
  * @author zbychu
  *
  */
 public class MimeMessage {
 	
-	final String BOUNDARY = "boundary";
+	
 	final String MULTIPART_TYPE = "multipart";
 	
 	/**
@@ -39,34 +42,24 @@ public class MimeMessage {
 	 */
 	public void createMimeMessage(InputStream inputStream) throws ParseException {
 		
+		// headers
 		headers = new MimeMessageHeaders(inputStream);
 		ContentType ct = headers.getContentType();
-		
 		if (ct==null) throw new ParseException("No content type in message");
-		
 		if (ct.getPrimaryType().equals(MULTIPART_TYPE)) {
-			getBoundaryLine(ct);
-			part = new MimeMultiPart(inputStream, ct, this.boundary);
+			part = new MimeMultiPart(inputStream, headers, null);
 		} else {
-			part = new MimePart(inputStream, ct); 
+			part = new MimePart(inputStream, ct, null); 
 		}
-		
-		 
+	}	
+	
+	@Override
+	public String toString() {
+		//najpierw mozna jeszcze stringnac
+		// headery
+		return part.toString();
 	}
 	
-	public void getBoundaryLine(ContentType contentType) throws ParseException {
-		
-		String boundary = null;
-		if (contentType!=null) {
-			boundary = contentType.getParameter(this.BOUNDARY);
-			if (boundary!=null) {
-				//TODO!! nie wszystkie maile sa takie fajne ze maja boundary 
-				// z -- dodatkowym
-				this.boundary = "--" + boundary;
-			} 
-		} 
-	}
-
 	public Part getPart() {
 		return part;
 	}

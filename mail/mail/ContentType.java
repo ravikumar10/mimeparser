@@ -5,7 +5,9 @@ import mail.util.HeaderTokenizer;
 import mail.util.ParameterList;
 
 public class ContentType {
-
+	
+	final String BOUNDARY = "boundary";
+	
 	private String primaryType;	// primary type like text
     private String subType;	// subtype line plain
     private ParameterList list;	// parameter list
@@ -138,5 +140,15 @@ public class ContentType {
 		this.subType = subType;
 	}
     
-    
+	public String getBoundaryLine() {
+		
+		String boundary = null;
+		boundary = getParameter(this.BOUNDARY);
+		if (boundary!=null) {
+			//TODO!! nie wszystkie maile sa takie fajne ze maja boundary 
+			// z -- dodatkowym
+			boundary = "--" + boundary;
+		} 
+		return boundary;
+	}
 }
