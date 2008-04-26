@@ -96,11 +96,14 @@ public class MimeMessageParseTest extends TestCase {
 	
 	
 	public void testMimeMultipartMessage() {
-		String filename = "multipart_text.eml";
-//		String filename = "multipart_mixed.eml";
+		
+		String filename = "text_plain.eml";
 //		String filename = "test_multipart.eml";
+//		String filename = "multipart_mixed.eml";
+//		String filename = "multipart_mixed_aware.eml";
+//		String filename = "text_and_pdf.eml";
 		SharedFileInputStream is = null;
-		System.out.println(filename);
+//		System.out.println(filename);
 		try {
 			is = new SharedFileInputStream(resourceDirName + "/" +filename);
 		} catch (FileNotFoundException e) {
@@ -112,11 +115,18 @@ public class MimeMessageParseTest extends TestCase {
 		
 		// parsing messages
 		MimeMessage mm = null;
+		long begin = 0, end = 0;
 		try {
+			begin = System.currentTimeMillis();
 			mm = new MimeMessage(is);
+			end = System.currentTimeMillis();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		
+		System.out.println("Parsing time: " + (end-begin) + " milliseconds");
+		
+		System.out.println(mm.toString());
 		
 		assertNotNull(mm.getHeaders());
 		assertNotNull(mm.getPart());

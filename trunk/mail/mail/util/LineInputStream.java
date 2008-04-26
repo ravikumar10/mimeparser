@@ -1,12 +1,13 @@
 package mail.util;
 
+import java.io.BufferedInputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
 
 
-public class LineInputStream extends FilterInputStream {
+public class LineInputStream extends BufferedInputStream implements SharedInputStream {
 
 	 private char[] lineBuffer = null; // reusable byte buffer
 
@@ -69,4 +70,11 @@ public class LineInputStream extends FilterInputStream {
 		
 		return String.copyValueOf(buf, 0, offset);
 	 }
+
+	@Override
+	public long getPosition() {
+		if (in == null)
+		    throw new RuntimeException("Stream closed");
+		return pos;
+	}
 }
