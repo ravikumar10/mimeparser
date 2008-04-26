@@ -49,15 +49,19 @@ public class MimeMessage {
 		if (ct.getPrimaryType().equals(MULTIPART_TYPE)) {
 			part = new MimeMultiPart(inputStream, headers, null);
 		} else {
-			part = new MimePart(inputStream, ct, null); 
+			part = new MimePart(inputStream, ct, headers, null); 
 		}
+		
 	}	
 	
 	@Override
 	public String toString() {
 		//najpierw mozna jeszcze stringnac
 		// headery
-		return part.toString();
+		String headerString = "";
+		if (headers!=null) headerString = "Headers:\n\t" + headers.toString().replace("\n", "\n\t");
+		
+		return headerString+part.toString(1);
 	}
 	
 	public Part getPart() {

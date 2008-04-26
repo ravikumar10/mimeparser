@@ -24,6 +24,11 @@ public abstract class Part {
 	protected byte[] content;
 	
 	/**
+	 * our super part (parent) null if we are top part
+	 */
+	Part parent;
+	
+	/**
 	 * simple content type 
 	 */
 	protected ContentType contentType;
@@ -64,5 +69,7 @@ public abstract class Part {
 	}
 	
 	public abstract void parse () throws ParseException;
+	
+	public abstract String toString(int n);
 	
 }

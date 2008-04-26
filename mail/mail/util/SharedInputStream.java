@@ -41,5 +41,5 @@ public interface SharedInputStream {
      * @param	end	the ending position + 1
      * @return		the new stream
      */
-    public InputStream newStream(long start, long end);
+    //public InputStream newStream(long start, long end);
 }

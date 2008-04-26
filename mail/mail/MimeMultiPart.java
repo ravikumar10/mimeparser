@@ -2,13 +2,20 @@ package mail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.mail.util.SharedByteArrayInputStream;
+
 import mail.exceptions.ParseException;
+import mail.util.BufferedSharedInputStream;
 import mail.util.LineInputStream;
+import mail.util.SharedFileInputStream;
 import mail.util.SharedInputStream;
 import mail.util.StringUtils;
 
@@ -24,17 +31,12 @@ import mail.util.StringUtils;
 public class MimeMultiPart extends Part {
 	
 	
-	private final static int tmpBufferSize = 1024;  
+	private final static int tmpBufferSize = 4096;  
 	
 	/**
 	 * part may contains other multiparts or can be simple part
 	 */
 	List<Part> parts = new ArrayList<Part>();
-	
-	/**
-	 * our super part (parent) null if we are top part
-	 */
-	Part parent;
 	
 	/**
 	 * boundary line is boundary get from ContentType + "--"
@@ -89,9 +91,6 @@ public class MimeMultiPart extends Part {
 	    ByteArrayOutputStream bufferOut = null;
 	    
 	    try {
-	    	//int position = inputStream.
-	    	//inputStream.read(slidingWindowBuffer, 0, slidingWindowBuffer.length);
-			
 	    	long shiftPosition = sin.getPosition();
 	    	
 		    int i,j=0;
@@ -108,14 +107,22 @@ public class MimeMultiPart extends Part {
 		    	
 		    	for (i=boundaryLenght-1; i>=0 && boundaryBytes[i] == slidingWindowBuffer[i]; i--){}
 		    	
-		    	
 		    	if (i<0) {
-		    		System.out.println("Part: " + new String(tmpBuffer));
+		    		// very useful for debuging
+		    		//System.out.println("Part: " + new String(tmpBuffer));
+		    		
+		    		analizeAndCreatePart(tmpBuffer);
+		    		this.content=tmpBuffer;
 		    		shift = good_suffix_shift[0];
-		    		j += shift; // po boundary line jest \n
+		    		j += shift;
 		    		tmpBuffer = new byte[tmpBufferSize];
 		    		positionInTmpBuffer = 0;
-		    		analizeAndCreatePart(tmpBuffer);
+		    		
+		    		//clearing sliding window
+		    		for(int k=0;k<slidingWindowBufferLenght;k++) slidingWindowBuffer[k] = 0;
+		    		
+		    		//marking position
+		    		inputStream.mark(5*slidingWindowBufferLenght);
 		    	} else {
 		    		shift = Math.max(good_suffix_shift[i], bcs[slidingWindowBuffer[i]] - boundaryLenght + 1 + i);
 		    		j += shift;
@@ -126,9 +133,25 @@ public class MimeMultiPart extends Part {
 		    	
 		    	//increasing tmp buffer if it's not big enough
 		    	if (positionInTmpBuffer+shiftPosition>tmpBuffer.length) {
+//		    		byte[] tmp = new byte[tmpBuffer.length+tmpBufferSize];
 		    		byte[] tmp = new byte[2*tmpBuffer.length];
 		    		System.arraycopy(tmpBuffer, 0, tmp, 0, tmpBuffer.length);
 		    		tmpBuffer = tmp;
+		    	}
+		    	
+		    	//if we encountered boundary line we read all 
+		    	// \n \t after it
+		    	if (positionInTmpBuffer==0) {
+		    		int c1;
+		    		while ((c1 = inputStream.read()) != -1) {
+		    			if (c1 == '\n' || c1 == '\t') {
+		    				inputStream.mark(5*slidingWindowBufferLenght);
+		    				shift--;
+		    			} else { 
+		    				inputStream.reset();
+		    				break;
+		    			}
+ 		    		}
 		    	}
 		    	
 		    	//reading bytes before shift to buffer in which we have all
@@ -144,7 +167,20 @@ public class MimeMultiPart extends Part {
     			//moving sliding window to new position
     			inputStream.read(slidingWindowBuffer, 0, slidingWindowBufferLenght);
     			
-    			if (tmpBuffer[0]==0) break;// EOF
+    			//analizing if we get --\n so it's end of parsing
+    			byte[] tmpContent = new byte[3];
+    			System.arraycopy(tmpBuffer, 0, tmpContent, 0, 3);
+    			if (new String(tmpContent).startsWith("--\n")) {
+    				//System.out.println("napotkalem znak konca");
+    				break;
+    			}
+    			
+    			// EOS - end of stream
+    			if (tmpBuffer[0]==0 || slidingWindowBuffer[0]==0) {
+    				//System.out.println("koniec streamu");
+    				break;
+    			}
+    			
 		    }
 	   
 	    } catch (IOException e) {
@@ -164,19 +200,29 @@ public class MimeMultiPart extends Part {
 	 * @throws ParseException 
 	 */
 	public void analizeAndCreatePart(byte[] content) throws ParseException {
-				
+		
 		LineInputStream lis = new LineInputStream(new ByteArrayInputStream(content));
 		
 		Part part = null;
 		
-		MimeMessageHeaders headers = new MimeMessageHeaders(inputStream);
+		
+		// not all of the systems are so fine that they finish 
+		// mime multipart with boundaryline + "--"
+		
+		MimeMessageHeaders headers = new MimeMessageHeaders(lis);
 		ContentType ct = headers.getContentType();
 		if (ct==null) throw new ParseException("No content type in message");
 		if (ct.getPrimaryType().equals(MULTIPART_TYPE)) {
-			part = new MimeMultiPart(inputStream, headers, this);
-			//recursive creatin of mimemultipart
+			//SharedFileInputStream sfis = new SharedFileInputStream(new File();
+			BufferedSharedInputStream bsis = new BufferedSharedInputStream(lis);
+			part = new MimeMultiPart(bsis, headers, this);
+			//recursive creation of mimemultipart
 		} else {
-			part = new MimePart(inputStream, ct, headers); 
+			long pos = lis.getPosition();
+			int newContentLenght = content.length-(int)pos;
+			byte[] newContent = new byte[newContentLenght];
+			System.arraycopy(content, (int)pos, newContent, 0, newContentLenght);
+			part = new MimePart(newContent, ct, headers, this);
 		}
 		
 		//adding part
@@ -191,17 +237,12 @@ public class MimeMultiPart extends Part {
 		this.inputStream=inputStream;
 	}
 	
-	public MimeMultiPart(InputStream inputStream, MimeMessageHeaders mimeMessageHeaders, Part parent) {
+	public MimeMultiPart(InputStream inputStream, MimeMessageHeaders mimeMessageHeaders, Part parent) throws ParseException {
 		this.inputStream=inputStream;
 		this.headers=mimeMessageHeaders;
 		this.parent=parent;
-		try {
-			parse();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			// TODO Na razie tak - trzeba sie zastanowic co z tym zrobic
-			e.printStackTrace();
-		}
+		parse();
+//		analizeAndCreatePart(content);
 	}
 	
 	public static int[] initializeBadCharacterShiftTable(byte[] pattern) {
@@ -261,10 +302,25 @@ public class MimeMultiPart extends Part {
 	
 	@Override
 	public String toString() {
+		String ret = "";
 		for (Part part : parts) {
-			part.toString();
+			ret += part.toString().replaceAll("\n", "\n\t");
 		}
-		return super.toString();
+		return ret;
+	}
+	
+	@Override
+	public String toString(int n) {
+		
+		String ret = "";
+		String indent = "";
+		for (int i=0;i<n;i++) indent+="\t";
+		ret += "\n" + indent + "Parts:\n" + indent + "|_";
+		int i=1;
+		for (Part part : parts) {
+			ret += "\n" + indent + "  Part" + i++ + ":"  + part.toString(n+1).replaceAll("\n", "\n"+indent+"  |");
+		}
+		return ret;
 	}
 	
 	// just for test!!
