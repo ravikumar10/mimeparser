@@ -1,0 +1,1 @@
+Tutaj beda umieszczane fragmenty pracy i rozne inne wykresy, pomiary, spostrzezenia
