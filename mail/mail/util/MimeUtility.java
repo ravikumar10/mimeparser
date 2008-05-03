@@ -32,6 +32,9 @@ public class MimeUtility {
 		    mime2java.put("euckr", "KSC5601");
 		    mime2java.put("us-ascii", "ISO-8859-1");
 		    mime2java.put("x-us-ascii", "ISO-8859-1");
+		    //mine
+		    mime2java.put("ISO-8859-2", "ISO-8859-2");
+		    mime2java.put("iso-8859-2", "ISO-8859-2");
 		}
 		
 	}

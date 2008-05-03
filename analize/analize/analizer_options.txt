@@ -1,0 +1,27 @@
+Headery glowne:
+
+(plik utf-8)
+
+Pola z odpowiednim kodowaniem nalezy przekonwertowac do utf-8 i z nim
+bedziemy porownywac
+
+- czy mail zawiera dany header
+- czy w danym headerze jest dany tekst x
+- czy we wszystkich headerach jest dany tekst x
+- czy w polu From, To jest (kazdy z ponizszych filtrow odzielny):
+    - host -> dany tekst x
+    - phrase -> dany tekst x
+    - addrres-spec  -> dany tekst x
+    
+Partsy:
+
+   * Headers:
+      - teskt w headerze
+      - dane pliki (content-type)
+      - dana wielkosc pliku
+      
+   * Content
+      - szukanie stringu w tekscie (pamietac o zencodowaniu)
+   
+   * File
+      - czy content pokrywa sie z rozszerzeniem pliku (zip, exe, pdf)
