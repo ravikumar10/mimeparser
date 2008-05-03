@@ -1,0 +1,11 @@
+// This is example configuration file
+// It contains some info about system
+// which we're going to run and some rules
+// which we would like to use to filter messages
+
+max_memory = 1024 // in megabytes
+max_threads = 10 // max threads run
+
+
+
+// MESSAGES RULES
