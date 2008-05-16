@@ -58,8 +58,6 @@ public class StringUtils {
 	public static String InputStreamToString(InputStream inputStream) {
 		
 		String ret = "";
-		
-		
 		char[] buf, lineBuffer; 
 		buf = lineBuffer = new char[128];
 		int room = buf.length;
@@ -84,100 +82,148 @@ public class StringUtils {
 		} catch (IOException ex) {
 			
 		}
-		
 		return ret;
 	}
 	
 	/**
-	 * According to RFC 2047
-	 * Method parses (using regexp) text in non USASCII words 
-	 * to String with set encoding
-	 * codedText can't not be longer than 75 characters
+	 * Initialize Bad Character Shift Table for Boyer-Moore algorithm according
+	 * to given pattern
 	 * 
-	 * B encoding - like Base64
-	 * Q encoding:
-	 *   - = followed by hex digits
-	 *   - _ - space
-	 *   - other than = ? _ printable ASCII represends by themselves
-	 *     SPACE and TAB MUST NOT be represented by themselves
-	 * 
-	 * Given text may be folded
-	 * 
-	 * @param text
+	 * @param given pattern
 	 * @return
 	 */
-	public String convertStringAccordingToInsideEncoding(String text) {
+	public static int[] initializeBMAlgorithmBadCharacterShiftTable(byte[] pattern) {
 		
-		String regexp = "([A-Za-z_0-9-]+)\\?([QB])\\?([A-Za-z_=*0-9]+)";
-		StringBuilder ret = new StringBuilder(text.length());
-		// deleting \n\t and \nspace
-		text = text.replace("\n\t", "").replace("\n ", "");
-		//spliting over =? or ?=
-		String[] textParts = text.split("(=\\?)|(\\?=)");
+		int[] bcs = new int[255];
+		int m = pattern.length;
+        for (int i = 0; i < 255; i++) {
+        	bcs[i] = m;
+        }
+        for (int i = 0; i < m - 1; ++i) {
+        	bcs[pattern[i]] = m - i - 1;
+        }
+		return bcs;
+	}
+	
+	/**
+	 * Initialize Suffixes Table for Boyer-Moore algorithm according
+	 * to given pattern
+	 * 
+	 * @param given pattern
+	 * @return
+	 */
+	public static int[] initilizeBMAlgorithmSuffixesTable(byte[] pattern) {
+		 
+		 int j;
+         int m = pattern.length;
+         int[] suff = new int[m];
+
+         suff[m - 1] = m;
+         for (int i = m - 2; i >= 0; --i) {
+            for (j = 0; j <= i && pattern[i-j] == pattern[m-j-1]; j++);
+            suff[i] = j;
+         }
+		return suff;
+	}
+	
+	/**
+	 * Initialize Good Suffix Shift Table for Boyer-Moore algorithm according
+	 * to given pattern
+	 * 
+	 * @param given pattern
+	 * @return
+	 */
+	public static int[] initializeBMAlgorithmGoodSuffixShiftTable(byte[] pattern) {
 		
-		for (String textPart : textParts) {
-			
-			Pattern pattern = Pattern.compile(regexp);
-			Matcher matcher = pattern.matcher(textPart);
-			if (matcher.matches()) {
-				String charset = matcher.group(1);
-				String codingType = matcher.group(2);
-				String codedText = matcher.group(3);
-				
-				
-				switch (codingType.toLowerCase().charAt(0)) {
-				case 'q':
-					int codedTextBufferDecrease = 0;
-					byte[] codedTextBuffer = new byte[codedText.length()];
-					for (int i = 0, bi=0; i < codedText.length(); i++) {
-						char c = codedText.charAt(i);
-						if (c == '=') {//hex
-							codedTextBufferDecrease+=2;
-							String hex = codedText.substring(i + 1, i + 3);
-							c = (char)Integer.parseInt(hex, 16);
-							i += 2;
-						} else if (c == '_') //space
-							c = (char)32;
-						codedTextBuffer[bi++] = (byte)c;
-					}
-					try {
-						byte[] tmpCodedTextBuffer = new byte[codedText.length()-codedTextBufferDecrease]; 
-						System.arraycopy(codedTextBuffer, 0, tmpCodedTextBuffer, 0, codedText.length()-codedTextBufferDecrease);
-						ret.append(new String(tmpCodedTextBuffer,charset));
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-					}
-					break;
-				case 'b':
-//					base 64
-					break;
-				default:
-//					rzucic jakims wyjatkiem
-					break;
-				}
-			} else {
-				ret.append(textPart);
-			}
-		}
+		int j = 0;
+        int m = pattern.length;
+        int[] good_suffix_shift = new int[m];
+
+        int[] suff = initilizeBMAlgorithmSuffixesTable(pattern);
+
+        for (int i = 0; i < m; i++) {
+           good_suffix_shift[i] = m;
+        }
+        
+        j = 0;
+        for (int i = m - 1; i >= 0; --i) {
+           if (suff[i] == i + 1) {
+              for (; j < m - 1 - i; ++j) {
+                 good_suffix_shift[j] = m - 1 - i;
+              }
+           }
+        }
+
+        for (int i = 0; i <= m - 2; ++i) {
+           good_suffix_shift[m - 1 - suff[i]] = m - 1 - i;
+        }
+
+        return good_suffix_shift;
+	}
+	
+	/**
+	 * Uses Boyer-Moore algorithm to find pattern in text
+	 * return true if pattern was found
+	 * @param pattern
+	 * @param text
+	 * @return true if pattern is in text
+	 */
+	public static boolean isPatternInText(byte[] pattern, byte[] text) {
 		
-		return ret.toString();
+		int i, j;
+        int m = pattern.length;
+        int n = text.length;
+        int shift = 0;
+
+        int[] bcs = initializeBMAlgorithmBadCharacterShiftTable(pattern);
+        int[] good_suffix_shift = initializeBMAlgorithmGoodSuffixShiftTable(pattern);
+        
+        j = 0;
+        while (j <= n - m) {
+           for (i = m - 1; i >= 0 && pattern[i] == text[i + j]; --i);
+           if (i < 0) return true;
+           else {
+        	   shift = Math.max(good_suffix_shift[i], bcs[text[i + j]] - m + 1 + i);
+        	   j +=shift;
+           }
+        }
+        return false;
+	}
+	
+	/**
+	 * Boyer moore algorithm - just for test do nothing
+	 * @param pattern
+	 * @param text
+	 */
+	public static void algorithmBM(byte[] pattern, byte[] text) {
+		
+		 int i, j;
+         int m = pattern.length;
+         int n = text.length;
+         int shift = 0;
+
+         int[] bcs = initializeBMAlgorithmBadCharacterShiftTable(pattern);
+         int[] good_suffix_shift = initializeBMAlgorithmGoodSuffixShiftTable(pattern);
+         
+         j = 0;
+         while (j <= n - m) {
+            for (i = m - 1; i >= 0 && pattern[i] == text[i + j]; --i);
+            if (i < 0) {
+            	j += good_suffix_shift[0];
+            } else {
+            	shift = Math.max(good_suffix_shift[i], bcs[text[i + j]] - m + 1 + i);
+            	j +=shift;
+            }
+         }
 	}
 	
 	public static void main(String[] args) {
 		
-		String example = "Bardzo =?ISO-8859-2?Q?d=B3ugi_temat_ze_specjalnymi_znaka?=\n" +
-						 " =?ISO-8859-2?Q?mi_=22=22_=5B=5D_=28=29*_i_ciekawe_jak_to_?=\n" +
-						 " =?ISO-8859-2?Q?zostanie_zinterpretowane_bo_nikt_tego_nie_wie?=\n" +
-						 " =?ISO-8859-2?Q?_o_jeszcze_malpa_=40?=\n";
+		String text = " mucha walczy w gnoju z rosolem na scianie";
+		String pattern = "gnoj";
+		System.out.println(isPatternInText(pattern.getBytes(), text.getBytes()));
 		
-		String hex = "22";
-		Integer i  = Integer.parseInt(hex, 16);
-		
-		StringUtils su = new StringUtils();
-		
-		String reto = su.convertStringAccordingToInsideEncoding(example);
-		System.out.println(reto);
-				
 	}
+	
 	
 }

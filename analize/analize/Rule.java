@@ -28,10 +28,43 @@ public class Rule {
 	
 	/**
 	 * tells if messages applies to this rule shit be filtered out
-	 * if true message ARE NOT filtered out
+	 * if true message ARE filtered out
 	 */
-	protected boolean exclude;
+	protected boolean filterOut;
 	
+	/**
+	 * tells if we are looking for messages that contains this rule
+	 * or not
+	 * For example:
+	 * if we're looking for content that contains some keyword (than
+	 * present is true) or content that doesn't have it (false)
+	 * 
+	 * look for more explanation in constructor of appropriate rule
+	 */
+	protected boolean present;
+	
+	public RuleType getRuleType() {
+		return ruleType;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public boolean isFilterOut() {
+		return filterOut;
+	}
+
+	public boolean isPresent() {
+		return present;
+	}
+
+
 	@Override
 	public String toString() {
 		return name;
