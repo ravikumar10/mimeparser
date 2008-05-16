@@ -56,8 +56,6 @@ public class MimeMessage {
 	
 	@Override
 	public String toString() {
-		//najpierw mozna jeszcze stringnac
-		// headery
 		String headerString = "";
 		if (headers!=null) headerString = "Headers:\n\t" + headers.toString().replace("\n", "\n\t");
 		

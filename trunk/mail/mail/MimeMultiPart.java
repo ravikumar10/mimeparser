@@ -76,10 +76,10 @@ public class MimeMultiPart extends Part {
 		int boundaryLenght = boundaryBytes.length;
 		
 		// initialize Bad Character Shift table
-	    int[] bcs = initializeBadCharacterShiftTable(boundaryBytes);
+	    int[] bcs = StringUtils.initializeBMAlgorithmBadCharacterShiftTable(boundaryBytes);
 	    
 	    //initialize Good Sufix Shift table
-	    int[] good_suffix_shift = initializeGoodSuffixShiftTable(boundaryBytes);
+	    int[] good_suffix_shift = StringUtils.initializeBMAlgorithmGoodSuffixShiftTable(boundaryBytes);
 		
 	    //sliding window
 	    byte[] slidingWindowBuffer = new byte[boundaryLenght];
@@ -204,8 +204,7 @@ public class MimeMultiPart extends Part {
 		LineInputStream lis = new LineInputStream(new ByteArrayInputStream(content));
 		
 		Part part = null;
-		
-		
+
 		// not all of the systems are so fine that they finish 
 		// mime multipart with boundaryline + "--"
 		
@@ -242,64 +241,8 @@ public class MimeMultiPart extends Part {
 		this.headers=mimeMessageHeaders;
 		this.parent=parent;
 		parse();
-//		analizeAndCreatePart(content);
 	}
-	
-	public static int[] initializeBadCharacterShiftTable(byte[] pattern) {
-		
-		int[] bcs = new int[255];
-		int m = pattern.length;
-        for (int i = 0; i < 255; i++) {
-        	bcs[i] = m;
-        }
-        for (int i = 0; i < m - 1; ++i) {
-        	bcs[pattern[i]] = m - i - 1;
-        }
-		return bcs;
-	}
-	
-	public static int[] initilizeSuffixesTable(byte[] pattern) {
-		 
-		 int j;
-         int m = pattern.length;
-         int[] suff = new int[m];
 
-         suff[m - 1] = m;
-         for (int i = m - 2; i >= 0; --i) {
-            for (j = 0; j <= i && pattern[i-j] == pattern[m-j-1]; j++);
-            suff[i] = j;
-         }
-		return suff;
-	}
-	
-	public static int[] initializeGoodSuffixShiftTable(byte[] pattern) {
-		
-		int j = 0;
-        int m = pattern.length;
-        int[] good_suffix_shift = new int[m];
-
-        int[] suff = initilizeSuffixesTable(pattern);
-
-        for (int i = 0; i < m; i++) {
-           good_suffix_shift[i] = m;
-        }
-        
-        j = 0;
-        for (int i = m - 1; i >= 0; --i) {
-           if (suff[i] == i + 1) {
-              for (; j < m - 1 - i; ++j) {
-                 good_suffix_shift[j] = m - 1 - i;
-              }
-           }
-        }
-
-        for (int i = 0; i <= m - 2; ++i) {
-           good_suffix_shift[m - 1 - suff[i]] = m - 1 - i;
-        }
-
-        return good_suffix_shift;
-	}
-	
 	@Override
 	public String toString() {
 		String ret = "";
@@ -322,45 +265,6 @@ public class MimeMultiPart extends Part {
 		}
 		return ret;
 	}
-	
-	// just for test!!
-//	public static void algorithmBM(byte[] pattern, byte[] text) {
-//		
-//		 int i, j;
-//         int m = pattern.length;
-//         int n = text.length;
-//         int shift = 0;
-//
-//         int[] bcs = initializeBadCharacterShiftTable(pattern);
-//         int[] good_suffix_shift = initializeGoodSuffixShiftTable(pattern);
-//         
-//         String textString = new String(text);
-//         
-//         j = 0;
-//         while (j <= n - m) {
-//            for (i = m - 1; i >= 0 && pattern[i] == text[i + j]; --i);
-//            if (i < 0) {
-//               System.out.print(j + " ");
-//               System.out.println(new String( new byte[]{text[j],text[j+1]}));
-//               j += good_suffix_shift[0];
-//               System.out.print(j + " ");
-//               System.out.println(new String( new byte[]{text[j],text[j+1]}));
-//            }
-//            else {
-////            	System.out.println("I: " + i);
-//            	shift = Math.max(good_suffix_shift[i], bcs[text[i + j]] - m + 1 + i);
-////            	System.out.println("Gss: " + good_suffix_shift[i]);
-////            	System.out.println("Bcs: " + (bcs[text[i + j]] - m + 1 + i) + " " + bcs[text[i + j]]);
-////            	System.out.println("Shift: " + shift);
-////            	System.out.println("J: " + j);
-////            	System.out.println("Before shift Substring: " + textString.substring(j, j+m));
-//            	j +=shift;
-////            	System.out.println("After shift Substring: " + textString.substring(j, j+m));
-////            	System.out.println("");
-//            }
-//         }
-//		
-//	}
 	
 	public static void main(String[] args) {
 		
@@ -402,7 +306,7 @@ public class MimeMultiPart extends Part {
 		byte[] pattern = StringUtils.getBytes(sampleBoundaryString);
 		byte[] text = StringUtils.getBytes(sampleContentString);
 		
-//		MimeMultiPart.algorithmBM(pattern, text);
+//		StringUtils.algorithmBM(pattern, text);
 		
 	}
 }

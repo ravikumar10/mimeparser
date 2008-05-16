@@ -3,9 +3,48 @@
 // which we're going to run and some rules
 // which we would like to use to filter messages
 
-max_memory = 1024 // in megabytes
-max_threads = 10 // max threads run
-
-
+max_memory = 100 // in megabytes
+max_threads = 6 // max threads run
 
 // MESSAGES RULES
+
+// HEADERS
+
+// type of headers rulez
+// 1. header_presence
+
+// rule_name#header_type#list_of_headers(or one header)#present=true/false#filter_out=true/false
+
+// example01:
+rule01#1#Date#true#true // comment
+//means:
+//  filter out (drop) [last true] all messages that contains [before last true] headers Date  
+
+// example02:
+rule02#1#X-Virus-Scanned,X-Mozilla-Status2#false#true // comment
+//means:
+// filter out (drop) [last true] all messages that doesn't contain [before last false] one of headers: 
+// X-Virus-Scanned,X-Mozilla-Status2
+
+// 2. look keyword
+
+// rule_name#header_type#search_keyword#list_of_headers#filter_out=true/false
+// example:
+rule03#2#From, To#Zbigniew Artemiuk#false#true //coment
+
+// filter out (drop) [last true] all message that doesn't contain [before last false] one of headers:
+// From, To
+
+// 3. 
+
+
+
+// 4.
+
+
+// PARTS
+
+
+
+
+

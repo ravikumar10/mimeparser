@@ -23,8 +23,7 @@ public class LineInputStream extends BufferedInputStream implements SharedInputS
 	  * The line terminator is not returned as part of the returned 
 	  * String. Returns null if no data is available. <p>
 	  *
-	  * This class is similar to the deprecated 
-	  * <code>DataInputStream.readLine()</code>
+	  * RFC822
 	  */
 	 public String readLine() throws IOException {
 		InputStream in = this.in;
