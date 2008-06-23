@@ -1,17 +1,21 @@
 package configuration;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 import mail.util.LineInputStream;
 
-import analize.HeaderPresenceRule;
+import analize.MaxPartSizeRule;
+import analize.MimeMessageHeaderPresenceRule;
 import analize.KeywordSearchHeaderRule;
 import analize.Rule;
 
@@ -41,12 +45,12 @@ public class Configuration {
 	public void loadConfiguration() {
 		
 		File conf = new File(pathToConfigurationFile);
-		LineInputStream lis = null;
+		BufferedReader br = null;
 		try {
-			lis = new LineInputStream(new FileInputStream(conf));
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(conf)));
 			String line=null;
 		
-			while ((line=lis.readLine())!=null) {
+			while ((line=br.readLine())!=null) {
 				
 				if (line.contains("//")) //delete all after //
 					line = line.substring(0, line.indexOf("//"));
@@ -60,7 +64,7 @@ public class Configuration {
 					System.out.println("Settings " + line + "!");
 					continue;
 				} else if (line.contains("#")){ // rule
-					Rule rule = parseRuleLine(line);
+					Rule rule = parseRuleLine(new String(line.getBytes()));
 					if (rule != null) rules.add(rule);
 				}
 			}
@@ -72,14 +76,16 @@ public class Configuration {
 		} 
 	}
 	
-	private Rule parseRuleLine(String ruleLine) {
+	public static Rule parseRuleLine(String ruleLine) {
 		
 		Rule ret = null;
 		String[] ruleSegments = ruleLine.split("#");
 		if (ruleSegments.length>=3) {
 			String ruleName = ruleSegments[0];
 			String ruleType = ruleSegments[1];
-			String[] listOfHeaders = ruleSegments[2].split(",");
+			
+			
+			
 			
 			int ruleTypeInt = 0; 
 			try{
@@ -90,12 +96,29 @@ public class Configuration {
 			}
 			
 			switch (ruleTypeInt) {
-			case 1:
-				if (ruleSegments.length==5)
-					return new HeaderPresenceRule(ruleName,listOfHeaders, new Boolean(ruleSegments[3]), new Boolean(ruleSegments[4]));
-			case 2:
-				if (ruleSegments.length==6)
+			case 1:// header presence
+				if (ruleSegments.length==5) {
+					String[] listOfHeaders = ruleSegments[2].split(",");
+					return new MimeMessageHeaderPresenceRule(ruleName,listOfHeaders, new Boolean(ruleSegments[3]), new Boolean(ruleSegments[4]));
+				}
+			case 2:// keyword search in headers of messages
+				if (ruleSegments.length==6) {
+					String[] listOfHeaders = ruleSegments[2].split(",");
 					return new KeywordSearchHeaderRule(ruleName, listOfHeaders, ruleSegments[3], new Boolean(ruleSegments[4]), new Boolean(ruleSegments[5]));
+				}
+			case 5://keyword search in headers of parts
+				if (ruleSegments.length==6) {
+					String[] listOfHeaders = ruleSegments[2].split(",");
+					return new KeywordSearchHeaderRule(ruleName, listOfHeaders, ruleSegments[3], new Boolean(ruleSegments[4]), new Boolean(ruleSegments[5]), true);
+				}
+			case 6:
+				if (ruleSegments.length==5) 
+					return new KeywordSearchHeaderRule(ruleName, new String[]{"Content-type"}, ruleSegments[2], new Boolean(ruleSegments[3]), new Boolean(ruleSegments[4]), true);
+			case 7:
+				if (ruleSegments.length==5) {
+					int maxFileSize = new Integer(ruleSegments[2]).intValue();
+					return new MaxPartSizeRule(ruleName, maxFileSize, new Boolean(ruleSegments[3]), new Boolean(ruleSegments[4]));
+				}
 			default:
 				break;
 			}

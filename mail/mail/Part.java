@@ -5,7 +5,19 @@ import java.io.InputStream;
 import mail.exceptions.ParseException;
 
 public abstract class Part {
-
+	
+	/**
+	 * size of buffer in which we're saving all data
+	 * from stream
+	 */
+	protected final static int dataBufferSize = 4096;
+	
+	
+	/**
+	 * size of how fast tmp buffer is going to grow
+	 */
+	protected final static int dataBufferIncreaseSize = 4096;
+	
 	protected final String BOUNDARY = "boundary";
 	
 	//glownych siedem predefiniowanych Content-Typeow
@@ -71,5 +83,9 @@ public abstract class Part {
 	public abstract void parse () throws ParseException;
 	
 	public abstract String toString(int n);
+
+	public byte[] getContent() {
+		return content;
+	}
 	
 }

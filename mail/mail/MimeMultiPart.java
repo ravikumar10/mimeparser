@@ -2,20 +2,14 @@ package mail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.mail.util.SharedByteArrayInputStream;
 
 import mail.exceptions.ParseException;
 import mail.util.BufferedSharedInputStream;
 import mail.util.LineInputStream;
-import mail.util.SharedFileInputStream;
 import mail.util.SharedInputStream;
 import mail.util.StringUtils;
 
@@ -31,7 +25,6 @@ import mail.util.StringUtils;
 public class MimeMultiPart extends Part {
 	
 	
-	private final static int tmpBufferSize = 4096;  
 	
 	/**
 	 * part may contains other multiparts or can be simple part
@@ -84,19 +77,11 @@ public class MimeMultiPart extends Part {
 	    //sliding window
 	    byte[] slidingWindowBuffer = new byte[boundaryLenght];
 	    
-	    SharedInputStream sin = null;
-	    if (inputStream instanceof SharedInputStream)
-		    sin = (SharedInputStream)inputStream;
-	    
-	    ByteArrayOutputStream bufferOut = null;
-	    
 	    try {
-	    	long shiftPosition = sin.getPosition();
-	    	
 		    int i,j=0;
 		    int shift=0;
 		    
-		    byte[] tmpBuffer = new byte[tmpBufferSize];
+		    byte[] tmpBuffer = new byte[dataBufferSize];
 		    int positionInTmpBuffer = 0;
 		    
 		    int slidingWindowBufferLenght = slidingWindowBuffer.length;
@@ -115,7 +100,7 @@ public class MimeMultiPart extends Part {
 		    		this.content=tmpBuffer;
 		    		shift = good_suffix_shift[0];
 		    		j += shift;
-		    		tmpBuffer = new byte[tmpBufferSize];
+		    		tmpBuffer = new byte[dataBufferSize];
 		    		positionInTmpBuffer = 0;
 		    		
 		    		//clearing sliding window
@@ -132,9 +117,10 @@ public class MimeMultiPart extends Part {
 		    	}
 		    	
 		    	//increasing tmp buffer if it's not big enough
-		    	if (positionInTmpBuffer+shiftPosition>tmpBuffer.length) {
-//		    		byte[] tmp = new byte[tmpBuffer.length+tmpBufferSize];
-		    		byte[] tmp = new byte[2*tmpBuffer.length];
+//		    	if (positionInTmpBuffer+shiftPosition>tmpBuffer.length) {
+		    	if (positionInTmpBuffer+shift>tmpBuffer.length) {
+//		    		byte[] tmp = new byte[tmpBuffer.length+dataBufferIncreaseSize];
+		    		byte[] tmp = new byte[tmpBuffer.length*2];
 		    		System.arraycopy(tmpBuffer, 0, tmp, 0, tmpBuffer.length);
 		    		tmpBuffer = tmp;
 		    	}
@@ -204,7 +190,7 @@ public class MimeMultiPart extends Part {
 		LineInputStream lis = new LineInputStream(new ByteArrayInputStream(content));
 		
 		Part part = null;
-
+		
 		// not all of the systems are so fine that they finish 
 		// mime multipart with boundaryline + "--"
 		
@@ -229,7 +215,11 @@ public class MimeMultiPart extends Part {
 	}
 	
 	
-	
+	public List<Part> getParts() {
+		return parts;
+	}
+
+
 	public MimeMultiPart() {}
 	
 	public MimeMultiPart(InputStream inputStream) {

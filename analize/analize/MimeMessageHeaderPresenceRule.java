@@ -6,7 +6,7 @@ package analize;
  * @author zbychu
  *
  */
-public class HeaderPresenceRule extends Rule {
+public class MimeMessageHeaderPresenceRule extends Rule {
 	
 	/**
 	 * Which header we're looking for
@@ -21,7 +21,7 @@ public class HeaderPresenceRule extends Rule {
 	 * that doesn't contain this header
 	 * @param filterOut - should this rule cause message to be dropped
 	 */
-	public HeaderPresenceRule(String name, String[] headers, boolean present, boolean filterOut) {
+	public MimeMessageHeaderPresenceRule(String name, String[] headers, boolean present, boolean filterOut) {
 		this.headers=headers;
 		this.name=name;
 		this.ruleType=RuleType.HEADER_PRESENCE;
