@@ -217,11 +217,121 @@ public class StringUtils {
          }
 	}
 	
+	
+	// For string
+	/**
+	 * Initialize Bad Character Shift Table for Boyer-Moore algorithm according
+	 * to given pattern
+	 * 
+	 * @param given pattern
+	 * @return
+	 */
+	public static int[] initializeBMAlgorithmBadCharacterShiftTablForString(String pattern) {
+		
+		int[] bcs = new int[512];
+		int m = pattern.length();
+        for (int i = 0; i < 512; i++) {
+        	bcs[i] = m;
+        }
+        for (int i = 0; i < m - 1; ++i) {
+        	int index = pattern.charAt(i);
+        	bcs[index] = m - i - 1;
+        }
+		return bcs;
+	}
+	
+	/**
+	 * Initialize Suffixes Table for Boyer-Moore algorithm according
+	 * to given pattern
+	 * 
+	 * @param given pattern
+	 * @return
+	 */
+	public static int[] initilizeBMAlgorithmSuffixesTableForString(String pattern) {
+		 
+		 int j;
+         int m = pattern.length();
+         int[] suff = new int[m];
+
+         suff[m - 1] = m;
+         for (int i = m - 2; i >= 0; --i) {
+            for (j = 0; j <= i && pattern.charAt(i-j) == pattern.charAt(m-j-1); j++);
+            suff[i] = j;
+         }
+		return suff;
+	}
+	
+	/**
+	 * Initialize Good Suffix Shift Table for Boyer-Moore algorithm according
+	 * to given pattern
+	 * 
+	 * @param given pattern
+	 * @return
+	 */
+	public static int[] initializeBMAlgorithmGoodSuffixShiftTableForString(String pattern) {
+		
+		int j = 0;
+        int m = pattern.length();
+        int[] good_suffix_shift = new int[m];
+
+        int[] suff = initilizeBMAlgorithmSuffixesTableForString(pattern);
+
+        for (int i = 0; i < m; i++) {
+           good_suffix_shift[i] = m;
+        }
+        
+        j = 0;
+        for (int i = m - 1; i >= 0; --i) {
+           if (suff[i] == i + 1) {
+              for (; j < m - 1 - i; ++j) {
+                 good_suffix_shift[j] = m - 1 - i;
+              }
+           }
+        }
+
+        for (int i = 0; i <= m - 2; ++i) {
+           good_suffix_shift[m - 1 - suff[i]] = m - 1 - i;
+        }
+
+        return good_suffix_shift;
+	}
+	
+	/**
+	 * Uses Boyer-Moore algorithm to find pattern in text
+	 * return true if pattern was found
+	 * @param pattern
+	 * @param text
+	 * @return true if pattern is in text
+	 */
+	public static boolean isStringPatternInStringText(String pattern, String text) {
+		
+		int i, j;
+        int m = pattern.length();
+        int n = text.length();
+        int shift = 0;
+
+        int[] bcs = initializeBMAlgorithmBadCharacterShiftTablForString(pattern);
+        int[] good_suffix_shift = initializeBMAlgorithmGoodSuffixShiftTableForString(pattern);
+        
+        j = 0;
+        while (j <= n - m) {
+           for (i = m - 1; i >= 0 && pattern.charAt(i) == text.charAt(i + j); --i);
+           if (i < 0) return true;
+           else {
+        	   shift = Math.max(good_suffix_shift[i], bcs[text.charAt(i + j)] - m + 1 + i);
+        	   j +=shift;
+           }
+        }
+        return false;
+	}
+	
 	public static void main(String[] args) {
 		
-		String text = " mucha walczy w gnoju z rosolem na scianie";
-		String pattern = "gnoj";
-		System.out.println(isPatternInText(pattern.getBytes(), text.getBytes()));
+		String text = "bardzo długa droga do domu ";
+		String pattern = "długa";
+		
+		System.out.println(isStringPatternInStringText(pattern, text));
+//		System.out.println(isPatternInText(pattern.getBytes(), text.getBytes()));
 		
 	}
 	

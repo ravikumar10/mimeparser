@@ -11,7 +11,7 @@ package analize;
 public class Rule {
 
 	public enum RuleType { HEADER_PRESENCE, LOOK_KEYWORD, HOST_LOOK_KEYWORD, 
-		PHRASE_LOOK_KEYWORD, ADDRESS_LOOK_KEYWORD }
+		PHRASE_LOOK_KEYWORD, ADDRESS_LOOK_KEYWORD, MAX_SIZE_PART, ATTACHMENT_ANALIZE }
 	
 	protected RuleType ruleType; 
 	
@@ -70,4 +70,19 @@ public class Rule {
 		return name;
 	}
 	
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (obj instanceof Rule) {
+			Rule r = (Rule) obj;
+			if (this.ruleType == r.ruleType && this.getName().equals(r.getName())) return true;
+		}
+		
+		return false;
+	}
 }

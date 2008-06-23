@@ -39,7 +39,7 @@ public class MimePart extends Part {
 	public void parse() {
 		
 		//just reading from inputstream to byte array
-		char[] buffer = new char[1024];
+		char[] buffer = new char[dataBufferSize];
 		int offset = 0;
 		int c1;
 		int room = buffer.length-1;
@@ -50,7 +50,7 @@ public class MimePart extends Part {
 				
 				if (--room < 0) { // No room, need to grow.
 					//tmp buffer
-					char[] tmpBuffer = new char[offset + 256];
+					char[] tmpBuffer = new char[offset + dataBufferIncreaseSize];
 					room = tmpBuffer.length - offset - 1;
 					//copying from original to tmp
 					System.arraycopy(buffer, 0, tmpBuffer, 0, buffer.length);

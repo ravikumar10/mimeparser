@@ -1,18 +1,15 @@
 package tests;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.TestCase;
 import mail.MimeMessage;
-import mail.MimeMessageHeader;
-import mail.MimeMessageHeaders;
 import mail.exceptions.ParseException;
 import mail.util.SharedFileInputStream;
-import junit.framework.TestCase;
 
 public class MimeMessageParseTest extends TestCase {
 	
@@ -97,9 +94,9 @@ public class MimeMessageParseTest extends TestCase {
 	
 	public void testMimeMultipartMessage() {
 		
-		String filename = "text_plain.eml";
+//		String filename = "text_plain.eml";
 //		String filename = "test_multipart.eml";
-//		String filename = "multipart_mixed.eml";
+		String filename = "multipart_mixed.eml";
 //		String filename = "multipart_mixed_aware.eml";
 //		String filename = "text_and_pdf.eml";
 		SharedFileInputStream is = null;
@@ -133,5 +130,6 @@ public class MimeMessageParseTest extends TestCase {
 		
 		
 	}
+	
 	
 }

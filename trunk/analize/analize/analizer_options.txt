@@ -16,9 +16,9 @@ bedziemy porownywac
 Partsy:
 
    * Headers:
-      - teskt w headerze
-      - dane pliki (content-type)
-      - dana wielkosc pliku
+      - teskt w headerze +
+      - dane pliki (content-type) +
+      - dana wielkosc parta (znaczy sie wielkosc parta nie mozesz byc wieksza niz)
       
    * Content
       - szukanie stringu w tekscie (pamietac o zencodowaniu)

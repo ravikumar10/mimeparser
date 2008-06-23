@@ -3,12 +3,15 @@
 // which we're going to run and some rules
 // which we would like to use to filter messages
 
+// This file should be utf-8 encoding
+
+
 max_memory = 100 // in megabytes
 max_threads = 6 // max threads run
 
-// MESSAGES RULES
+// ##### MESSAGES RULES #############
 
-// HEADERS
+// ######################## HEADERS #########################################
 
 // type of headers rulez
 // 1. header_presence
@@ -16,35 +19,85 @@ max_threads = 6 // max threads run
 // rule_name#header_type#list_of_headers(or one header)#present=true/false#filter_out=true/false
 
 // example01:
-rule01#1#Date#true#true // comment
-//means:
-//  filter out (drop) [last true] all messages that contains [before last true] headers Date  
+// rule01#1#Date#true#true 
+// ########### explanation of rule ###############
+//  filter out (drop) [last true] all messages that contains [before last true]
+// ONE OF THE  headers: Date  
+// ####### end of explanation of rule ############
 
 // example02:
-rule02#1#X-Virus-Scanned,X-Mozilla-Status2#false#true // comment
-//means:
-// filter out (drop) [last true] all messages that doesn't contain [before last false] one of headers: 
-// X-Virus-Scanned,X-Mozilla-Status2
+// rule02#1#X-Virus-Scanned,X-Mozilla-Status2#false#true // comment
+// ########### explanation of rule ###############
+// filter out (drop) [last true] all messages that doesn't contain [before last false]  
+// ONE OR MORE OF THE headers: X-Virus-Scanned,X-Mozilla-Status2
+// in different words all of headers: X-Virus-Scanned and X-Mozilla-Status2
+// must be present in message
+// ####### end of explanation of rule ############
 
 // 2. look keyword
 
-// rule_name#header_type#search_keyword#list_of_headers#filter_out=true/false
+// rule_name#header_type#search_keyword#list_of_headers#present=true/false#filter_out=true/false
 // example:
-rule03#2#From, To#Zbigniew Artemiuk#false#true //coment
+// rule03#2#To, Received#zbychu@astronet.pl#true#true //coment
+// ########### explanation of rule ###############
+// filter out (drop) [last true] all message that contains 
+// [before last false] search_keyword: zbychu@astronet.pl 
+// in ONE OF THE headers: From, To
+// ####### end of explanation of rule ############
 
-// filter out (drop) [last true] all message that doesn't contain [before last false] one of headers:
-// From, To
+// rule04#2#From, Subject#grono#false#true //coment
+// ########### explanation of rule ###############
+// filter out (drop) [last true] all message that doesn't contain 
+// [before last false] search_keyword: zbychu@astronet.pl 
+// in ANY OF THE headers: From, To
+// In other words From and Subject must contain search keyword: grono
+// ####### end of explanation of rule ############
 
-// 3. 
+// 3. NOT IMPLEMENTED 
+
+// 4. NOT IMPLEMENTED
+
+//TESTS of many different filters
+
+// ## HEADERS
+
+//rule004#1#Content-Transfer-Encoding#true#true // filter out all messages that contain header Content-Transfer-Encoding
+//rule005#1#X-Virus-Scanned, X-Mailbox-Line#false#true // filter out all messages that doesn't contain header X-Virus-Scanned and X-Mailbox-Line
+//rule006#1#X-Mailbox-Line#false#true 
+
+//rule007#2#Subject#długi temat#true#true 
 
 
+// ############################## PARTS #######################################
 
-// 4.
+// 5. look keyword in parts
 
+//rule007#5#Content-Type#charset="utf-8"#true#true
+// ########### explanation of rule ###############
+// drops all messages that contains keyword charset="utf-8"  
+// in parts' headers
+// ####### end of explanation of rule ############
 
-// PARTS
+// 6. content type in parts
 
+//rule_text_plain_in_content_type#6#text/plain#true#true
+// ########### explanation of rule ###############
+// drops all messages that contains part in given content
+// type (here: text/plain)
+// ####### end of explanation of rule ############
 
-
-
-
+rule_part_max_size#7#500#true#true
+// ########### explanation of rule ###############
+// drops all messages that contains part with size
+// bigger than 500 KB
+// analyses parts in first degree - without headers
+// if message is not mime/multipart analyses the size
+// of the message - without headers
+// 
+// how accurate is this filter is determined by how big
+// is buffer to which we're reading data (now 512 bytes)
+// and how this buffer grows (now +256 bytes)
+// above is very slow while parsing big messages
+// 
+//
+// ####### end of explanation of rule ############
