@@ -398,6 +398,13 @@ public class MimeUtility {
 		return ret.toString();
 	}
 	
+	public void convertFromBase64() {
+		
+		//sun.misc.
+		
+	}
+	
+	
 	public static void main(String[] args) {
 		
 		String example = "Bardzo =?ISO-8859-2?Q?d=B3ugi_temat_ze_specjalnymi_znaka?=\n" +
