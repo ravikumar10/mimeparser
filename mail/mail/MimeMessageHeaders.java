@@ -96,7 +96,7 @@ public class MimeMessageHeaders {
 			}
 		    } while (line != null && line.length() > 0);
 		} catch (IOException ioex) {
-//		    throw new MessagingException("Error in input stream", ioex);
+		    //logging
 		}
 	}
 	
