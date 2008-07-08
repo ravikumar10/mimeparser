@@ -1,0 +1,812 @@
+%%%% ZAWARTO¦Æ OBLIGATORYJNA - NALE¯Y DOSTOSOWAÆ %%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Tytu³ opracowania
+\title{Projektowanie bezpiecznej konfiguracji sieci\\
+%% Tu nale¿y podaæ nazwê przedmiotu, którego tyczy sprawozdanie.
+\begin{small}
+Projekt z przedmiotu BSS
+\end{small}}
+
+%% Autorzy opracowania, po dwie linie z nazwiskiem i adresem e-mail na
+%% osobê. Ka¿dy opis oddzielony separatorem 'and'.
+%% \author{Tomasz Jordan Kruk\\ T.Kruk@ia.pw.edu.pl \and Jan Nieznany\\ jn@n.pl}
+\author{Tomasz Jordan Kruk\\ T.Kruk@ia.pw.edu.pl}
+
+% To stworzy w³a¶ciwy format tytu³u oraz spis tre¶ci.
+\maketitle
+\tableofcontents
+
+
+
+%%%% PONI¯EJ ZAWARTO¦Æ DOWOLNA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Dokument podzielony powinien byæ na elementy: section, subsection,
+% ewentualnie subsubsection.
+\section{Strategie zabezpieczeñ}
+
+Przed opisaniem poszczególnych architektur zabezpieczeñ sieci przedstawione
+zostan± podstawowe strategie u¿ywane do wymuszania bezpieczeñstwa w sieci.
+
+Jedn± z najbardziej podstawowych zasad bezpieczeñstwa jest \e{zasada
+minimalnych przywilejów} \ang{least privilege}. Polega ona na tym, ¿e ka¿dy
+obiekt (u¿ytkownik, administrator, program, system itp.) powinien mieæ tylko
+takie uprawnienia, które s± mu niezbêdne do wykonania przydzielonego zadania
+- i ¿adnych wiêcej. Pomaga to ograniczyæ ryzyko ataku i zniszczeñ, które
+spowoduje. Nie ka¿dy u¿ytkownik musi mieæ dostêp do wszystkich us³ug
+internetowych. Nie ka¿dy musi mieæ mo¿liwo¶æ czytania wszystkich plików w
+systemie. Nie ka¿dy system musi mieæ dostêp do wszystkich plików innego
+systemu.
+
+Klasycznym przyk³adem jest rejestrowanie siê administratora systemu
+uniksowego do systemu. Do¶wiadczeni administratorzy nigdy nie rejestruj± siê
+do systemu jako u¿ytkownik \e{root}. Ka¿dy ma w³asne konto z prawami
+zwyk³ego u¿ytkownika, natomiast prze³±cza siê komend± \e{su} \ang{switch
+user} na u¿ytkownika \e{root} tylko w przypadku konieczno¶ci dokonania
+w³a¶ciwych czynno¶ci administracyjnych.
+
+Inn± zasad± bezpieczeñstwa jest tzw. \e{dog³êbna obrona} \ang{defence in
+depth}. Nie powinno siê polegaæ na tylko jednym mechanizmie
+zabezpieczaj±cym, jakkolwiek wydaje siê skuteczny. Powinno siê instalowaæ
+wiele mechanizmów wspieraj±cych b±d¼ te¿ uzupe³niaj±cych swoj±
+funkcjonalno¶æ. Nie jest realistycznym za³o¿enie, i¿ nasze pojedyncze
+zabezpieczenie jest nie do z³amania. Dlatego te¿ powinno siê stosowaæ
+ochronê wielowarstwow±. Nale¿y zapamiêtaæ, i¿ celem stosowania nadmiarowych
+zabezpieczeñ nie jest g³ównie obrona przed atakami, lecz ochrona przed
+awariami innych poziomów zabezpieczeñ.
+
+Kolejn± zasad± bezpieczeñstwa jest wykorzystywanie tzw. \e{w±skiego
+przej¶cia} \ang{choke point}. W±skie przej¶cie zmusza napastników do
+u¿ywania kana³u, który mo¿na kontrolowaæ i monitorowaæ. W sieciach takim
+w±skim gard³em jest ¶ciana ogniowa miêdzy sieci± wewnêtrzn± a sieci±
+zewnêtrzn±. Ka¿dy, kto chce zaatakowaæ sieæ wewnêtrzn± z sieci zewnêtrznej,
+musi u¿yæ tego kana³u, który z kolei powinien byæ dostatecznie zabezpieczony
+przed próbami ataków. Koncepcja w±skiego przej¶cia staje siê bezu¿yteczna,
+gdy istnieje inna efektywna droga do systemu. Takim potencjalnym obej¶ciem
+mo¿e byæ na przyk³ad niezabezpieczony serwer terminali dla po³±czeñ
+telefonicznych czy te¿ dodatkowe bezpo¶rednie po³±czenie z sieci± innej
+firmy, która nie podjê³a w trosce o w³asn± sieæ wystarczaj±cych ¶rodków
+bezpieczeñstwa.
+
+Podstawow± zasad± bezpieczeñstwa jest \e{zasada najs³abszego ogniwa}. Ka¿dy
+³añcuch zabezpieczeñ jest tak silny jak jego najs³abszy punkt. Napastnicy
+bêd± szukali w³a¶nie takiego najs³abszego punktu i bezlito¶nie wykorzystaj±
+jego s³abo¶ci. Nale¿y byæ ¶wiadomym s³abych punktów swojej obrony i je albo
+wyeliminowaæ, albo je¿eli eliminacja nie jest mo¿liwa, na ich kontroli
+skupiæ szczególna uwagê. Najs³absze ogniwo bêdzie istnia³o zawsze, trzeba
+
+\section{Architektury styku z sieci± Internet}
+
+W poni¿szym podrozdziale przedstawiono metody zabezpieczania sieci
+instytucji poprzez ró¿ne architektury zabezpieczeñ. Architektury te ró¿ni±
+siê takimi w³asno¶ciami jak: poziom zabezpieczenia, ³atwo¶æ instalacji i
+pó¿niejszego zarz±dzania oraz cena rozwi±zania.
+
+\subsection{Wszystko w jednym}
+
+Najprostsz± architektur± jest pojedynczy obiekt \ang{single-box
+architecture} pe³ni±cy funkcjê ¶ciany ogniowej. Wad± takie rozwi±zania jest
+fakt, i¿ ca³e bezpieczeñstwo zale¿y od tego jednego miejsca. Nie ma
+wielowarstwowych zabezpieczeñ. Inna wada to ograniczenie zakresu
+przy³o¿onych zabezpieczeñ ze wzglêdu na ograniczenia wydajno¶ciowe
+pojedynczej maszyny. W praktyce, zalet± pojedynczej architektury jest nie
+tyle zadowalaj±cy poziom bezpieczeñstwa, co wzglêdy praktyczne. W porównaniu
+z bardziej rozbudowanymi architekturami jest tañsza i ³atwiej
+zarz±dzalna. Poniewa¿ wszystkie funkcje mieszcz± siê w jednym pude³ku,
+zabezpieczenia takie s± oferowane przez producentów zabezpieczeñ jako
+³atwo instalowalny i konfigurowalny, wymagaj±cy minimalnego dogl±dania w
+trakcie pracy, produkt. Poniewa¿ rozwi±zania oferowane s± jako seryjne
+produkty, ich cena mo¿e byæ odpowiednio ni¿sza. Ponadto, zarz±dzanie takim
+zabezpieczeniem wymaga mniej wiedzy w zakresie sieci komputerowych i
+zabezpieczeñ, ni¿ w przypadku innych rozwi±zañ. Jest to rozwi±zanie
+dedykowane przede wszystkim dla firm o nierozbudowanej infrastrukturze
+sieciowej oraz ograniczonym zakresie wykorzystania sieci.
+
+Najprostszym typem pojedynczego zabezpieczenia jest zastosowanie \e{routera
+os³aniaj±cego} okre¶lanego równie¿ mianem \e{routera ekranuj±cego} w
+charakterze ¶ciany ogniowej. Jest to rozwi±zanie tanie, gdy¿ i tak zazwyczaj
+do kontaktu z sieci± Internet potrzebny jest router.  Wystarczy go jedynie
+skonfigurowaæ tak, by filtrowa³ pakiety. Poniewa¿ nowe routery poza
+klasycznym filtrowaniem pakietów oferuj± równie¿ bardziej zaawansowane
+mechanizmy, jak badanie stanu wybranych protoko³ów czy zwrotne listy
+dostêpu, osi±gniêty poziom bezpieczeñstwa jest du¿o wy¿szy od minimalnego.
+
+Router ekranuj±cy nadaje siê do zastosowania jako ¶ciana ogniowa w
+nastêpuj±cych przypadkach:
+
+\begin{itemize}
+
+\item chroniona sieæ ma dobrze zabezpieczone hosty,
+
+\item liczba u¿ywanych protoko³ów jest ograniczona d o kilku prostych,
+
+\item potrzebna jest maksymalna wydajno¶æ i nadmiarowo¶æ.
+
+\end{itemize}
+
+Innym typem pojedynczego zabezpieczenia jest \e{host dwusieciowy}
+\ang{dual-homed host}. Jest to architektura oparta o host, który ma co
+najmniej dwa interfejsy sieciowe. Host taki mo¿e s³u¿yæ jako router pomiêdzy
+sieciami, do których ma interfejsy (np. sieci± wewnêtrzn± i zewnêtrzn±).
+Jednak aby u¿ywaæ takiego komputera jako ¶ciany ogniowej, nale¿y wy³±czyæ
+funkcjê trasowania. Pakiety z jednej sieci nie s± bezpo¶rednio przesy³ane do
+drugiej podsieci. Systemy chronione ¶cian± ogniow± mog± siê z ni±
+komunikowaæ. Tak samo mog± siê z nim komunikowaæ systemy zewnêtrzne.
+Powy¿sze grupy nie mog± siê komunikowaæ bezpo¶rednio. Ruch IP miêdzy nimi
+jest ca³kowicie zablokowany.
+
+Host dwusieciowy mo¿e zapewniæ bardzo wysoki poziom kontroli. Je¿eli nie
+dopuszcza siê ¿adnym pakietom na przechodzenie miêdzy sieciami, mo¿na mieæ
+np. pewno¶æ, ze ka¿dy pakiet w wewnêtrznej sieci, który ma zewnêtrzny adres
+¼ród³owy, oznacza niebezpieczeñstwo. Z drugiej strony, rozwi±zanie takie nie
+jest zbyt wydajne. Hosty musz± wiêcej pracowaæ nad ka¿dym po³±czeniem ni¿
+filtr pakietów i potrzebuj± wiêcej zasobów. Host bastionowy sam w sobie musi
+byæ bardzo bezpiecznie skonfigurowany. Intruz, który potrafi³by opanowaæ
+taki host, dostaje pe³en dostêp do sieci prywatnej a tak¿e mo¿e skutecznie
+uniemo¿liwiæ korzystanie z sieci zewnêtrznej.
+
+Host dwusieciowy mo¿e ¶wiadczyæ us³ugi tylko poprzez po¶redniczenie b±d¼
+bezpo¶redni± interakcjê z u¿ytkownikami. Problem polega na tym, ¿e wymaga to
+zazwyczaj bazy kont u¿ytkowników na ho¶cie zabezpieczaj±cym, a to stanowi
+samo w sobie dodatkowy problem. Ponadto, wielu u¿ytkowników uwa¿a za
+uci±¿liwo¶æ konieczno¶æ logowania siê na takim ho¶cie.
+
+Po¶redniczenie znacznie lepiej wspó³pracuje z us³ugami wychodz±cymi ni¿ z
+przychodz±cymi. W konfiguracji z hostem dwusieciowym wiêkszo¶æ us³ug
+internetowych musi byæ uruchamiana na tym ho¶cie. Z drugiej strony, ma on
+przecie¿ zasadnicze znaczenie dla bezpieczeñstwa, wiêc nie powinno siê na
+nim uruchamiaæ ryzykownych us³ug, jak np. serwer WWW. Reasumuj±c, host z
+dwoma interfejsami nadaje siê do zastosowania jako ¶ciana ogniowa w
+nastêpuj±cych sytuacjach:
+
+\begin{itemize}
+
+\item ruch do sieci Internet jest niewielki,
+
+\item ³±czno¶æ z sieci± Internet nie decyduje o prowadzeniu interesów firmy,
+
+\item sieæ firmowa nie udostêpnia na zewn±trz ¿adnych us³ug,
+
+\item sieæ chroniona nie zawiera wyj±tkowo warto¶ciowych danych.
+
+\end{itemize}
+
+\subsection{Architektura ekranowanego hosta}
+
+Podczas gdy architektura z hostem wielosieciowym udostêpnia us³ugi z hosta,
+który jest przy³±czony do wielu sieci (ale ma wy³±czony routing), to
+\e{architektura z ekranowanym hostem} \ang{screened host} udostêpnia je z
+hosta, który jest przy³±czony do sieci wewnêtrznej z u¿yciem oddzielnego
+routera. W takim rozwi±zaniu g³ównym zabezpieczeniem jest filtrowanie
+pakietów. Na rysunku \ref{fig:screenedhost} przedstawiono prost± wersjê
+architektury z ekranowanym hostem. Host bastionowy jest umieszczony w sieci
+wewnêtrznej. Filtrowanie pakietów w routerze skonfigurowano tak, by host
+bastionowy by³ jedynym hostem w sieci wewnêtrznej, z którym mog± siê ³±czyæ
+hosty z sieci Internet (na przyk³ad dostarczaj±ce pocztê elektroniczn±).
+Dozwolone s± tylko pewne typy po³±czeñ, ka¿dy system zewnêtrzny próbuj±cy
+uzyskaæ dostêp do wewnêtrznych systemów lub us³ug musi siê po³±czyæ z tym
+hostem. Host bastionowy musi byæ szczególnie dobrze zabezpieczony.
+
+\begin{figure*}
+\begin{center}
+\input{screenedhost}
+\end{center}
+\caption[Architektura z ekranowanym hostem]
+{\label{fig:screenedhost} Architektura z ekranowanym hostem.}
+\end{figure*}
+
+Dziêki filtrowaniu pakietów host bastionowy mo¿e nawi±zywaæ ze ¶wiatem
+zewnêtrznym dozwolone po³±czenia. Router ekranuj±cy mo¿e byæ skonfigurowany
+tak, by wykonywa³ jedno z poni¿szych zadañ:
+
+\begin{itemize}
+
+\item pozwala³ hostom wewnêtrznym na nawi±zywanie po³±czeñ z hostami w sieci
+Internet na potrzeby pewnych us³ug,
+
+\item zabrania³ nawi±zywania po³±czeñ z wewnêtrznych hostów - zmuszaj±c je
+do korzystania z us³ug po¶redniczenia w ho¶cie bastionowym.
+
+\end{itemize}
+
+Oczywi¶cie w zale¿no¶ci od potrzeb b±d¼ dodatkowych ograniczeñ mo¿liwe s±
+rozwi±zania po¶rednie. Niektóre us³ugi mog± byæ dostêpne bezpo¶rednio przez
+filtr pakietów, inne tylko poprzez system po¶rednicz±cy. Jest to zale¿ne od
+zaimplementowanej polityki bezpieczeñstwa.
+
+Pozornie architektura ekranowanego hosta wydaje siê byæ bardziej ryzykowna
+od architektury z hostem wielosieciowym, gdy¿ pozwala na przep³yw pakietów z
+sieci Internet do sieci wewnêtrznej. W praktyce jednak i ta druga
+architektura jest podatna na awarie, które pozwalaj± pakietom przechodziæ z
+sieci zewnêtrznej do wewnêtrznej. Ponadto, ³atwiej jest broniæ router ni¿
+host. W wiêkszo¶ci zastosowañ, architektura ekranowanego hosta zapewnia i
+lepsze zabezpieczenie i wiêksz± u¿yteczno¶æ ni¿ architektura z hostem
+wielosieciowym.
+
+Poniewa¿ host bastionowy jest mo¿liwym punktem awarii b±d¼ ataku, nie nale¿y
+na nim uruchamiaæ bardzo ryzykownych us³ug, na przyk³ad serwera WWW. Host
+bastionowy powinien mieæ zapewniony równie wysoki poziom ochrony, jakiego
+wymaga³by host z wieloma interfejsami zastosowany jako pojedynczy element
+realizuj±cy funkcje ¶ciany ogniowej.
+
+\subsection{Architektura ekranowanej podsieci}
+
+\e{Architektura ekranowanej podsieci} \ang{screened subnet architecture}
+dodaje warstwê zabezpieczeñ do architektury z ekranowanym hostem poprzez
+dodanie \e{sieci peryferyjnej} \ang{perimeter network}, która dodatkowo
+izoluje sieæ wewnêtrzn± od sieci Internet.
+
+Najbardziej nara¿onymi na potencjalne ataki s± hosty bastionowe. Pomimo
+ich odpowiedniego zabezpieczenia, nale¿y przewidzieæ sytuacjê, w której host
+bastionowy zostanie skutecznie zaatakowany. W architekturze z ekranowanym
+hostem nie ma ¿adnej linii obrony miêdzy hostami bastionowymi a pozosta³ymi
+maszynami nale¿±cymi do sieci wewnêtrznej. Izoluj±c host bastionowy od sieci
+wewnêtrznej poprzez wprowadzenie sieci peryferyjnej mo¿na zmniejszyæ skutki
+ewentualnego w³amania do hosta bastionowego.
+
+W najprostszym przypadku architektura z ekranowan± podsieci± tworzona jest
+poprzez wykorzystanie dwóch routerów, z których ka¿dy pod³±czony jest do tej
+podsieci. Jeden jest umiejscowiony miêdzy sieci± zewnêtrzna a sieci±
+ekranowan±, drugi miêdzy sieci± wewnêtrzn± a sieci± ekranowan±. Na rysunku
+\ref{fig:screenedsubnet1} przedstawiono przyk³adow± konfiguracjê ¶ciany
+ogniowej, która opiera siê na ekranowanej podsieci.
+
+\begin{figure*}
+\begin{center}
+\input{screenedsubnet1}
+\end{center}
+\caption[Architektura ekranowanej podsieci z wykorzystaniem dwóch routerów]
+{\label{fig:screenedsubnet1} Architektura ekranowanej podsieci z
+wykorzystaniem dwóch routerów.}
+\end{figure*}
+
+\e{Sieæ peryferyjna} pe³ni funkcjê dodatkowej bariery miêdzy napastnikiem a
+systemami wewnêtrznymi. Je¿eli kto¶ w³amie siê do hosta bastionowego bêdzie
+móg³ podejrzeæ tylko ruch w tej sieci. Poniewa¿ ¿aden ca³kowicie wewnêtrzny
+ruch nie przechodzi przez siec peryferyjn±, ruch ten bêdzie zabezpieczony
+przed przechwyceniem nawet w przypadku w³amania na host bastionowy.
+Oczywi¶cie ruch do i z hosta do sieci zewnêtrznych nadal bêdzie widoczny.
+Etapem projektowania ¶ciany architektury zabezpieczeñ jest m.in. upewnienie
+siê, ¿e ruch ten nie bêdzie zawiera³ niezabezpieczonych informacji na tyle
+poufnych, by ich ujawnienie narazi³o ca³y o¶rodek.
+
+W opisywanej architekturze host bastionowy (lub kilka hostów bastionowych)
+w³±cza siê do sieci peryferyjnej. Host ten jest g³ównym miejscem kontaktu
+po³±czeñ przychodz±cych z zewn±trz z sieci± instytucji. Us³ugi wychodz±ce s±
+obs³ugiwane w jeden z nastêpuj±cych sposobów:
+
+\begin{itemize}
+
+\item ustawienie filtrów pakietów w zewnêtrznym i wewnêtrznym routerze tak,
+by pozwoliæ wewnêtrznym klientom na bezpo¶redni dostêp do zewnêtrznych
+serwerów,
+
+\item ustawienie serwerów proxy w ho¶cie bastionowym (o ile wykorzystywane
+jest po¶redniczenie) tak, by pozwoliæ wewnêtrznym klientom na po¶redni
+dostêp do zewnêtrznych serwerów. Powinno siê równie¿ ustawiæ filtrowanie
+pakietów, aby pozwoliæ wewnêtrznym klientom na komunikacjê z serwerem proxy
+w ho¶cie bastionowym i odwrotnie, ale jednocze¶nie zabroniæ bezpo¶redniej
+komunikacji miêdzy wewnêtrznymi klientami a ¶wiatem zewnêtrznym.
+
+\end{itemize}
+
+W ka¿dym z przypadków filtrowanie pakietów pozwala hostowi bastionowemu na
+po³±czenie siê z sieci± zewnêtrzn± oraz akceptowanie ustalonych typów
+po³±czeñ z sieci zewnêtrznej. Wiêkszo¶æ czynno¶ci hosta bastionowego polega
+na dzia³aniu jako serwer proxy dla ró¿nych us³ug.
+
+\e{Router wewnêtrzny}, okre¶lany równie¿ mianem \e{routera d³awi±cego}
+\ang{choke router}, zabezpiecza sieæ wewnêtrzn± przed atakami zarówno z
+sieci zewnêtrznej jak i sieci peryferyjnej. Powinno siê ograniczyæ us³ugi
+dozwolone miêdzy hostem bastionowym a sieci± wewnêtrzn± tylko do tych, które
+s± rzeczywi¶cie niezbêdne, jak np. SMTP (by host bastionowy móg³
+przekierowywaæ przychodz±c± pocztê), DNS (by host bastionowy móg³ odpowiadaæ
+na zapytania komputerów zewnêtrznych lub zadawaæ pytania, w zale¿no¶ci od
+konfiguracji) i tak dalej. Mo¿na równie¿ ograniczyæ us³ugi w jeszcze wiêkszym
+zakresie umo¿liwiaj±c komunikacjê w wybranych protoko³ach z hostem
+bastionowym tylko z wybranych komputerów sieci wewnêtrznej. Przyk³adowo,
+SMTP mo¿e byæ ograniczone tylko do komunikacji miêdzy hostem bastionowym a
+wewnêtrznym serwerem poczty.
+
+Teoretycznie zadaniem \e{routera wewnêtrznego} \ang{exterior router},
+zwanego czasem równie¿ \e{routerem dostêpowym} \ang{access router}, jest
+ochrona zarówno sieci peryferyjnej jak i sieci wewnêtrznej. W praktyce,
+routery zewnêtrzne zazwyczaj pozwalaj± wszystkim danym wychodz±cym wydostaæ
+siê na zewn±trz i prawie nie filtruj± pakietów. Jedynymi specjalnymi
+regu³ami filtrowania w zewnêtrznym routerze s± te, które chroni± maszyny w
+sieci peryferyjnej (czyli host bastionowy i router wewnêtrzny). Zazwyczaj
+jednak specjalna ochrona nie jest konieczna, poniewa¿ hosty w sieci
+peryferyjnej chronione s± przez w³asne zabezpieczenia. Aby wspieraæ us³ugi
+po¶rednicz±ce, dopuszczonych przez router wewnêtrzny z hostów wewnêtrznych do
+hosta bastionowego, router zewnêtrzny mo¿e przepuszczaæ te protoko³y tylko
+wtedy, gdy pochodz± z hosta bastionowego. Innym u¿ytecznym zadaniem, które
+powinien wykonywaæ router zewnêtrzny jest blokowanie wchodz±cych z sieci
+zewnêtrznej pakietów z fa³szywym adresem ¼ród³owym, czyli pakietów
+usi³uj±cych udawaæ pakiety z sieci wewnêtrznej. Router zewnêtrzny mo¿e
+równie¿ zabraniaæ wyj¶cia z sieci pakietom z nieprawid³owym adresem
+¼ród³owym.
+
+Architektura z ekranowan± podsieci± jest odpowiednia do wiêkszo¶ci
+zastosowañ. Oczywi¶cie, podane rozwi±zanie jest pewnym schematem
+posiadaj±cym wiele ró¿nych wariacji. K³ad± one zazwyczaj jeszcze
+wiêkszy nacisk na bezpieczeñstwo, na zwiêkszenie przepustowo¶ci b±d¼
+zapewnienie wiêkszego poziomu ci±g³o¶ci dzia³ania w wypadku wyst±pienia
+awarii.
+
+W \e{wieloczê¶ciowej sieci ekranowej} \ang{split-screened subnet} nadal
+wystêpuj± routery wewnêtrzny i zewnêtrzny, ale pomiêdzy nimi jest kilka
+(zazwyczaj dwie) sieci. Os³oniête podsieci s± przewa¿nie po³±czone ze sob±
+za pomoc± jednego b±d¼ wielu hostów wielosieciowych zamiast nastêpnych
+routerów \rys{fig:screenedsubnet2}. Architektura ta stosowana jest w celu
+zapewnienia sobie wielowarstwowego zabezpieczenia i ochrony hostów z us³uga
+po¶redniczenia za pomoc± routerów. Routery zapewniaj± ochronê przed
+fa³szerstwem i takimi awariami hosta wielosieciowego, w wyniku których
+zaczyna on tarasowaæ ruch.  Host wielosieciowy, w porównaniu do filtrów
+pakietów, umo¿liwia bardziej dok³adn± kontrolê po³±czeñ.
+
+Architektura wieloczê¶ciowej sieci ekranowej wykorzystywana jest czasem
+równie¿ w celu umo¿liwienia administracji us³ugami na hostach bastionowych
+z wykorzystaniem protoko³ów uznanych ogólnie za niewystarczaj±co bezpieczne,
+by mog³y siê znale¼æ w sieci chronionej jedynie przez router zewnêtrzny.
+Przyk³adami takich protoko³ów mog± byæ w³asne protoko³y systemu NT u¿ywane
+podczas zdalnego uruchamiania mened¿era u¿ytkowników i monitora wydajno¶ci
+albo te¿ us³ugi w systemach Unix wykorzystuj±ce do konfiguracji protokó³
+bez szyfrowania ruchu (np. telnet).
+
+\begin{figure*}
+\begin{center}
+\input{screenedsubnet2}
+\end{center}
+\caption[Architektura dwuczê¶ciowej ekranowanej sieci bez przechodz±cego ruchu]
+{\label{fig:screenedsubnet2} Architektura dwuczê¶ciowej ekranowanej sieci
+bez przechodz±cego ruchu.}
+\end{figure*}
+
+W pewnych przypadkach zasadnym jest zastosowanie \e{niezale¿nych podsieci
+ekranowanych}\ang{independent screened subnet} z oddzielnymi parami routerów
+zewnêtrznych i wewnêtrznych. Jednym z powodów mo¿e byæ konieczno¶æ
+zapewnienia nadmiarowo¶ci. Awaria czy skuteczny atak na jedn± z sieci
+peryferyjnych nie powoduje ca³kowitego braku ³±czno¶ci z sieci± Internet.
+Rozwi±zanie takie wydaje siê byæ zasadnym na przyk³ad w przypadku dostawców
+us³ug internetowych.  W du¿ych instytucjach mo¿na te¿ pokusiæ siê o
+oddzielenie us³ug przychodz±cych (np. do oficjalnego serwera WWW naszej
+instytucji) od us³ug wychodz±cych (ruch generowany przez u¿ytkowników z
+sieci wewnêtrznej). Znacznie pro¶ciej jest zapewniæ ¶cis³e bezpieczeñstwo
+je¿eli ruch przychodz±cy i wychodz±cy zostan± rozdzielone.
+
+Opisane powy¿ej architektury obrazuj± pewn± strukturê logiczn± systemu
+zabezpieczeñ, jednak fizycznie pewna funkcjonalno¶æ mo¿e byæ na przyk³ad
+scalona w jednym urz±dzeniu. Ze wzglêdu na cenê czêsto \e{scala siê router
+wewnêtrzny z zewnêtrznym} . W takiej sytuacji jedna grupa portów pe³ni
+funkcjê routera zewnêtrznego a druga grupa portów routera wewnêtrznego.
+Podobnie jak w klasycznym rozwi±zaniu wystêpuje sieæ peryferyjna,
+odgradzaj±ca sieæ zewnêtrzn± od sieci wewnêtrznej. W normalnych warunkach
+poziom bezpieczeñstwa jest dok³adni taki sam jak przy roz³±cznych routerach.
+Router taki stanowi jednak pojedynczy punkt awarii. W przypadku opanowania
+go przez intruza (co jest przy dobrym zabezpieczeniu ma³o prawdopodobne
+jednak nie niemo¿liwe) sieæ wewnêtrzna jest bezbronna.
+
+W pewnych przypadkach mo¿na u¿ywaæ pojedynczej maszyny z wieloma
+interfejsami zarówno jako hosta bastionowego jak i routera zewnêtrznego.
+Przypu¶æmy, ¿e do sieci zewnêtrznej ³±czymy siê jedynie przez ³±cze
+komutowane z wykorzystaniem protoko³u PPP. W takim przypadku mo¿na u¿ywaæ
+PPP w ho¶cie bastionowym i pozwoliæ mu dzia³aæ i jako host bastionowy i jako
+router zewnêtrzny. U¿ywanie hosta wielosieciowego do routowania nie zapewni
+wydajno¶ci i elastyczno¶ci dedykowanego routera, ale nie jest to potrzebne w
+przypadku wolnego pojedynczego po³±czenia. W przeciwieñstwie do ³±czenia
+routera zewnêtrznego i wewnêtrznego, po³±czenie hosta bastionowego z
+routerem zewnêtrznym nie otwiera nowych powa¿nych luk. Po prostu host
+bastionowy jest chroniony przez filtry na swoich w³asnych interfejsach,
+które jak i w standardowej konfiguracji musz± byæ szczególnie uwa¿nie
+zabezpieczone.
+
+Nie wszystkie scalania s± jednak bezpiecznie. Nale¿y pamiêtaæ o
+nastêpuj±cych zasadach:
+
+\begin{itemize}
+
+\item nie powinno siê ³±czyæ hosta bastionowego z routerem wewnêtrznym,
+
+\item nie powinno u¿ywaæ siê wielu routerów wewnêtrznych dla jednej sieci
+peryferyjnej i jednego routera zewnêtrznego,
+
+\item niebezpiecznie jest u¿ywaæ jednocze¶nie i ekranowanych podsieci i
+ekranowanych hostów.
+
+\end{itemize}
+
+W pierwszym przypadku system staje siê systemem z ekranowanym hostem zamiast
+podsieci±. Je¿eli kto¶ w³amie siê do hosta bastionowego, ma tak¿e
+natychmiast dostêp do sieci prywatnej.
+
+W drugim przypadku problemem jest to, i¿ oprogramowanie routuj±ce mo¿e
+uznaæ, i¿ najszybsza droga miêdzy dwoma komputerami wewnêtrznymi bêdzie
+powadziæ przez sieæ peryferyjn±. W przypadku konieczno¶ci wydzielenia w
+sieci wewnêtrznej osobnych podsieci, lepiej wydzieliæ je na jednym routerze
+wewnêtrznym albo te¿, w przypadku du¿ej liczby koniecznych podzia³ów,
+zdecydowaæ siê na stworzenie za routerem wewnêtrznym prywatnej sieci
+szkieletowej ³±cz±cej wewnêtrzne routery.
+
+Nie stanowi natomiast, z punktu widzenia bezpieczeñstwa, dodatkowego
+problemu u¿ycie wielu routerów zewnêtrznych pod³±czonych do tej samej sieci
+peryferyjnej.
+
+
+\section{Zalecenia odno¶nie bezpiecznej konfiguracji}
+
+Architektura zabezpieczeñ sieci jest pojêciem obejmuj±cym swoim zakresem
+zarówno pojedyncze routery brzegowe z filtrowaniem pakietów jak i
+zaawansowane rozwi±zania anga¿uj±ce wiele ¶cian ogniowych, systemów
+po¶redniczenia i systemów wykrywania w³amañ. Jest jednak kilka zaleceñ
+ogólnych, odnosz±cych siê do ka¿dego systemu zabezpieczeñ.
+
+\begin{itemize}
+
+\item \e{prostota rozwi±zania} \ang{KISS, Keep It Simple}, rozwi±zanie nie mo¿e
+byæ zbyt skomplikowane, gdy¿ wtedy trudno w pe³ni je rozumieæ, zweryfikowaæ
+oraz nim zarz±dzaæ.  Z³o¿ono¶æ w projektowaniu i funkcjonalno¶ci czêsto
+prowadzi do b³êdów konfiguracyjnych. Jest to najwa¿niejsze z poni¿szych
+zaleceñ.
+
+\item \e{wykorzystywanie urz±dzeñ zgodnie z ich pierwotnym przeznaczeniem},
+przede wszystkim zaleca siê nie zatrudnianie do funkcji ¶ciany ogniowej
+komputerów do tego pierwotnie nie dedykowanych. Analogicznie, podstawowym
+przeznaczeniem routerów jest routing a nie filtrowanie pakietów. Nie oznacza
+to, ¿e nie nale¿y wykorzystywaæ ich mo¿liwo¶ci filtrowania pakietów, jednak
+nie powinno siê polegaæ jedynie na routerach.
+
+\item \e{ochrona wielowarstwowa}, powinno siê stosowaæ architekturê
+wielowarstwow±, przygotowywaæ kilka linii obrony. Tam, gdzie mo¿na
+wykorzystaæ kilka ¶cian ogniowych, nale¿y je wykorzystaæ. Tam, gdzie mo¿na
+wdro¿yæ filtrowania pakietów w kilku punktach sieci, powinno siê je wdro¿yæ.
+Je¿eli systemy operacyjne serwerów us³ug maj± mo¿liwo¶æ w³asnych metod
+zabezpieczenia, nale¿y je równie¿ skonfigurowaæ i uaktywniæ.
+
+\item \e{niebagatelizowanie zagro¿eñ wewnêtrznych} koncentruj±c siê na
+zabezpieczeniach przed zagro¿eniami zewnêtrznymi nie wolno zapominaæ o
+potencjalnych zagro¿eniach wewnêtrznych. Rozpatrywaæ nale¿y nie tylko
+sytuacjê, w której pracownik próbuje naruszyæ bezpieczeñstwo sieci w³asnej
+instytucji, ale i fakt, i¿ z powodu niedba³o¶ci b±d¼ b³êdów u¿ytkowników,
+intruz mo¿e uzyskaæ formalnie poprawny dostêp do zasobów wewnêtrznych
+(zdobycie has³a pracownika, kradzie¿ laptopa z konfiguracj± VPN w przypadku
+u¿ytkowników mobilnych), po czym mo¿e próbowaæ atakowaæ zasoby sieciowe
+maj±c ju¿ przyczó³ek w sieci wewnêtrznej.
+
+\end{itemize}
+
+Decyduj±c siê na konkretn± architekturê, która ma zabezpieczaæ sieæ, nale¿y
+rozpatrywaæ ¶ciany ogniowe, które oferuj± nastêpuj±ce w³asno¶ci:
+
+\begin{itemize}
+
+\item filtrowanie pakietów i protoko³ów (filtrowanie na bazie typu
+protoko³u, adresów i numerów portów ¼ród³a i celu, interfejsu
+wej¶ciowego/wyj¶ciowego pakietu),
+
+\item filtrowanie z badaniem stanu dla us³ug po³±czeniowych (co najmniej dla
+protoko³ów SMTP, FTP oraz HTTP),
+
+\item ¶wiadczenie us³ugi po¶redniczenia \ang{proxy} dla planowanych do
+wykorzystywania protoko³ów,
+
+\item mo¿liwo¶æ rejestracji zarówno ruchu przepuszczanego jak i
+odrzucanego,
+
+\item mechanizmy uwierzytelniania u¿ytkowników o niestatycznym charakterze,
+tak by nawet ewentualne pods³uchanie protoko³u uwierzytelniania nie
+umo¿liwi³o intruzowi podanie siê za uprawnionego u¿ytkownika.
+
+\end{itemize}
+
+Decyduj±c siê na pod³±czenie do sieci Internet powinno siê stworzyæ co
+najmniej jedn± ekranowan± sieæ peryferyjn± (najlepiej dwie, zewnêtrzn± i
+wewnêtrzn±), okre¶lan± równie¿ mianem strefy zdemilitaryzowanej \ang{DMZ}.
+Us³ugi dostêpne publicznie powinny byæ oddzielone od sieci wewnêtrznej i
+umieszczone w sieci peryferyjnej. U¿ytkownicy wewnêtrzni powinni byæ
+dodatkowo ochraniani przez wewnêtrzn± ¶cianê ogniow± (co najmniej przez
+router d³awi±cy).
+
+\begin{figure*}
+\begin{center}
+\input{fwarch1}
+\end{center}
+\caption[Rozbudowana architektura ¶ciany ogniowej]
+{\label{fig:fwarch1} Rozbudowana architektura ¶ciany ogniowej.}
+\end{figure*}
+
+Na rysunku \ref{fig:fwarch1} pokazano przyk³ad dobrze zabezpieczonej sieci z
+du¿± liczb± elementów zabezpieczaj±cych. U¿ytkownicy zdalni powinni raczej
+korzystaæ z sieci VPN. O ile serwer po³±czeñ telefonicznych dial-in móg³by
+byæ umieszczony za ¶cian± ogniow±, o tyle bezpieczniej jest powi±zaæ go z
+serwerem us³ugi VPN, by po³±czenia zdalne mog³y umo¿liwiaæ uwierzytelnienie
+i szyfrowanie. Jako dodatkowy element systemu zabezpieczeñ, poza dotychczas
+omawianymi, pojawiaj± siê systemy wykrywania intruzów \ang{IDS}. Na rysunku
+umieszczono sieciowe systemy wykrywania intruzów \ang{network-based
+intrusion detection systems, NIDS}. Systemy typu host-based \ang{HIDS} mog±
+byæ dodatkowym zabezpieczeniem w przypadku instalacji na serwerach
+niekrytycznych pod wzglêdem wymagañ na przepustowo¶æ, na przyk³ad na
+serwerach poczty elektronicznej.
+
+W przypadku sieci wewnêtrznych zaleca siê stosowanie mechanizmu translacji
+adresów \ang{NAT} oraz konfiguracjê osobnych, rozmieszczonych w osobnych
+podsieciach, serwerów DNS do wykorzystywania przez u¿ytkowników zewnêtrznych
+i u¿ytkowników wewnêtrznych.  Informacja w serwerach DNS mo¿e byæ
+zró¿nicowana - tak, by ukryæ szczegó³y konfiguracyjne sieci wewnêtrznej
+przed potencjalnymi intruzami.  U¿ytkownicy zdalni powinni byæ zobligowani
+wdro¿on± polityk± bezpieczeñstwa teleinformatycznego instytucji, do
+instalacji na komputerach przeno¶nych, z których ³±cz± siê do sieci
+instytucji, systemów typu \e{osobista ¶ciana ogniowa} \ang{personal
+firewall}, zabezpieczaj±cych sam komputer przeno¶ny przed atakami z sieci
+Internet.
+
+Przed podjêciem decyzji o architekturze zabezpieczeñ powinno siê
+przeprowadziæ analizê ryzyka krytyczno¶ci poszczególnych elementów i
+informacji przesy³anej w systemie teleinformatycznym. Rezultatem analizy
+powinny byæ decyzje dotycz±ce metody zabezpieczania i kosztów przeznaczonych
+na to zabezpieczenie.
+
+Przed konfiguracj± urzadzeñ sieciowych pod wzglêdem zabezpieczania powinna
+byæ przygotowana polityka zabezpieczeñ, zawieraj±ca miêdzy innymi informacje
+jako informacje nale¿y przepuszczaæ a jakie blokowaæ. Domy¶ln± polityk±
+dotycz±c± ruchu przychodz±cego powinno byæ blokowanie wszystkich pakietów i
+po³±czeñ, które jawnie nie zosta³y uznane za dozwolone. Alternatywa -
+blokowanie tego, co jest jawnie zabronione, jest rozwi±zaniem mniej
+bezpiecznym.
+
+Powinno siê przyj±æ jako generaln± zasadê, i¿ ka¿dy protokó³ i ruch, który
+nie jest niezbêdnie konieczny powinien byæ zablokowany juz na pierwszym
+zabezpieczeniu, czyli na routerze dostêpowym. Dziêki temu zredukuje siê
+mo¿liwo¶æ ataków i zmniejszy nasilenie ruchu w sieciach peryferyjnych, przez
+co zwiêkszy mo¿liwo¶æ kontroli ruchu.
+
+Zarówno do wychodz±cego ruchu HTTP, jak i do wychodz±cego i przychodz±cego
+ruchu SMTP, powinno siê wykorzystywaæ systemy po¶rednicz±ce \ang{proxy}.
+Stosowane rozwi±zania po¶rednicz±ce co najmniej powinny:
+
+\begin{itemize}
+
+\item umo¿liwiaæ blokowanie apletów i aplikacji w jêzyku Java,
+
+\item posiadaæ mo¿liwo¶æ filtrowania ActiveX i JavaScript,
+
+\item blokowaæ zadane konfiguracj± typy za³±czników MIME poczty
+elektronicznej,
+
+\item wykonywaæ skanowania antywirusowe.
+
+\end{itemize}
+
+To na ile aktywna zawarto¶æ stron WWW jest blokowana czy filtrowana zale¿y
+od przyjêtej w instytucji polityki bezpieczeñstwa. Nale¿y znale¼æ sensowny
+kompromis miêdzy mo¿liwo¶ci± przegl±dania jak najwiêkszego spektrum stron
+sieci WWW a bezpieczeñstwem. Jedynym elementem, który bezwarunkowo powinien
+byæ blokowany s± listy z wirusami i koniami trojañskimi. Z punktu widzenia
+bezpieczeñstwa oczywi¶cie idealn± sytuacj± by³oby blokowanie ca³ej aktywnej
+zawarto¶ci wszystkich zewnêtrznych stron WWW.
+
+Za³±czniki poczty posiadaj±ce nastêpuj±ce rozszerzenia zawieraj± instrukcje,
+które mog± byæ wykonane pó³automatycznie b±d¼ automatycznie na komputerze
+odbiorczym:
+\e{.ade},
+\e{.adp},
+\e{.bas},
+\e{.bat},
+\e{.chm},
+\e{.cmd},
+\e{.com},
+\e{.cpl},
+\e{.crt},
+\e{.dll},
+\e{.eml},
+\e{.exe},
+\e{.hlp},
+\e{.hta},
+\e{.inf},
+\e{.ins},
+\e{.isp},
+\e{.js},
+\e{.jse},
+\e{.lnk},
+\e{.mdb},
+\e{.mde},
+\e{.msc},
+\e{.msi},
+\e{.msp},
+\e{.mst},
+\e{.pcd},
+\e{.pif},
+\e{.pl},
+\e{.pot},
+\e{.reg},
+\e{.scr},
+\e{.sct},
+\e{.scx},
+\e{.shs},
+\e{.url},
+\e{.vb},
+\e{.vbe},
+\e{.vbs},
+\e{.wsc},
+\e{.wsc},
+\e{.wsf},
+\e{.wsh}.
+
+Rozszerzenia te w znakomitej wiêkszo¶ci s± charakterystyczne dla systemów MS
+Windows. Nie oznacza to jednak, i¿ inne systemy operacyjne s± wolne od
+zagro¿eñ zwi±zanych z mo¿liwo¶ci± uruchomienia robaków poprzez otwarcie
+za³±cznika poczty. Kod wykonywalny mo¿e byæ umieszczony równie¿ poprzez
+odwo³ania do adresów URL, a tak¿e w bezpiecznych wydawaæ by siê mog³o
+plikach jak np. pliki w postaci Postscript. To, ¿e destrukcyjne czy
+intruzyjne za³±czniki preparowane s± najczê¶ciej dla systemu Windows wi±¿e
+siê jedynie z mniejsz± popularno¶ci± innych systemów, a nie ich lepszymi
+za³o¿eniami pod wzglêdem bezpieczeñstwa. W najbli¿szym czasie mo¿na na
+przyk³ad spodziewaæ siê coraz wiêkszej liczby robaków przygotowywanych pod
+odbiorcê w systemie Linux - ze wzglêdu na rosn±c± popularno¶æ tego systemu.
+
+Domy¶ln± polityk± ¶ciany ogniowej powinno byæ blokowanie ca³ego
+przychodz±cego ruchu o ile ten nie zosta³ jawnie dopuszczony dla wybranych
+protoko³ów czy adresów. Poni¿ej przedstawiono zestawienie serwisów i
+aplikacji, które powinny przedmiotem konfiguracji na ¶cianie ogniowej wraz z
+opisem dzia³ania, które nale¿y przedsiêwzi±æ. Zestawienie stworzono na bazie
+zaleceñ organizacji CERT/CC (www.cert.org/tech\_tips/packet\_filtering.html)
+oraz SANS Institute (www.sans.org/top20.htm).
+
+\begin{figure*}
+\begin{small}
+\begin{center}
+\noindent
+\begin{tabular}{|c|l|l|} \hline
+\bf{Aplikacja} & \bf{Numer portu} & \bf{Akcja} \\ \hline
+\hline
+Us³ugi & telnet - 23/tcp &
+    ograniczenie z silnym \\
+ & & uwierzytelnianiem\\ \cline{2 - 3}
+logowania  & SSH - 22/tcp &
+    ograniczenie do ustalonych \\
+ & & systemów\\ \cline{2 - 3}
+ & FTP - 21/tcp &
+    ograniczenie z silnym \\
+ & & uwierzytelnianiem\\ \cline{2 - 3}
+ & \e{r-us³ugi} - 512-514/tcp &
+    zawsze zablokowane\\ \hline
+\hline
+RPC i NFS & portmap/rpcbind - 111/tcp/udp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & NFS - 2049/tcp/udp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & lockd - 4045/tcp/udp  &
+    zawsze zablokowane\\ \hline
+\hline
+NetBIOS & 135/tcp/udp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+w Windows NT & 137/udp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & 138/udp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & 139/tcp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & 445/tcp/udp (W2K) &
+    zawsze zablokowane\\ \hline
+\hline
+X Window & 6000/tcp - 6255/tcp  &
+    zawsze zablokowane\\ \hline
+\hline
+Us³ugi & DNS - 53/udp  &
+    ograniczone do zewnêtrznych \\
+nazewnicze & & serwerów DNS \\ \cline{2 - 3}
+ & DNS, transfer strefy - 53/udp  &
+    zablokowane, o ile nie ma \\
+ & & zewnêtrznych \e{slave}\\ \cline{2 - 3}
+ & LDAP - 389/tcp/udp  &
+    zawsze zablokowane\\ \hline
+\hline
+poczta & SMTP - 25/tcp  &
+    zablokowane z wyj±tkiem \\
+ & & serwerów poczty \\ \cline{2 - 3}
+ & POP - 109/tcp i 110/tcp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & IMAP - 143/tcp  &
+    zawsze zablokowane\\ \hline
+\hline
+WWW & HTTP - 80/tcp i SSL - 443/tcp &
+    zablokowane z wyj±tkiem \\
+ & & publicznych serwerów WWW \\ \cline{2 - 3}
+ & \multicolumn{2}{c|}{byæ mo¿e równie¿ inne porty: 8000/tcp, 8080/tcp,
+8888/tcp}\\ \hline
+\hline
+,,ma³e porty'' & porty poni¿ej 20/tcp/udp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & time - 37/tcp/udp  &
+    zawsze zablokowane\\ \hline
+\hline
+ró¿ne & TFTP - 69/udp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & finger - 79/tcp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & NNTP - 119/tcp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & NTP - 123/tcp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & LPD - 515/tcp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & syslog - 514/tcp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & SNMP - 161-162/tcp/udp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & BGP - 179/tcp  &
+    zawsze zablokowane\\ \cline{2 - 3}
+ & SOCKS - 1080/tcp  &
+    zawsze zablokowane\\ \hline
+\end{tabular}
+\end{center}
+\end{small}
+\caption[Zalecana konfiguracja filtrowania pakietów]
+{\label{tab:frules} Zalecana konfiguracja filtrowania pakietów.}
+\end{figure*}
+
+Je¿eli chodzi o filtrowanie protoko³u ICMP, zaleca siê blokowanie
+przychodz±cych ¿±dañ echa (ping i traceroute) oraz blokowanie wychodz±cych
+odpowiedzi echo, przekroczenia czasu, i nieosi±galno¶ci celu - z wyj±tkiem
+pakietów typu ,,wiadomo¶æ zbyt du¿a'' (typ 3, kod 4). Jest to podej¶cie
+restrykcyjne, która utrudnia pracê równie¿ w przypadku prawid³owych prób
+u¿ycia pakietów ICMP. Na podej¶cie mniej restrykcyjne, pozwalaj±ce na
+ograniczon± listê dopuszczanych typów pakietów ICMP z okre¶lonych ¼róde³
+(np. od w³asnego dostawcy sieci Internet) mo¿na sobie pozwoliæ, o ile
+posiada siê router, który potrafi dok³adnie analizowaæ i filtrowaæ pakiety
+ICMP.
+
+Nastêpuj±ce typy ruchu sieciowego powinny byæ zawsze zablokowane:
+
+\begin{itemize}
+
+\item ruch wej¶ciowy z nieautoryzowanych ¼róde³ podaj±cy jako adres ¼ród³a
+adres ¶ciany ogniowej,
+
+\item ruch wej¶ciowy z adresem ¼ród³owym stwierdzaj±cym, i¿ pakiet jakoby
+pochodzi z sieci wewnêtrznej,
+
+\item ruch wej¶ciowy ze ¼ród³a z zakresu zdefiniowanego w RFC 1918 jako
+zarezerwowanego dla sieci prywatnej,
+
+\item ruch wej¶ciowy z nieautoryzowanego ¼ród³a zawieraj±cy protokó³ SNMP
+(Simple Network Management Protocol),
+
+\item ruch wej¶ciowy zawieraj±cy informacje o routingu ¼ród³owym IP,
+
+\item ruch wej¶ciowy i wyj¶ciowy zawieraj±cy jako ¼ród³o b±d¼ przeznaczenie
+adres lokalny 127.0.0.1,
+
+\item ruch wej¶ciowy i wyj¶ciowy zawieraj±cy jako adres ¼ród³a b±d¼
+przeznaczenia 0.0.0.0,
+
+\item ruch wej¶ciowy i wyj¶ciowy zawieraj±cy adresy ukierunkowanego
+rozg³aszania \ang{directed broadcast}.
+
+\end{itemize}
+
+
+Je¿eli ¶ciana ogniowa zosta³a zainstalowana na standardowym systemie
+operacyjnym (np. Unix, Windows NT), system operacyjny musi oferowaæ
+zminimalizowany (byæ mo¿e ¿aden) zestaw us³ug sieciowych. Najlepsz± sytuacj±
+jest ta, w której system taki nie oferuje ¿adnych us³ug sieciowych (¿adne
+us³ugi nie s³uchaj± na portach IP) oprócz niezbêdnych do realizacji funkcji
+¶ciany ogniowej. System operacyjny musi byæ te¿ regularnie uaktualniany
+poprzez nak³adanie ³atek na system przygotowanych przez producenta.
+
+Kopia zapasowa systemu ¶ciany ogniowej nie powinna byæ przeprowadzana przez
+sieæ. Do tworzenia kopii powinno siê wykorzystywaæ jedynie wewnêtrzne
+mechanizmy, np. do³±czony streamer. Wykonywanie kopii zapasowych przez sieæ
+by³oby ¼ród³em potencjalnych luk w systemie zabezpieczeñ.
+
+¦ciana ogniowa powinna rejestrowaæ ustalony przez administratora ruch.
+Zarejestrowane dzienniki systemowe powinny byæ analizowane przez
+administratora systemu codziennie. O ile system ¶ciany ogniowej posiada
+zdalny interfejs graficzny do konfiguracji i przegl±dania zapisanych
+informacji, warto zastanowiæ siê czy nie nale¿y stworzyæ dedykowanej sieci
+wewnêtrznej po³±czonej do ¶ciany dedykowanym interfejsem jedynie do ³±czenia
+siê ze ¶cian± ogniow± przez administratora poprzez klienta interfejsu
+graficznego.
+
+Mimo silnych zabezpieczeñ ka¿da instytucja powinna byæ przygotowana na
+wyst±pienie incydentów naruszenia bezpieczeñstwa zasobów sieciowych o ró¿nym
+poziomie konsekwencji. Procedury obs³ugi incydentów powinny byæ przygotowane
+zanim takowe incydenty wyst±pi±.

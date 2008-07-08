@@ -1,4 +1,4 @@
-SRC= Makefile t.tex praca.tex t.bib
+SRC= Makefile t.tex x.tex t.bib
 
 # pdf, ps, gs, gs2, dvi
 default: pdf
@@ -6,7 +6,7 @@ default: pdf
 pdf: t.pdf
 	acroread t.pdf
     
-ps: t.ps
+ps: t.psdef
 
 gs: t.ps
 	gv -scale -2 -geometry +0+0 t.ps
@@ -43,7 +43,7 @@ t.ps: t.dvi
 #	( D=`basename $$PWD`; cd ..; tar czf $$D.tgz $$D; ls -l $$D.tgz )
 
 aspell:
-	aspell --lang=polish -c praca.tex
+	aspell --lang=polish -c x.tex
 
 clean:
 	rm -f *.dvi *.bbl *.blg *.log *.toc *.aux *.ps *.lof *.pdf
