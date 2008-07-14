@@ -111,13 +111,84 @@ Tylko 12 firm z³o¿y³o oferty z czego 4 zosta³y uznane za najwa¿niejsze. Do
 koñca roku wy³oniono 2 firmy, z których ostatecznie 7 kwietnia 1969 roku
 zosta³a wybrana firma BBN.
 
-Propozycja BBN by³a najbli¿sza planom ARPA. Pomys³em ich by³o stowrzenie sieci
+Propozycja BBN by³a najbli¿sza planom ARPA. Pomys³em ich by³o stworzenie sieci
 z ma³y komputerów zwanych Interface Message Processors (bardziej znanych jako
 IMPs), które to obecnie nazywamy routerami. IMPsy z ka¿dej strony zapewnia³y
 funkcje przechowywania i przekazywania pakietów, a po³±czone by³y miêdzy sob±
 przy u¿yciu modemów podpiêtych do ³±czy dzier¿awionych (o przepustowo¶ci 50
 kbit/sekundê). Komputery pod³±czone by³y do IMPsów poprzez specjalny bitowy
 interfejs. W ten sposób stawa³y siê one czê¶ci± sieci ARPANET.
+
+Do zbudowania pierwszej generacji IMPsów BBN wykorzysta³a komputer Honeywell
+DDP-516. Zosta³ on wyposa¿ony w 24kB pamiêci rdzenia (z mo¿liwo¶ci±
+rozszerzenia) oraz 16 kana³ów Direct Multiplex Control (DMC) do bezpo¶redniogo
+dostêpu do tej pamiêci. Poprzez DMC pod³±czane by³y komputery u¿ytkowników
+(hosty) i modemy. Dodatkowo 516 otrzyma³ ezstaw 24 lamp, które pokazywa³y
+status kana³ów komunikacyjnych IMPa. Do ka¿dego IMPa mo¿na by³o pod³±czyæ do
+czterech hostów i móg³ siê on komunikowaæ z 6 zdalnymi IMPami poprzez
+wspó³dzielone ³±cza.
+
+Zespó³ z BBN (pocz±tkowo 7 osób) szybko stworzy³ pierwsze dzia³aj±ce jednoski
+(IMPy). Ca³y system, który zawiera³ zarówno sprzêt jak i pierwsze
+oprogramowania zarz±dzaj±ce pakietami, zosta³ zaprojektowany i zainstalowany w
+ci±gu 9 miesiêcy.
+
+Pocz±tkowo ARPANET sk³ada³ siê z 4 IMPów. Zosta³y one zainstalowane w:
+
+\begin{itemize}
+  \item UCLA (University of California, Los Angeles), gdzie Leonard Kleinrock
+  za³o¿y³ centrum pomiaru sieci (Network Measurment Center)
+  \item The Stanford Research Institute's Augmentation Research Center, gdzie
+  Douglas Engelbert stworzy³ system NLS, który miêdzy innymi wprowadzi³ pojêcie
+  hypertextu
+  \item UC Santa Barbara
+  \item The University of Utah's Graphics Department, gdzie przebywa³ ówcze¶nie
+  Ivan Sutherland
+\end{itemize}
+
+\subsubsection{Piersze wiadomo¶ci w ARPANETcie}
+
+Pierwsza komunikacja host-host w sieci ARPANET wykorzystywa³a protokó³ 1822,
+który definiowa³ sposób w jakis host przesy³a³ wiadomo¶æ do IMPa. Format
+wiadomo¶ci by³ tak zaprojektowany, ¿eby bez problemu móg³ pracowaæ z szerokim
+zakresem architektur. Zasadniczo wiadomo¶æ sk³ada³a siê z:
+
+\begin{itemize}
+  \item typu wiadomo¶ci
+  \item adresu hosta
+  \item pola z danymi
+\end{itemize}
+
+W celu wys³ania wiadomo¶ci do innego hosta, host wysy³aj±cy powinien sformatowaæ
+wiadomo¶æ tak, aby ta zawiera³a adres hosta docelowego oraz dane, a nastêpnie
+dokonaæ transmisji wiadomo¶ci przez interfejs sprzêtowy 1822. IMP dostrze¿e
+dostarczenie wiadomo¶ci albo poprzez dostarczenie jej bezpo¶rednio do hosta
+docelowego albo poprzez przekazanie jej do kolejnego IMPa. Kiedy wiadomo¶æ
+zosta³a odebrana przez docelowego hosta, IMP do którego host by³ pod³±czony
+wysy³a potwierdzenie odbioru (zwane Ready for Next Message or RFNM) do hosta
+wysy³aj±cego.
+
+W przeciwieñstwie do obecnych protoko³ów datagramowych w Interecie (takich jak
+no IP), ARPANETowy porotokó³ 1822 zapewnia³ niezawodno¶æ w taki sposób, ¿e
+informowa³ o niedostarczonej wiadomo¶ci. Niemniej protokó³ 1822 nie by³
+odpowiedni do ¿onglowania wieloma po³±czeniami w ró¿nych aplikacjach
+uruchomionych na pojedynczym ho¶cie. Problem ten zosta³ rozwi±zany dziêki
+wprowadzeniu na hostach Network Control Program (NCP), dziêki któremu mo¿liwe
+by³o niezawodne, z kontro³± przep³ywu, dwukierunkowe po³±czenia pomiêdzy
+ró¿nymi procesami na ró¿nych hostach. NCP implementowa³ kolejn± warstwê
+znajduj±c± siê na górze stosu protoko³ów. Dziêki niemu aplikacje, które mia³y
+mieæ ju¿ jak±¶ konkretn± funkcjonalno¶æ, mog³y wykorzystywaæ spójny interfejs i
+korzystaæ swobodnie z dobrodziejstw ARPANETu czyli wykonywaæ po³±czenia do
+innych aplikacji przez sieæ. 
+
+Ju¿ nied³ugo, bo na pocz±tku roku 1970, powsta³ pierwszy program (a w
+zasadzie 2 oddzielne) do wysy³ania i odbierania wiadomo¶ci. Zaimplementowa³ go
+Ray Tomlinson podczas pracy w niewielkiej grupie nad systemem operacyjnym
+TENEX. Programy te to SNDMSG i READMAIL. Pierwsza wersja tych programów s³u¿y³a
+jednak do wymiany informacji miêdzy u¿ytkownikami jednej maszyny. Ju¿ jednak w
+1971 Tomlinson stworzy³ pierwsz± aplikacjê ARPANETow±, która umo¿liwia³a
+wysy³anie wiadomo¶ci do dowolnych hostów. Tomlinson dokona³ usprawnieñ w
+programie SNDMSG przy okazji 
 
 
 
