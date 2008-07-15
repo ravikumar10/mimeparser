@@ -181,20 +181,114 @@ mieæ ju¿ jak±¶ konkretn± funkcjonalno¶æ, mog³y wykorzystywaæ spójny interfejs i
 korzystaæ swobodnie z dobrodziejstw ARPANETu czyli wykonywaæ po³±czenia do
 innych aplikacji przez sieæ. 
 
-Ju¿ nied³ugo, bo na pocz±tku roku 1970, powsta³ pierwszy program (a w
-zasadzie 2 oddzielne) do wysy³ania i odbierania wiadomo¶ci. Zaimplementowa³ go
-Ray Tomlinson podczas pracy w niewielkiej grupie nad systemem operacyjnym
-TENEX. Programy te to SNDMSG i READMAIL. Pierwsza wersja tych programów s³u¿y³a
-jednak do wymiany informacji miêdzy u¿ytkownikami jednej maszyny. Ju¿ jednak w
-1971 Tomlinson stworzy³ pierwsz± aplikacjê ARPANETow±, która umo¿liwia³a
-wysy³anie wiadomo¶ci do dowolnych hostów. Tomlinson dokona³ usprawnieñ w
-programie SNDMSG przy okazji 
+\subsubsection{SNDMSG i READMAIL}
 
+Na pocz±tku roku 1970, powsta³ program (a w zasadzie 2
+oddzielne) do wysy³ania i odbierania wiadomo¶ci. Zaimplementowa³ go Ray
+Tomlinson. Programy te to SNDMSG i READMAIL. Pierwsza wersja tych
+programów, by³a kolejn± implementacj±, która umo¿liwia³a wymiane
+informacji miêdzy u¿ytkownikami jednej maszyny (jednego hosta), a konkretnie
+komponowanie, adresowanie i wysy³anie wiadomo¶ci do skrzynek u¿ytkowników. Ju¿
+jednak w 1971 Tomlinson stworzy³ pierwsz± aplikacjê ARPANETow± (w ramach prac
+nad systemem TENEX), która umo¿liwia³a wysy³anie wiadomo¶ci do dowolnych
+hostów. Tomlinson dokona³ usprawnieñ w programie SNDMSG przy okazji pracy nad
+projektem CPYNET, którego celem by³o stworzenie protoko³u do wymiany plików
+miêdzy komputerami w sieci.
 
+Skrzynkê emailow± by³ wówczas by³ zwyk³y plik o okre¶lonej nazwie. Specjaln±
+w³a¶ciwo¶ci± jego by³o to, ¿e mia³ ochronê tak±, ¿e umo¿liwia³ innym
+u¿ytkownikom dopisywanie do pliku. Mogli oni wiêc pozostawiaæ kolejne
+wiadomo¶ci ale nie mogli ich czytaæ ani nadpisywaæ wcze¶niejszych (jedynie
+w³a¶ciciel móg³ to robiæ). Tomilson zauwa¿y³, ¿e CPYNET mo¿e dopisywaæ zawarto¶æ
+do pliku skrzynki mailowej, na takiej zasadzie jak SNDMSG (SNDMSG umia³
+zapisywaæ wtedy tylko na lokalnej maszynie). Dlatego te¿ SNDMSG móg³ po prostu
+skorzystaæ z kodu CPYNET i bezpo¶rednio dostarczaæ wiadomo¶ci poprzez
+po³±czenie sieciowe do zdalnych skrzynek poprzez dopisywanie kolejnych
+informacji do plików na innych hostach.
+
+Brakuj±c± czê¶ci± by³a mo¿liwo¶æ dopisywania do plików przy pomocy CPYNET.
+Dotychczas móg³ on tylko s³aæ i odbieraæ pliki. Dodanie tej funkcjonalno¶ci nie
+by³o czym¶ wielkim dla twórców protoko³u i funkcjonalno¶æ ta wkrótce
+zainstnia³a.
+
+Nastêpnie Tomilson w³±czy³ kod CPYNET do SNDMSG. Pozosta³o jedynie rozró¿nienie
+maili lokalnych od maili zdalnych. Dlatego te¿ Tomilson zdecydowa³ siê, ¿e
+maile zdalne bêd± rozpoznawane po tym, ¿e po loginie (czyli wyznaczniku
+u¿ytkownika do którego wiadomo¶æ jest s³ana) nast±pi specjalny znaczek @ (ang.
+at, a polska znana wszystkim ma³pa) , a tu¿ po nim nazwa hosta czyli zdalnego
+komputera, na którym skrzynkê ma dany loginem u¿ytkownik. Tomilson tak
+powiedzia³ o wyborze ma³py jako znaczka rozdzielaj±cego login od hosta: ''I am
+frequently asked why I chose the at sign, but  the at sign just makes sense''
+(w wolnym t³umaczeniu: Jestem czêsto pytany czemu wybra³em znaczek ma³py, ale
+on po prostu mia³ sens).
+
+Pierwsza wiadomo¶æ zosta³a przes³ana pomiêdzy maszynami, które fizycznie by³y
+obok siebie. Jedyne po³±czenie jakie by³o miêdzy maszynami (oprócz pod³ogi ;] )
+by³o za po¶rednictwem sieci ARPANET. Tomilson przes³a³ wiele wiadomo¶ci do
+samego siebie z jednej maszyny na drug±. Pierwsze tre¶ci wiadomo¶ci od razu
+zosta³y zapomniane. Najprawdopodobniejsza ich tre¶æ by³a w stylu QWERTYUIOP.
+Kiedy Tomilson by³ zadowolony z programu wys³a³ do swoich kolegów z zespo³u
+wiadomo¶æ z instrukcj± jak s³aæ wiadomo¶ci przez sieæ. I tak pierwsza
+wys³ana wiadomo¶æ og³osi³a swoje istnienie.
+
+Te pierwsze wiadomo¶ci zosta³y wys³ane pod koniec 1971 roku. Nastêpne wydanie
+TENEXa, które ukaza³o siê w 1972 roku, zawiera³o SNDMSG, z mo¿liwo¶ci±
+wysy³ania maili przy u¿yciu sieci ARPANET. Protokó³ CPYNET wkrótce zosta³
+zast±piony prawdziwym protoko³em do transferu plików i posiada³ specyficzne
+dodatki do obs³ugi maila. 
+
+\subsubsection{MAIL i MLFL w protokole FTP}
+Protoko³em, o którym wcze¶niej by³a mowa by³ protokó³ FTP, którego specyfikacja
+wstêpna zosta³a zawarta w RFC (Request For Comment) 114. Kolejne ulepszenia
+protoko³u zosta³y dokonana w roku 1972 i wtedy te¿ wesz³y do niego nowe polecenia pozwalaj±ce
+korzystaæ ze skrzynek emailowych. Poleceniami tymi by³y:
+
+\begin{itemize}
+  \item MAIL - polecenie to pozwala³o u¿ytkownikowi przy pomocy telnetu wys³aæ
+  maila. Pomocne to by³o gdy u¿ytkownik ten nie korzysta³ ze swojego hosta i
+  logowa³ sie do niego poprzez protokól telnet
+  \item MLFL - polecenie to pozwala³o na normalne skonstruowanie maila i
+  przes³anie odpowiednio wskazanego pliku jako jego tre¶ci
+\end{itemize}
+
+Protokó³ ten sta³ siê a¿ do roku 1980 standardem przesy³ania emaili w
+ARPANETcie. Wtedy to zosta³ wypart przez protokó³ SMTP, który z pewnymi
+usprawnieniami funkcjonuje a¿ do dzi¶.
+
+\subsubsection{Rozwój innych programów do obs³ugi poczty}
+
+Zanim jednak powsta³ protokó³ SMTP ca³y czas pracowano nad rozwojem ówczesnych
+programów chocia¿by do odbioru maili. W ten sposób na pro¶be Steve'a Lukasika
+Lawrence Roberts, ówczesny dyrektor IPTO, stworzy³ program RD, który sk³ada³
+siê z makr w edytorze TECO (Text Editor and COrrector).
+
+Program RD umo¿liwia³:
+
+\begin{itemize}
+  \item sortowanie emaili po temacie i dacie
+  \item czytanie, zapisywanie i czytanie wiadomo¶ci w dowolnym porz±dku
+\end{itemize}
+
+RD nie powsta³ wiêc jako wynik badañ, ale z czysto praktycznej potrzeby
+swobodnego zarz±dzania emailami.
+
+Wkrótce powsta³y te¿ kolejne ulepszenia programu RD oraz SENDMSG, takie jak NRD
+czy WRD, które to wprowadza³y kolejne ulepszenia istniej±cych ju¿
+implementacji. 
+
+Warte wspomnienia jest tak¿e powstanie programu MSG, który umo¿liwia³ miêdzy
+innymi przekazywanie maili (ang. forwarding), konfigurowalny interfejs, czy te¿
+polecenie Odpowiedz (ang. Answer), które automatycznie uzupe³nia³o adres
+odbiorcy. MSG mo¿na by³o nazwaæ pierwszym nowoczesnym programem pocztowym. 
+
+W 1977 roku ró¿ne formaty wiadomo¶ci zosta³y zebrane w jedn± spójn±
+specyfikacjê co doprowadzi³o do stworzenia RFC 733.  Specyfikacja ta po³±czy³a
+wcze¶niej istniej±ce dokumentacjê z odrobion± innowacji i by³a jednocze¶nie
+pierwszym RFC, które deklarowa³o standard Internetowy (ówcze¶nie ARPANETowy).
 
 \subsection{Szczegó³y protoko³u}
 
-Szczegó³y protoko³u
+W 1982 roku powsta³o g³ówne RFC opisuj±ce protokó³ SMTP - RFC 821. 
 
 \subsubsection{Komunikacja klient-serwer}
 
@@ -232,7 +326,7 @@ Aladdin eSafe
 
 \subsubsection{Surfcontrol Email Filter}
 
-Surfcontrol Email Filter
+Suontrol Email Filter
 
 \subsection{Produkty open-source}
 
