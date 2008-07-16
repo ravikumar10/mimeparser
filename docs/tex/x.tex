@@ -30,30 +30,55 @@ Praca in¿ynierska
 
 \section{Wstêp}
 
-W dobie obecnego Internetu, pomimo szeregu rozwijaj±cych siê form komunikacji,
+Obecnie w Internecie, pomimo szeregu rozwijaj±cych siê form komunikacji,
 chocia¿by technologii takich jak tekstowa komunikacja czasu rzeczywistego (czyli
 IM - instant messaging i popularne chaty) czy te¿ jeszcze bardziej zaawansowanych
 technologii, które umo¿liwiaj± przesy³anie g³osu oraz wideo (chocia¿by Skype),
-pospolite maile ca³y czas jednak znajduj± zastosowanie. U¿ywamy ich chyba obecnie najcze¶ciej
+pospolite maile ca³y czas znajduj± zastosowanie. U¿ywamy ich chyba obecnie najcze¶ciej
 do kontaktów biznesowych, rodzinnych, przyjacielskich, g³ównie w celach informacyjnych
-(czyli sam tekst), jak równie¿ do przekazywania niewielkich plików. Chyba ka¿dy obecny
-internauta legitymuje siê przynajmniej jedn± skrzynk± mailow± (a czasami jest ich znacznie
-wiêcej). Ka¿dy te¿ internauta spotka³ siê tak¿e z niechcian± poczt± (niechcianymi mailami), nazywan± bardzo 
-ogólnym okre¶leniem Spam, i narzêdziami (chocia¿by tymi wbudowanymi w klientów pocztowych dostêpnych
- z poziomu przegl±darki internetowej), które umo¿liwiaj± odseparowanie takiej poczty, od tej
- która niesie interesuj±c± nas zawarto¶æ merytoryczn±. Separacja ta to tzw. filtrowanie ze
- wzglêdu na obiekt filtracji zwane filtracja poczty. Dokonanie filtracji wymaga jednak
- poznania dok³adnie w jaki sposób transportowane s± nasze maile, a to wszystko zawarte jest 
- w protokole Simple Mail Transfer Protocol (w skrócie SMTP).
+(czyli sam tekst), jak równie¿ do przekazywania niewielkich plików. Chyba ka¿dy
+internauta legitymuje siê przynajmniej jedn± skrzynk± mailow± (a czasami jest
+ich znacznie wiêcej). Ka¿dy spotka³ siê tak¿e z niechcian±
+poczt± (niechcianymi mailami), nazywan± bardzo ogólnym okre¶leniem Spam, i
+narzêdziami (chocia¿by tymi wbudowanymi w klientów pocztowych dostêpnych z
+poziomu przegl±darki internetowej), które umo¿liwiaj± odseparowanie takiej
+poczty, od tej która niesie interesuj±c± nas zawarto¶æ merytoryczn±. Separacja
+ta to tzw. filtrowanie ze wzglêdu na obiekt filtracji zwane filtracja poczty.
+Dokonanie filtracji wymaga jednak poznania dok³adnie w jaki sposób
+transportowane s± nasze maile, a to wszystko zawarte jest w protokole Simple
+Mail Transfer Protocol (w skrócie SMTP).
+Co¶ tutaj jeszcze dopisaæ o protokole, o jego wadach, o konieczno¶ci filtracji.
 
 \newpage
 
 \section{Cel i zakres pracy}
 
-Celem pracy jest zaprojektowanie systemu w jêzyku Java, który umo¿liwia³bym
-przy pomocy dosyæ prostej konfiguracji w postaci pliku tekstowego,
-jego uruchomienie oraz dokonywa³by filtracji, na podstawie regu³
-zawartych w konfiguracji, przes³anych do niego protoko³em SMTP wiadomo¶ci.
+Celem pracy jest zaprojektowanie oprogramowania, które po
+uruchomieniu umo¿liwia³oby filtracjê wiadomo¶ci w ramach protoko³u SMTP.
+Oprogramowanie to by³oby konfigurowalne poprzez plik tekstowy zawieraj±cy
+regu³y dotycz±ce wiadomo¶ci SMTP i zachowania oprogramowania po napotkaniu
+takiej wiadomo¶ci. Regu³y te dawa³yby mo¿liwo¶æ nastêpuj±cej filtracji:
+
+\begin{itemize}
+  \item wykrywanie wiadomo¶ci posiadaj±cych b±d¼ nie posiadaj±cych okre¶lony
+  nag³ówek (nag³ówki)
+  \item wykrywanie wiadomo¶ci posiadaj±cych b±d¼ nie posiadaj±cych okre¶lonej
+  frazy w nag³ówku (nag³ówkach)
+  \item wykrywanie wiadomo¶ci posiadaj±cych b±d¼ nie posiadaj±cych okre¶lonej
+  frazy w nag³ówkach czê¶ci maila (gdy nie jest to prosty mail)
+  \item wykrywanie okre¶lonych content-type-ow w wiadomo¶ciach
+  \item wykrywanie wiadomo¶ci o okre¶lonej wielko¶ci czê¶ci (je¿eli wiadomo¶æ
+  jest jednoczê¶ciowa to tyczy siê tre¶ci wiadomo¶ci)
+\end{itemize}
+ 
+Po natrafieniu na wiadomo¶æ spe³niaj±c± kryteria danej regu³y zostanie ona w
+zale¿no¶ci od zapisu w konfiguracji: 
+
+\begin{itemize}
+  \item odrzucona (wyfiltrowana)
+  \item przepuszczona, a jej obecno¶æ zostanie zaznaczona w logach
+  \item przepuszczona 
+\end{itemize}
 
 \newpage
 
@@ -288,11 +313,74 @@ pierwszym RFC, które deklarowa³o standard Internetowy (ówcze¶nie ARPANETowy).
 
 \subsection{Szczegó³y protoko³u}
 
-W 1982 roku powsta³o g³ówne RFC opisuj±ce protokó³ SMTP - RFC 821. 
+W 1982 roku powsta³o g³ówne RFC opisuj±ce protokó³ SMTP - RFC 821. W 2001 roku
+zosta³o ono rozbudowane i powsta³ dokument, który jest obowi±zuj±c± obecnie
+specyfikacj± protoko³u. Informacje te zawarte zosta³y w RFC o numerze 2821.
 
-\subsubsection{Komunikacja klient-serwer}
+\subsubsection{Model protoko³u, podstawy}
 
-Komunikacja
+\includegraphics[scale=0.4]{klient_serwer_smtp.png}
+
+Komunikacja w protokole SMTP oparta jest na nastepuj±cym modelu: kiedy klient
+SMTP posiada wiadomo¶æ, któr± chce przetransmitowaæ ustanawia dwukierunkowy
+kana³ transmisyjny z serwerem SMTP. Klient SMTP bierze na siebie
+odpowiedzialno¶æ za przetransportowanie wiadomo¶ci do jednego lub wielu
+serwerów SMTP, lub zg³oszenie b³êdu je¶li operacji przekazania maila nie
+powiod³a siê. 
+
+Adres serwera SMTP klient determinuje poprzez zamianê domeny podanej w
+adresie na po¶redni host (Mail eXchanger) lub ostateczny host docelowy.
+
+Serwer SMTP mo¿e byæ ostatecznym celem albo te¿ po¶rednim ''przeka¼nikiem''
+(po odebraniu wiadomo¶ci to on mo¿e przej±æ rolê klienta SMTP) albo ''bram±''
+(mo¿e transportowaæ wiadomo¶æ dalej u¿ywaj±c innego protoko³u ni¿ SMTP).
+Polecenia protoko³u SMTP generowane s± przez klienta i posy³ane do serwera.
+Odpowiedzi s³ane s± jak reakcja na ¿±dania klienta.
+
+Innymi s³owy wiadomo¶æ mo¿e byæ przetransportowana w trakcie pojedynczego
+po³±czenia pomiêdzy pierwotnym adresatem, a ostatecznym klientem albo mo¿e
+sk³adaæ siê z kilku po¶rednich po³±czeñ. W obu przypadkach zachowana jest
+odpowiedzialno¶æ za wiadomo¶æ - protokó³ wymaga od serwera wziêcia
+odpowiedzialno¶ci za dostarczenie wiadomo¶ci albo w przypadku nieprawid³owo¶ci
+za zg³oszenie b³êdu.
+
+Kiedy kana³ transmisyjny zostanie zestawiony klient SMTP inicjuje transakcjê
+maila. Sk³ada siê ona z serii poleceñ, które maj± na celu wyspecyfikowanie
+nadaj±cego i celu wiadomo¶ci, a nastêpnie przes³ania jej zawarto¶ci (oczywi¶cie
+z nag³ówkami, które wchodz± w jej sk³ad). Kiedy ta sama wiadomo¶æ jest
+adresowana do wielu odbiorców, protokó³ przesy³a jedn± kopiê wiadomo¶æ dla
+wszystkich odbiorców w obrêbie jednego hosta.
+
+Serwer reagujê na ka¿d± komendê odpowiedziami. Wskazuj± one akceptacjê komendy
+(tej przes³anej od klienta) i oczekiwanie na kolejne, b±d¼ te¿ wyst±pienie
+tymczasowych albo sta³ych b³êdów.
+
+Kiedy mail zostanie przetransmitowany, klient mo¿e zamkn±æ po³±czniee albo te¿
+zainicjowaæ kolejn± tranzakcjê innego maila. Dodatkowo klienty SMTP mog± u¿ywaæ
+po³±czenia z serwerem w celach np. weryfikacji adresu email b±d¼ te¿ uzyskanie
+adresów subskrybentów listy dyskusyjnej.
+
+Jak zosta³o wcze¶niej zasugerowane transmisja w protokole mo¿e odbywaæ siê
+bezpo¶rednio pomiêdzy hostem ¶l±cym wiadomo¶c, a hostem docelowym, kiedy s± one
+po³±czone tym samym serwisem transportowym. Kiedy tak nie jest, transmisja
+odbywa siê poprzez hosty po¶rednie. Hosty te wybierane s± poprzez
+mechanizm serwera domen (DNS) zwany Mail eXchanger.
+
+\subsubsection{Model rozszerzeñ}
+
+W wyniku prac, które rozpoczê³y siê oko³o dekadê po wydaniu pierwszego RFC
+dotycz±cego protoko³u SMTP (czyli RFC 822), protokó³ zosta³ rozszerzony i
+pojawi³y siê w nim nowe funckjonalno¶ci. Standardowy model zosta³ wiêc
+zmodyfikowany o dodatkowe serwisy. Pozwalaj± one na ustalenie pomiêdzy klientem,
+a serwerem us³ug dodatkowych jakie s± oni w stanie obs³u¿yæ (poza podstawowymi
+wymaganiami SMTP). Mechanizm rozszerzeñ SMTP okre¶la ¶rodki, za pomoc± których
+klient i serwer mog± dokonaæ wzajemnego ropoznania, a serwer mo¿e tak¿e
+poinformowaæ klienta o rozszerzeniach, które on wspiera.
+
+Wspó³czesna implementacja SMTP musi obs³ugiwaæ podstawowe mechniazmy
+rozszerzeñ. Przyk³adowo serwer musi wspieraæ komendê EHLO, je¶li nawet nie
+implementuje innych specyficznych rozszerzeñ, natomiast klient powinien
+sk³aniaæ siê ku u¿ywaniu komendy EHLO ni¿ HELO. 
 
 \subsubsection{Konstrukcja wiadomo¶ci}
 
@@ -332,7 +420,7 @@ Suontrol Email Filter
 
 \newpage
 
-\section{W³asny projekt do filtracji poczty}
+\section{Opracowany filtr poczty SMTP}
 
 \subsection{Za³o¿enia projektu}
 
