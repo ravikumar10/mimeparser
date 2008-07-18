@@ -377,10 +377,256 @@ wymaganiami SMTP). Mechanizm rozszerzeñ SMTP okre¶la ¶rodki, za pomoc± których
 klient i serwer mog± dokonaæ wzajemnego ropoznania, a serwer mo¿e tak¿e
 poinformowaæ klienta o rozszerzeniach, które on wspiera.
 
-Wspó³czesna implementacja SMTP musi obs³ugiwaæ podstawowe mechniazmy
+Wspó³czesna implementacja SMTP musi obs³ugiwaæ podstawowe mechanizmy
 rozszerzeñ. Przyk³adowo serwer musi wspieraæ komendê EHLO, je¶li nawet nie
 implementuje innych specyficznych rozszerzeñ, natomiast klient powinien
 sk³aniaæ siê ku u¿ywaniu komendy EHLO ni¿ HELO. 
+
+SMTP jest szeroko u¿ywany i pojawi³o siê wiele bardzo dobrych implementacji
+protoko³u wyposa¿onych w liczne rozszerzenia. Spo³eczno¶æ w Internecie jednak
+uwa¿a, ¿e niektóre z serwisów s± bardzo wa¿ne, mimo tego, ¿e nie powsta³y gdy
+protokó³ by³ po raz pierwszy projektowany. Je¶li serwisy te maj± zostaæ dodane
+to w zachowaniem zgodno¶ci wstecz. 
+
+Obecnie szkielet rozszerzeñ sk³ada siê z:
+
+\begin{itemize}
+  \item Polecenia EHLO, które powinno byæ u¿ywane zamiast wcze¶niejszego HELO
+  \item Rejestr rozszerzeñ SMTP
+  \item Dodatkowe parametry do poleceñ SMTP MAIL i RCPT
+  \item Opcjonalnych zast±pieñ poleceñ w protokole SMTP, jak na przyk³ad DATA w
+  transmisji nie przy pomocy ASCII (ang. pipelining opisany pó¼niej)
+\end{itemize}
+
+Si³± SMTP jest jego prostota. Do¶wiadczenia z protoko³ami pokazuj±, ¿e te z
+kilkoma mo¿liwo¶ciami staj± siê powszechnie u¿ywanymi, podczas gdy te z
+wieloma mo¿liwo¶ciami przestaj± byæ czytelne. 
+
+\subsubsection{Sesja protoko³u}
+
+Sesja jest inicjowana kiedy klient otwiera po³±czenie do serwera i serwer
+odpowie wiadomo¶ci± zapraszaj±c±.
+
+SMTP serwer po pod³±czeniu siê klienta mo¿e po kodzie powitalnym 220
+poinformowaæ klienta o swoim oprogramowaniu i jego wersji.
+
+\framebox{220 mail.foo.com SuperSMTP v 6.1.2 Service ready}
+
+Protokó³ SMTP pozwala serwerowi na odmówienie transakcji podczas gdy formalnie
+umo¿liwia na pod³±czenie siê do serwera SMTP. Wtedy zamiast kodu 220 serwer
+odpowiada kodem 554. 
+
+\framebox{554 Transaction failed (Or, in the case of a
+connection-opening response, ''No SMTP service here'')}
+
+Serwer w tym przypadku musi czekaæ zanim zakoñczeny po³±czenie na
+komende QUIT ze strony klienta. W trakcie tego oczekiwania wszystkie inne
+komendy zostan± potraktowane odpowiedzi± 503.
+
+\framebox{503 Bad sequence of commands}
+
+Kiedy serwer przywita siê z klientem i klient otrzyma wiadomo¶æ powitaln±,
+standardowo wysy³a on polecenie EHLO do serwera i w wiadomo¶ci tej przedstawia
+siê.
+ 
+\framebox{EHLO bar.com}
+
+U¿ycie komendy EHLO wskazuje, ¿e klient jest w stanie obs³u¿yæ
+rozszerzenia protoko³u i prosi serwer o ich listê. Starsze systemy SMTP, które
+nie obs³uguj± rozszerzeñ protoko³u czy te¿ starsze klienty SMTP, które nie
+wymagaj± tych¿e rozszerzeñ, mog± u¿ywaæ komendy HELO.
+
+\framebox{HELO bar.com}
+
+Serwer w odpowiedzi na HELO nie powinien zwróciæ listy rozszerzeñ. Je¿eli
+serwer zwróci na EHLO 
+
+\framebox{500 Command not recognized}
+
+, wtedy klient powinien byæ w stanie przes³aæ komende HELO.
+
+Nastêpnie dochodzi do transakcji maila. Rozpoczyna siê ona poleceniem MAIL,
+która identyfikuje nadawcê. Po niej nastêpuje seria poleceñ RCPT, które
+przekazuj± informacjê o odbiorcy, a na sam koniec DATA czyli cia³o maila, które
+koñczone jest wyznacznikiem koæa maila. Znacznik ten potwierdza transakcjê. 
+
+Pierwszym krokiem w procedurze transakcji jest komenda MAIL. Ogólna jej
+sk³adnia wygl±da nastêpuj±co:
+
+\framebox{MAIL FROM:<reverse-path> [SP <mail-parameters> ] <CRLF>}
+
+przyk³adowo
+
+\framebox{MAIL FROM:<bob@example.org>}
+
+Poleceni to mówi odbiorcy SMTP (serwerowi), ¿e rozpoczynana jest nowa
+transakcja. Dlatego powinien on zresetowaæ (chyba na danym po³±czeniu?)
+wszystkie poprzednie stany tabel i buforów, w³±czaj±c w to odbiorców i dane
+maila. Argument <reverse-path> zawiera adres ¼ród³owej skrzynki mailowej, która
+mo¿e pos³u¿yæ w celu informacji o ewentualnych b³êdach (bêdzie dalej opisane
+[4.2]). Je¶li polecenie zostanie zaakcpetowane serwer odpowiada poleceniem 250
+OK. 
+
+\framebox{250 OK}
+
+Je¶li przes³any adres nie zosta³ zaakceptowany serwer musi odpowiedzieæ czy
+b³±d jest sta³y (zawsze bêdzie siê pojawia³ przy tym adresie) czy tymczasowy
+(klient bêdzie móg³ wykonaæ ponown± próbê, która mo¿e zakoñczyæ siê sukcesem).
+Czasami jednak serwer mo¿e dokonaæ akceptacji adresu przekazanego w poleceniu
+MAIL i dopiero po analizie adresów przes³anych w poleceniu RCPT, mo¿e zg³osiæ
+b³±d. Normalnie jednak gdy b³±d jest sta³y odpowied¼ serwera to
+
+\framebox{550 mailbox not found}
+
+albo tymczasowy
+
+\framebox{503 i co tutaj?}
+
+Historycznie <reverse-path> mo¿e nie tylko zawieraæ adres skrzynki, jednak¿e
+obecne oprogramowanie nie powinno u¿ywaæ routingu ¼ród³a.
+
+Parametry opcjonalne w poleceniu MAIL <mail-parameters> s³u¿± do negocjacji
+rozszerzeñ protoko³u i bêd± opisane pó¼niej. (2.2 sekcja - to juz pisalem -
+moze gdzies dalej bêdzie napisane co dok³adnie mog± tutaj gadaæ)
+
+Nastêpnym krokiem w transakcji jest polecenie RCPT. Jego sk³adnia to
+
+RCPT TO:<forward-path> [ SP <rcpt-parameters> ] <CRLF>
+
+Argumentem tego polecenia jest adres (z regu³y adres skrzynki oraz domena)
+identyfikuj±cy odbiorcê. Je¶li zostanie on zaakceptowany przez serwer odpowiada
+on komunikatem 250 OK i zapisuje sobie argument forward-path. Je¿eli adres nie
+jest prawid³owy serwer odpowiada kodem 550. Z regu³y odpowied¼ wygl±da tak
+
+\framebox{550 No such user}
+
+Procedura ta mo¿e byæ powtórzona parokrotnie przyk³adowo
+
+\framebox{C: MAIL FROM:<bob@example.org>
+S: 250 Ok
+C: RCPT TO:<alice@example.com>
+S: 250 Ok}
+
+W tym przypadku kopia maila trafi do 2 u¿ytkowników korzystaj±cych z tego
+samego serwera pocztowego (tej samej domeny). Jak ju¿ wcze¶niej by³o wspomniane
+dzieje siê to przy nawi±zaniu 1 po³±czenia.
+
+Argument <forward-path> mo¿e zawieraæ wiêcej ni¿ jeden adres skrzynki
+odbiorczej. Ze wzglêdów historycznych mog± siê tutaj pojawiæ równie¿ lista
+hostów ¼ród³owych i skrzynka odbiorcza, jednak klienty SMTP (jak ju¿ wcze¶niej
+by³o wspomniane) nie powinny korzystaæ z tej mo¿liwo¶ci. Serwer jednak musi byæ
+przygotowany na tak± ewentualno¶æ, ale powinien zignorowaæ t± listê.
+
+Dodatkowe parametry (<rcpt-parameters>) bêd± omówione pó¼niej.
+
+Trzecim krokiem w trakcie transakcji jest polecenie DATA. Sk³adnia jego jest
+prosta po prostu
+
+\framebox{DATA <CRLF>}
+
+Je¿eli polecenie zosta³o zaakceptowane serwer SMTP zwraca status 354 i prosi
+klienta aby odpowiedzia³ jak najszybciej tre¶ci± maila, koñcz±c transmisjê
+znacznikiem koñca maila. Przyk³adowo 
+
+\framebox{354 End data with <CR><LF>.<CR><LF>}
+
+Kiedy serwer otrzyma znak koñca wiadomo¶ci, a mail zostanie zapisany odbiorca
+maila odpowiada standardowo 250 OK. Koniec wiadomo¶ci klient zaznacza poprzez
+przes³anie linii zawieraj±cej jeden znak ''.'' (kropkê). Wystêpuj± dodatkowo
+odpowiednia procedura zabezpieczaj±ca nieporozumienie zwi±zane z tym, ¿e przy
+przekazywaniu tekstu wiadomo¶ci klient prze¶le linie zawieraj±c± jedynie
+znak kropki ''.'' (4.5.2 sekcja).
+
+Polecenie DATA mo¿e nie udaæ siê tylko w 2 przypadkach:
+
+\begin{itemize}
+  \item Je¿eli nie by³o polecenia MAIL albo RCPT albo oba zosta³y odrzucone
+  wtedy serwer na DATA mo¿ê odpowiedzieæ
+  \newline 
+  \framebox{503 Command out of sequence} 
+  \newline 
+  albo te¿ 
+  \newline
+  \framebox{554 No valid recipients} 
+  \newline
+  Je¿eli która¶ z tych odpowiedzi (albo inna z serii 5yz czyli mówi±cych
+  o b³êdzie) zostanie odebrana przez klienta, nie powinien on przesy³aæ tre¶ci
+  wiadomo¶ci. Powinien on robiæ to tylko w przypadku odpowiedzi 354.
+  \item Je¿eli polecenie DATA zosta³o zaakceptowane odpowiedzi± 354, mo¿e doj¶æ
+  do nieudanego przes³ania maila tylko gdy transakcja jest niekompletna (brak
+  zdefiniowancyh odbiorców), albo niespodziewanie odbiorca przestanie byæ
+  dostêpny lub te¿ serwer z innych powodów (np. polityka ochrony) serwer
+  postanowi odrzuciæ wiadomo¶æ.
+\end{itemize}
+
+W praktyce jednak niektóre serwery nie dokonuj± weryfikacji odbiorcy przed
+otrzymaniem ca³ej wiadomo¶ci. Nie jest to dobre zachowanie, gdy¿ je¿eli po
+zaakceptowaniu adresów odbiorców nagle po poleceniu DATA serwer odpowie ''550
+mailbox not found'' to klient nie jest w stanie okre¶liæ, który adresat jest
+nieprawid³owy.
+
+Serwer nie powinien na tym etapie odrzucaæ wiadomo¶ci na podstawie nag³ówków
+przekazanych w tre¶ci wiadomo¶ci (po poleceniu DATA).
+
+Oto ca³a przyk³adowa, prawid³owa sesja protoko³u SMTP: 
+\newline
+Klient otwiera po³±czenie do serwera.
+\newline
+S: 220 smtp.example.com ESMTP Postfix
+\newline
+C: HELO relay.example.org
+\newline
+S: 250 Hello relay.example.org, I am glad to meet you
+\newline
+C: MAIL FROM:<bob@example.org>
+\newline
+S: 250 Ok
+\newline
+C: RCPT TO:<alice@example.com>
+\newline
+S: 250 Ok
+\newline
+C: RCPT TO:<theboss@example.com>
+\newline
+S: 250 Ok
+\newline
+C: DATA
+\newline
+S: 354 End data with <CR><LF>.<CR><LF>
+\newline
+C: From: "Bob Example" <bob@example.org>
+\newline
+C: To: Alice Example <alice@example.com>
+\newline
+C: Cc: theboss@example.com
+\newline
+C: Date: Tue, 15 Jan 2008 16:02:43 -0500
+\newline
+C: Subject: Test message
+\newline
+C:
+\newline
+C: Hello Alice.
+\newline
+C: This is a test message with 5 headers and 4 lines in the body.
+\newline
+C: Your friend,
+\newline
+C: Bob
+\newline
+C: .
+\newline
+S: 250 Ok: queued as 12345
+\newline
+C: QUIT
+\newline
+S: 221 Bye
+\newline
+Serwer zamyka po³±czenie.
+
+\subsubsection{Polecenia do debugowania}
+
+
 
 \subsubsection{Konstrukcja wiadomo¶ci}
 
