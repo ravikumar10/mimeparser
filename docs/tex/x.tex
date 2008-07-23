@@ -624,17 +624,490 @@ S: 221 Bye
 \newline
 Serwer zamyka po³±czenie.
 
-\subsubsection{Polecenia do debugowania}
+\subsubsection{Polecenia do debugowania adresów}
+
+SMTP dostarcza poleceñ za pomoc± których mo¿na dokonaæ weryfikacji nazwy
+u¿ytkownika albo uzyskaæ zawarto¶æ listy mailingowej. Dokonuje siê tego przy
+pomocy poleceñ VRFY i EXPN, których wspacie powinno byæ zaimplementowane w
+serwerze SMTP. 
+
+Argumentem polecenia VRFY jest po prostu napisa, który sk³ada siê z nazwy
+u¿ytkownika lub te¿ dodatkowo domeny. Je¿eli w wyniku polecenia serwer zwróci
+odpowied¼ 250, mo¿e zawrzeæ w nim pe³n± nazwê u¿ytkownika i musi zawrzeæ
+skrzynkê u¿ytkownika. Musi wiêc byæ to jedno z poni¿szych:
+
+\begin{itemize}
+  \item User Name <local-part@domain>
+  \item local-part@domain 
+\end{itemize}
+
+Kiedy argument podany w komendzie VRFY sk³ada siê z kilku adresów, serwer mo¿e
+zg³osiæ niejasno¶æ w adresie jakos ca³o¶ci albo wskazaæ na jeden z podanych w
+argumencie adresów. Dla przyk³adu odpowiedzi serwera na komendê VRFY mog±
+przyj±æ postaæ:
+
+\begin{itemize}
+  \item \framebox{530 User ambiguous}
+  \item \framebox{553- Ambiguous;  Possibilities are 553-Joe Smith
+  <jsmith@foo.com> 553-Harry Smith <hsmith@foo.com> 553 Melvin Smith <dweep@foo.com>}
+  \item \framebox{553-Ambiguous;  Possibilities 553- <jsmith@foo.com> 553-
+  <hsmith@foo.com> 553 <dweep@foo.com>}
+\end{itemize}
+
+W normalnych okoliczno¶ciach klient, który otrzyma odpowied¼ 553 oczekuje, ¿e
+zwrócone wyniki bêdzie móg³ zaprezentowaæ u¿ytkownikowi czyli bêd± one dla
+niego zrozumia³e. W powy¿szym przyk³adzie mo¿liwe jest to tylko w przypadku 2
+i 3 (pierwszy nic konkretnego poza informacj± o b³êdzie nie mówi).
+
+Drugie polecenie EXPN przyjmuje jako argument napis (string), który
+identyfikuje listê maili, a odpowied¼ poprawna serwera mo¿e zawieraæ pe³ne
+nazwy u¿ytkowników i musi podawaæ ich skrzynki mailowe.
+
+Na niektórych hostach wystêpuje problem z rozró¿nieniem pomiêdzy list± mailow±,
+a aliasem do pojedynczej skrzynki mailowej, poniewa¿ struktura danych
+przechowuj±ca informacje na ten temat mo¿e przyjmowaæ oba typy wpisów i jest na
+przyk³ad mo¿liwe, ¿e lista mailowa zawiera tylko jeden adres skrzynki. Próba
+weryfikacji takiego adresu poprzez VRFY, mo¿e udaæ siê jedynie gdy serwer SMTP
+umie obs³u¿yæ wiadomo¶æ wys³an± na ten adres poprzez dostarczenie jej do ka¿dej
+skrzynki z listy. Je¿eli nie jest on w stanie tego zrobiæ zwróci jeden z
+nastêpuj±cych b³êdów
+
+\framebox{550 That is a mailing list, not a user}
+lub te¿ 
+\framebox{252 Unable to verify members of mailing list}
+
+W przypadku wielolinijkowej odpowiedzi serwera na polecenie EXPN dok³adnie
+jedna skrzynka mailowa powinna znale¼æ siê w lini. 
+
+Przyk³adowe polecenie EXPN i odpowiedzi na nie:
+
+\framebox{C: EXPN Example-People S: 250-Jon Postel <Postel@isi.edu> S: 250-Fred
+Fonebone <Fonebone@physics.foo-u.edu> S: 250 Sam Q. Smith <SQSmith@specific.generic.com>}
+
+\framebox{C: EXPN Executive-Washroom-List S: 550 Access Denied to You.}
+
+Serwerowi nie wolno w odpowiedzi na VRFY lub EXPN zwracaæ odpowiedzi 250 dopóki
+nie dokona faktycznej weryfikacji adresu. S± jednak przypadki, w których adres
+wydaje siê byæ prawid³owy, ale w czasie rzeczywistym nie mo¿e on zostaæ
+zweryfikowany. Jest tak np. kiedy serwer s³u¿y jako po¶redni dla innego serwera
+albo domeny. W takim przypadku serwer dokonuje jakby ''pozornej weryfikacji''.
+Sprawdza on poprawno¶æ sk³adniow± adresu, jak równie¿ mo¿e dokonaæ sprawdzenia
+domeny czy jest ona w zakresie domen do których maile mo¿e przekazywaæ.
+Odpowied¼ serwera powinna wiêc uwzglêdniæ, ¿e jest to tylko czê¶ciowa
+weryfikacja adresu i zamiast statusu 250 powinien pojawiæ siê status 252. 
+
+Implementacje serwera SMTP powinny zawieraæ przedstawione powy¿ej komendy. W
+celach bezpieczeñstwa implementacje mog± dostarczaæ narzêdzi (np. poprzez plik
+konfiguracyjny) do wy³±czenia tych poleceñ. Polecenia te by³y opcjonalne w RFC
+821, ale obecnie powinny byæ wylistowane jako dodatkowe serwisy w odpowiedzi na
+EHLO.
+
+\subsubsection{Koniec sesji i po³±czenia}
+
+Jak ju¿ wcze¶niej zosta³o wspomniane sesja w protokole SMTP koñczy siê wraz z
+przes³aniem przez klienta polecenia QUIT. Serwer odpowiada pozytywnym kodem, po
+którym zamyka po³±czenie.
+
+Serwerowi nie wolno zamkn±æ po³±czenia intuicyjnie poza 2 przypadkami:
+
+\begin{itemize}
+  \item otrzyma polecenie QUIT i odpowie kodem 221
+  \item po wykryciu potrzeby zamkniêcia serwisu SMTP i przes³aniu kodu 421.
+  Odpowied¼ ta mo¿ê byæ umieszczona po ka¿dej komendzie lub asynchronicznie
+  (przy za³o¿eniu, ¿e klient odbierze j± zanim kolejne polecenie zostanie
+  przes³ane)
+\end{itemize}
+
+Klient SMTP, który spotka siê z zamkniêciem po³±czenia w wyniku okoliczno¶ci,
+których nie mo¿e obs³u¿yæ, powinien traktowaæ przeprowadzan± transakcjê jak
+gdyby otrzyma³ od serwera odpowied¼ 451 ''Requested action aborted: error in
+processing''.
+
+\subsubsection{Listy mailowe (mailingowe) i aliasy}
+
+Serwer SMTP powinien wspieraæ zarówno aliasy, jak i listy mailowe, które
+s³u¿± w celach dostarczenia wiadomo¶ci do wiêkszej ilo¶ci adresów. 
+
+Alias to inaczej pseudo-skrzynka, której nazwa przy odbieraniu maila t³umaczona
+jest na rzeczywisty adres (b±d¼ adresy). Zmieniane jest tylko pole (RCPT TO),
+reszta wiadomo¶ci (''koperta'' i cia³o wiadomo¶ci) pozostaje nietkniêta. 
+
+Lista mailowa za¶ s³u¿y dostarczoniu albo przekazaniu maila do
+wszysktich adresów znajduj±cych siê na li¶cie. W wyniku tej operacji adres
+zwrotny na ''kopercie'' (MAIL FROM) musi byæ zmieniony na adres osoby albo innej
+jednostki, która sprawuje opiekê nad list±. Nag³ówki wiadomo¶ci (w
+szczególno¶ci pole From) pozostaj± nietkniête.
+
+\subsubsection{Informace o trasie}
+
+Kiedy serwer SMTP otrzyma wiadomo¶æ do dostarczenia albo dalszego procesowania
+pozostawia w niej swój ¶lad. ¦lad ten umieszczany jest na pocz±tku cia³a
+wiadomo¶ci (nag³ówki ''time stamp'' albo ''Received'').
+
+Linia ta powinna siê sk³adaæ z nastêpuj±cych informacji:
+
+\begin{itemize}
+  \item pola FROM, które powinno zawieraæ zarówno nazwe hosta ¼ród³owego (tak
+  ja w zaprezentowanym w ramach odpowiedzi na komende EHLO) i adres IP ¼ród³a,
+  zdeterminowane z po³±czenia TCP
+  \item pola ID, które mo¿e zawieraæ zgodnie z sugestiami w RFC 822 znaczke
+  ''@'', ale nie jest to wymagane
+  \item pola FOR, które mo¿e zawieraæ listê wpisów <path> kiedy w poleceniu
+  RCPT zosta³o podanych ich kilka
+\end{itemize}
+
+Wcze¶niej dodane linijka Received nie powinna byæ zmieniana. Serwery SMTP
+powinny mieæ przygotowan± linie Received do ''wstrzykniêcia'' do wiadomo¶ci.
+Nie wolno im zmieniaæ obecnych lini ani te¿ wpisywaæ swojej lini w innym ni¿
+przeznaczone miejscu.
+
+Przyk³adowa linia wygl±da nastêpuj±co:
+
+\framebox{Received: from mizar.astronet.pl ([127.0.0.1])
+ by localhost (mizar [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 18935-01 for <zbychu@astronet.pl>; Fri, 29 Feb 2008 14:44:55 +0100 (CET)}
+
+
+W miarê rozwoju Internetu linie Received s± bardzo istotne w celach wykrywania
+wyst±pienia jakichkolwiek problemów. 
+
+Kiedy wiadomo¶æ jest ostatecznie dostarczana, serwer SMTP wstawia nag³ówek
+''Return-path'' na pocz±tku maila. Zachowanie to jest wymagane. Systemy mailowe
+SMTP musz± to implementowaæ. ''Return-path'' to zachowane informacje z
+argumentu <reverse-path> z polecenia MAIL. Po tym oznaczeniu uznawane jest, ¿e
+wiadomo¶æ opu¶ci³a ¶rodowisko SMTP, jednak¿e nie oznacza to obecnie, ¿e zosta³a
+ona ostatecznie dostarczona. Mo¿e byæ transmitowana przez inny system mailowy.
+
+\subsubsection{Rozmiary i opó¼nienia}
+
+W protokole SMTP wystêpuj± obiekty, które maj± wymagane minimalne b±d¼ te¿
+maksymalne rozmiary. Ka¿da implementacja musi byæ w stanie odbieraæ o takich
+wielko¶ciach. Obiekty wiêksze powinny byæ unikane. Klient mo¿e liczyæ siê z
+tym, ¿e przy próbie transmisji zbyt du¿ych obiektów, mo¿e spotkaæ siê z odmow±
+ze strony serwera.
+
+Obiekty o których mowa to:
+
+\begin{itemize}
+  \item local-part - maksymalna d³ugo¶æ nazwy u¿ytkownika. Wynosie ona 64 znaki
+  \item domain - maksymalna d³ugo¶æ domeny. Wynosi to 255 znaków
+  \item path - maksymalna d³ugo¶æ argumentu reverse-path albo forward-path.
+  Wynosi ona 256 znaków (wliczaj±c w to interpunkcje i separatory elementów)
+  \item comman line - maksymalna d³ugo¶æ polecenia wraz z jego nazw± i znakiem
+  <CRLF>. Wynosi ona 512 znaków. Rozszerzenia SMTP mog± pos³u¿yæ w celach
+  zwiêkszenia tego limitu
+  \item reply line - maksymalna d³ugo¶æ lini odpowiedzi. Wynosia oan 512 znaków
+  wliczaj±c w to kod odpowiedzi oraz znak <CRLF>
+  \item text line - maksymalna d³ugo¶æ lini tekstu wliczaj±c w to znak <CRLF>.
+  Wynosi ona 1000 znaków. Mo¿e byæ ona rozszerzona przez dodatkowe serwisy
+  SMTP.
+  \item message content - d³ugo¶æ zawarto¶ci wiadomo¶ci (wliczaj±c
+  w to nag³ówki wiadomo¶ci jak i jego cia³o). Musi mieæ ona co najmniej 64K
+  octets (czyli ile?). Odk±d wprowadzono standard Multipurpose Internet Mail
+  Extensions (MIME) wielko¶æ wiadomo¶ci wzros³a diametralnie, dlatego te¿
+  zaleca siê obecnie aby serwery SMTP nie nak³ady ¿adnych ograniczeñ na wielko¶æ
+  wiadomo¶ci
+  \item recipients buffer - rozmiar buffora adresowego. Minimalna ca³kowita
+  liczba odbiorców, która musi byæ zbuforowana to 100. Klient, który chce
+  dostarczyæ wiadomo¶æ do wiêcej ni¿ 100 odbiorców powinien byæ przygotowany na
+  transmisjê maila w kawa³kach po 100 odbiorców (je¿eli oczywi¶ci serwer
+  akceptuje wiadomo¶ci z tak± ilo¶ci± odbiorców)
+\end{itemize}
+
+B³êdy zwi±zane z powy¿szymi ograniczeniami mog± byæ zg³oszone poprzez
+standardowe kody b³êdów. Przyk³ady takich b³êdów:
+
+\begin{itemize}
+  \item 500 Line too long
+  \item 501 Path too long
+  \item 452 Too many recipients
+  \item 552 Too much mail data
+\end{itemize}
+
+W ramach protoko³u SMTP nie mo¿emy tak¿e zapomnieæ o opó¼nieniach, które nale¿y
+wzi±æ pod uwagê przy implementacji klienta. Klient musi repektowaæ opó¼nienia
+zwi±zane z poleceniami. Powinny one byæ w prosty sposób w kliencie
+konfigurowalne (w celach ewentualnych zmian i próby dostosowanie opó¼nieñ do
+warunków panuj±cych w sieci). Proponowane opó¼nienia w kliencie:
+
+\begin{itemize}
+  \item Pocz±tkowa wiadomo¶æ 220 od serwera: 5 minut
+  \newline
+  Klient SMTP powinien mieæ mo¿liwo¶æ rozró¿nienia pomiêdzy problemami
+  zwi±zanymi z TCP (zerwane po³±czenie) a opó¼nieniami w otrzymaniu powitalnego
+  220. Wiele serwerów SMTP akceptuje po³±czenia, ale opo¼nia ich obs³ugê dopóki
+  load na maszynie nie spadnie do odpowiedniego poziomu
+  \item Polecenie MAIL: 5 minut
+  \item Polecenie RCPT: 5 minut
+  \newline
+  Wiêksze opó¼nienie jest wymagane w przypadkach, gdy procesowanie obs³ugi
+  listy mailowej czy aliasu nie nastêpuje po akceptacji maila
+  \item Inicjalizacja polecenie DATA: 2 minuty
+  \newline
+  Potrzeba na czekanie na odpowied¼ serwera ''354 Start Input''
+  \item Blok danych: 3 minuty
+  \newline
+  Ewentualna potrzeba na oczekiwanie na zakoñczenie wywo³anai TCP SEND do
+  transmisji kolejnych porcji danych
+  \item Zakoñczenie polecenia DATA: 10 minut
+  \newline
+  Potrzebne w celach oczekiwania na odpowied¼ 250 OK. Kiedy odbiorca otrzyma
+  ostatni znak oznaczaj±cy koniec wiadomo¶ci, przewa¿nie zaczyna on
+  procesowanie dostarczenia wiadomo¶ci do skrzynku u¿ytkownika. Nieodpowiednie
+  opó¼nienie tutaj mo¿e skutkowaæ dostarczeniem paru tego samego maila,
+  poniewa¿ klient za³o¿y, ¿e transakcja siê nie uda³a (minie odpowiedni czas),
+  a tak naprawde odbiorca zaakceptuje wiadomo¶æ, a jeszcze nie zd±¿y powiadomiæ
+  o tym klienta.
+\end{itemize}
+
+W przypadku opo¼nieñ serwera mo¿emy mówiæ o sta³ym opó¼nieniu 5 minut w
+oczekiwaniu na komendy od klienta.
+
+\subsubsection{Strategie wysy³ania i odbierania}
+
+Przewa¿nie struktura implementacji hosta SMTP zawiera skrzynki u¿ytkowników,
+jedn± lub wiêcej kolejek wiadomo¶ci oraz jednego lub wiêcej demonów do
+odbierania i wysy³ania maili. Dok³adna struktura ró¿ni siê w zale¿no¶ci od
+potrzeby u¿ytkowników oraz liczby i wielko¶ci list mailowych obs³ugiwanych
+przez host. Poni¿ej strategie, które okaza³y siê bardzo pomocne w przypadku
+obs³ugi du¿ego ruchu mailowego:
+
+\begin{itemize}
+  \item Wysy³anie:
+  \newline
+  G³ównym modelem dla klienta SMTP jest jeden lub kilka procesów, które
+  cyklicznie próbuj± transmitowaæ maile wychodz±ce. W typowym systemie,
+  program, który komponuje wiadomo¶æ posiada odpowiednie metody, aby zwróciæ
+  natychmiastow± uwagê na nowy element w wiadomo¶ciach wychodz±cych. Maile,
+  które nie s± transmitowane od razu s± kolejkowane i cyklicznie wysy³ane.
+  Kolejka mailowa zawiera oprócz samej wiadomo¶ci ''kopertê'' czyli dodatkowe
+  informacje s³u¿±ce do wysy³ania. 
+  \newline
+  Nadawca po nieudanym wys³aniu powinien odczekaæ pewn± jednostkê czasu zanim
+  ponowi próbê transmisji maila. Generalnie jednostka ta powinna wynosiæ oko³o
+  30 minut.
+  \newline
+  Ponawianie wys³ania nastêpuje dopóki zakoñczy siê ono sukcesem b±d¼ te¿
+  klient siê podda. Przyjmuje siê, ¿e po 4-5 dniach nieudanych próbach,
+  wiadomo¶æ zostaje uznana za niedorêczon±. 
+  \newline
+  Klient powinien trzymaæ listê hostów do których nie mo¿e dotrzeæ i
+  zapamiêtywaæ opó¼nienia do nich, zamiast nieustannie kolejkowaæ maile
+  przeznaczone do tych hostów. W ten sposób szybciej odrzuci maile, które nie
+  maj± szansy osi±gn±æ celu.
+  \newline
+  Klient SMTP mo¿e zmniejszyæ oczekiwanie w kolejce we wspó³pracy z serwerem
+  SMTP. Dla przyk³adu, je¿eli mail z danego adresu (domeny), zosta³ odebrany
+  prawdopodobne jest, ¿e maile kolejkowane dla tego adresu (domeny), mog±
+  zostaæ wys³ane.
+  \newline
+  Klient SMTP mo¿e mieæ kolejkê wielu wiadomo¶ci dla ka¿dego nieosi±galnego
+  hosta docelowego. Je¿eli ka¿da z tych wiadomo¶ci w cyklu ponawiania bêdzie
+  wysy³ana system zostanie zablokowany na d³ugi okres czasu, poniewa¿ klient
+  mo¿e stwierdziæ, ¿e dostarczenie siê nie uda³o jedynie po okre¶lonym czasie
+  (do kilku minut). Nawet zmniejszenie opó¼nienia do 1 minuty przy setkach
+  wiadomo¶ci powoduje zamro¿enie systemu. 
+  \newline   
+  W przypadku wysy³ania wiadomo¶ci do wielu odbiorców z tego samego hosta klient
+  powinien stosowaæ taktykê MAIL, RCPT, RCPT, \ldots RCPT, DATA zamiast MAIL,
+  RCPT, DATA, \ldots, MAIL, RCPT, DATA. 
+  
+  \item Strategie odbioru
+  \newline
+  SMTP server powinien oczekiwaæ nieustannie nadchodz±cych po³±czeñ. Wymaga to
+  oczywi¶cie od implementacji obs³ugi wielu po³±czeñ jednocze¶nie. Jak ju¿
+  wspomniano wcze¶niej obs³uga procesu dostarczenia maila do konkretnej
+  skrzynki mo¿e odbywaæ siê nie tu¿ po obs³udze polecenia DATA, ale w odzielnym
+  procesie. Zmniejszony jest wtedy czas oczekiwania klienta na ostateczne
+  potwierdzenie zakoñczenia transakcji maila.
+\end{itemize}
+
+\subsubsection{Rozwi±zywanie adresu i przekazywanie maila}
+
+Zanim klient SMTP zidentyfikuje dok±d ma byæ pos³any mail, musi nast±piæ
+odpytanie serwera DNS o adres domeny. Oczekuje siê, ¿e podane w adresie nazwy
+domen s± w pe³ni akceptowanymi nazwami domen (fully qualified domain name,
+FQDN). Pierwsze odpytanie serwera to zapytanie o rekorkdy MX zwi±zane z nazw±.
+
+Rekord MX (Mail exchanger) to jeden z typów rekordów w serwerze domen DNS,
+który specyfikuje w jakis sposób maile powinny byæ routowane (przekazywane w
+sieci) przy u¿yciu protokolu SMTP. Ka¿dy rekord MX ma nastêpuj±c± postaæ:
+[name] [ttl] IN MX preference host
+gdzie: 
+
+\begin{itemize}
+  \item name - nazwa komputera lub domeny czyli cel ostateczny naszego maila
+  \item ttl - czas ¿ycia rekordu
+  \item preference - komputer lub domena mo¿e mieæ wiêcej ni¿ jeden komputer
+  wskazany jako odbiorca poczty, wpisana w tym polu liczba okre¶la preferencjê
+  - im mniejsza jej warto¶æ tym priorytet wy¿szy
+  \item host - nazwa serwera pocztowego
+\end{itemize}
+
+Je¿eli przed rekordem MX zostanie znaleziony rekord CNAME, host który znajduje
+siê pod tym rekordem jest nastêpnie traktowany jak host, który by³ pierwotnie
+podany do poszukiwañ w DNS-ie. Rekord CNAME to swego rodzaju alias w DNS-ie. 
+
+Je¿eli ¿aden rekord MX nie zostanie odnaleziony, ale za to odnaleziony zostanie
+rekord A, jest on traktowany jakby by³ rekordem MX z preferencj± 0 (czyli
+najwy¿szym priorytetem). 
+
+Je¿eli uda siê znale¼æ jeden lub wiêcej rekordów MX dla danej nazwy,
+implementacjom systemów SMTP nie wolno u¿ywaæ ¿adnych rekordów A zwi±zanych z
+nazw±.
+
+Kiedy odpytanie DNS-ów zostanie zakoñczone sukcesem, mo¿emy w wyniku mapowania
+otrzymaæ kilka adresów, ze wzglêdu na mo¿liwo¶æ kilku rekordów MX czy te¿
+multihoming (albo to i to). A¿eby zapewniæ niezawodn± transmisjê maila, klient
+SMTP musi próbowaæ (i ew. ponawiaæ próby) dla ka¿dego z adresów wg porz±dku,
+a¿ uda siê dostarczyæ wiadomo¶æ. Klient mo¿e posiadaæ konfigurowaln± liczbê
+maksymalnych alternatywnych adresów. Liczba ta powinna wynosiæ przynajmniej 2
+adresy.
+
+Jak wy¿ej wspomniano klient posy³a maile do kilku adresów na podstawie
+uporz±dkowanej listy, która to zale¿na jest od priorytetów w rekordach MX oraz
+od hostów z wieloma adresami. Im ni¿szy priorytet tym serwer jest bardziej
+preferowany, za¶ przy tych samych priorytetach dokonywany jest wybór losowy. 
+
+Adres hosta docelowego mo¿e okazaæ siê nie pojedynczym adresem, ale list±
+adresów (multihomed host). Zadaniem serwera DNS jest zwrócenie ju¿
+uporz±dkowanej listy adresów IP, a klient po kolei próbuje wys³aæ pod nie maile.
+
+Obs³uga alternatywnych adresów zwi±zanych z multihomingiem mo¿e zostaæ w
+kliencie ograniczona do okre¶lonej liczby albo w ogóle wy³±czona.
+
+\subsection{Konstrukcja wiadomo¶ci}
+
+G³ówne informacje na temat wygl±du wiadomo¶ci s± obecnie zebrane w kilku
+dokumentach. Jednym z g³ównych opisuj±ych wygl±d wiadomo¶ci bez rozszerzeñ jest
+obecnie RFC 2822 (nastêpca ju¿ uznanego za przedawniony RFC 822). Rozszerzenia
+wiadomo¶ci, które bêd± opisane pó¼niej, zdefiniowane s± w kolejnych dokumentach
+(seria dokumentów o MIME RFC2045, RFC2046, RFC2047, RFC2048, RFC2049).
+
+Sama wiadomo¶æ, z punktu widzenia mocno niskopoziomowego, to po prostu seria
+znaków. Wiadomo¶æ zgodna ze standardem sk³ada siê ze znaków od 1 do 127
+interpretowanych jako znaki kodowania US-ASCII. Wynika to oczywi¶cie ze
+wzglêdów historycznych, gdy¿, jak to juz by³o wspomniane, to w Stanach zosta³y
+pos³ane pierwsze wiadomo¶ci i to na tamte potrzeby stworzono pierwsze standardy.
+
+Wiadomo¶ci s± podzielone na linie. Linia to seria znaków, która jest
+ograniczona przez 2 znaki powrót karetki (CR - carriege return - w ASCII znak
+numer 13) i znak nowej linii (LF - line-feed - w ASCII znak numer 10). Znaki te
+z regu³y wystêpuj± razem w ramach wiadomo¶ci i oznaczane s± jako CRLF.
+
+Ogólnie wiadomo¶æ mo¿na podzieliæ na 2 czê¶ci - pola z nag³ówkami wiadomo¶ci
+(nazywane po prostu nag³ówkiem wiadomo¶ci) oraz cia³a wiadomo¶ci, które jest
+opcjonalne. 
+
+\subsubsection{Ograniczenia w d³ugo¶ci linii}
+
+Ilo¶æ znaków w linii jest ograniczona dwoma limitami. Maksymalna ilo¶æ znaków w
+linii (z pominiêciem CRLF), musi byæ mniejsza ni¿ 998 znaków, i nie powinna byæ
+wiêksza ni¿ 78 znaków.
+
+Limit 998 znaków wynika z ograniczeñ wielu obecnych implementacji, które
+zajmuj± siê odbiorem, wysy³k± oraz przechowywaniem wiadomo¶ci. Nie obs³uguj±
+one po prostu d³u¿szych linii. 
+
+Bardziej konserwatywne ograniczenie zwi±zane z liczb± 78 znaków wynika z próby
+dostosowania wiadomo¶ci do wielu implementacji interfejsu u¿ytkownika, które
+wy¶wietlaj± te wiadomo¶ci. Implementacje te mog± uci±æ linie zawieraj±ce wiêcej
+ni¿ 78 znaków.
+
+\subsubsection{Nag³ówki wiadomo¶ci}
+
+Pole nag³ówka sk³ada siê z:
+
+\begin{itemize}
+  \item nazwy nag³ówka po której nastêpuje dwukropek '':''
+  \item cia³a nag³ówka po które nastêpuje znak CRLF
+\end{itemize}
+
+Nazwa nag³ówka musi sk³adaæ siê z drukowalnych znaków US-ASCII (czyli tych,
+których kody s± pomiêdzy 33, a 126 w³±cznie) bez przecinka '',''. Cia³o
+nag³ówka mo¿e zawieraæ wszystkie znaki oprócz CR i LF, chyba, ¿e przy
+konstrukcji nag³ówka u¿yto sk³adania (ang. folding) opisanego ni¿ej.
+
+Same nag³ówki mo¿na podzieliæ na posiadaj±ce (structered) lub nie posiadaj±ce
+dodatkowej struktury (unstructered).
+
+Te drugie (unstructered) oprócz wcze¶niej na³o¿onych restrykcji co do
+wystêpowania okre¶lonych znaków, nie maj± dodatkowych obostrzeñ. Semantycznie
+nie poddaje siê ich dodatkowemu procesowaniu (chyba, ¿e nag³ówek nale¿y
+posk³adaæ [ang. unfold])
+
+Niektóre nag³ówki wymagaj± w ramach swojego cia³a dodatkowej semantyki
+(struktury). Je¿eli dane cia³o nag³ówka nie jest zgodne z t± semantyk± to taki
+nag³ówek, a przez to tak¿e wiadomo¶æ, nie jest zgodna ze specyfikacj± opisywan±
+w RFC 2822. 
+
+Jak ju¿ by³o wcze¶niej zaznaczone pojedynczy nag³ówek to pojedyncza linia
+sk³adaj±ca siê z nazwy, dwukropka i cia³a nag³ówka. Dla wygody, a tak¿e aby
+poradziæ sobie z ograniczeniem na maksymalna d³ugo¶æ linii, pojedynczy nag³ówek
+mo¿e byæ roz³o¿ony na kilka linii. Dzielenie to okre¶lamy angielskim s³owem
+''folding''. 
+Dzielenie to polega na tym, ¿e cia³o nag³ówka mo¿e zostaæ, w przypadku d³ugiej
+lini, przeniesione do nastêpnej. Linia koñczona jest normalnym znakiem CRLF,
+ale nowa linia musi byæ rozpoczêta znakiem WSP (white space czyli spacj± space
+[SP] - kod 32 lub tabulatorem horizontal-tab [HTAB] - kod 11). Przyk³adowo
+nag³ówek:
+\newline
+\newline
+Subject: This is a test
+\newline
+\newline
+mo¿e byæ reprezentowany jako
+\newline
+\newline
+Subject: This
+\newline
+\vspace{10mm} is a test
+ 
+Dzielenie nag³ówka na wiele lini mo¿e nast±piæ w wielu miejscach jednak zaleca
+siê wstawianie znaku CRLF pomiêdzy tokenami, które znajduj± siê na najwy¿szym
+stopniu w semantyce nag³ówka. Dla przyk³adu kiedy cia³o nag³ówka sk³ada siê z
+podzielonych przecinkami warto¶ci, zaleca siê ³amanie lini po przecinku
+rozdzielaj±cym struktury.
+
+Jak ju¿ wcze¶niej by³o zaznaczone sk³adanie nag³ówka z wielu lini okre¶lane
+jest angieslkim s³owem ''unfolding''.
+
+\subsubsection{Opis niektórych nag³ówków}
+
+Niektóre z nag³ówków wiadomo¶ci (jak to juz wcze¶niej wspomniano) posiadaj±
+pewn± dodatkow± strukturê i s± przeznaczone do okre¶lonych celi. Dok³adny opis
+semantyki cia³a ''zaawansowanych'' nag³ówków umieszczony jest w RFC 2822 i nie
+bêdzie tutaj poruszany, jednak warto wspomnieæ jakie informacje nios± te
+nag³ówki.
+
+\begin{description}
+  \item[Date] - nag³ówek ten specyfikuje datê i czas, któr± to twórca
+  wiadomo¶ci wskazuje, ¿e jest ona skoñczona i gotowa do wej¶cia w system
+  dostarczania poczty (czyli gotowa do wys³ania). Dla przyk³adu mo¿e byæ to
+  czas kiedy u¿ytkownik tworz±c maila klika przycisk ''wy¶lij''
+  \item[From, Sender, Reply-to] - nag³ówki okre¶lane s± nag³ówkami autora
+  wiadomo¶ci. Pola te wskazuj± na skrzynkê (skrzynki) ¼ród³a wiadomo¶ci. W
+  szczególno¶ci pole ''From''
+\end{description}
 
 
 
-\subsubsection{Konstrukcja wiadomo¶ci}
+\subsubsection{Cia³o wiadomo¶ci}
 
-Konstrukcja
+Cia³o wiadomo¶ci to po prostu linie z³o¿one ze znakó³ US-ASCII. S± tylko dwa
+wymogi co do znaków w ciele wiadomo¶ci:
+
+\begin{itemize}
+  \item znaki CR i LF musz± wystêpowaæ razem w postaci CRLF
+  \item d³ugo¶æ lini musi byæ nie wiêksza ni¿ 998 znaków i powinna byæ nie
+  wiêksza ni¿ 78 znaków (wy³±czaj±c CRLF)
+\end{itemize}
+
+\subsubsection{Rozszerzenie wiadomo¶ci, MIME}
 
 \subsection{Obecne wykorzystanie protoko³u i jego forma}
 
-Obecne wykorzystanie
+\subsubsection{Kwestie bezpieczeñstwa, rozszerzenia protoko³u}
 
 \newpage
 
