@@ -1087,14 +1087,87 @@ nag³ówki.
   czas kiedy u¿ytkownik tworz±c maila klika przycisk ''wy¶lij''
   \item[From, Sender, Reply-to] - nag³ówki okre¶lane s± nag³ówkami autora
   wiadomo¶ci. Pola te wskazuj± na skrzynkê (skrzynki) ¼ród³a wiadomo¶ci. W
-  szczególno¶ci pole ''From''
+  szczególno¶ci pole From okre¶la autora (b±d¼ autorów) wiadomo¶ci czyli
+  skrzynkê (b±d¼ skrzynki) osoby (lub osób) odpowiedzialnych za stworzenie
+  maila. Nag³ówek Sender okre¶la skrzynkê odpowiedzialn± za aktualn± transmisjê
+  maila. Je¿eli twórc± wiadomo¶ci jest pojedyncza skrzynka oraz pole autora i
+  transmituj±cego maila s± identyczne nag³ówek Sender nie powinien wyst±piæ.
+  Inaczej oba (From i Sender) powinny siê pojawiæ. 
+  \newline
+  Reply-to (je¶li jest obecne) wskazuje skrzynkê (skrzynki), do których autor
+  chcia³by, aby s³ane by³y odpowiedzi. Je¿eli brakuje nag³ówka Reply-to wtedy
+  odpowiedzi powinny byæ s³ane na adres spod nag³ówka From. Nag³ówek From nie
+  powinien zawieraæ ¿adnych adresów skrzynek nie nale¿±cych do autora
+  wiadomo¶ci.
+  \item[To, Cc, Bcc] - zwane s± polami docelowymi. Okre¶laj± one odbiorców
+  wiadomo¶ci. Pole To okre¶la adres g³ównego odbiorcy (b±d¼ adresy g³ównych
+  odbiorców). Pole Cc (nazwa pochodzi od Carbon Copy w rozumieniu tworzenia
+  kopii przez pisarza przy u¿yciu kalki) zawiera inne adresy osób, które
+  powinny otrzymaæ maila, chocia¿ to nie oni s± g³ównymi adresatami. Bcc (Blind
+  Carbon Copy) zawiera adresy odbiorców, które nie maj± byæ pokazane innym
+  odbiorcom. S± trzy sposoby u¿ycia Bcc: 
+  \begin{itemize}
+    \item Pierwszy z nich polega na usuniêciu z wiadomo¶ci linijki Bcc (tu¿
+    przed wys³aniem wiadomo¶ci) i przes³anie jej kopii tak¿e do tych adresów z
+    Bcc. 
+    \item Drugi sposób polega na pos³aniu do adresatów z To i Cc wiadomo¶ci z
+    usuniêt± linijk± Bcc, za¶ adresy spod lini Bcc dostaj± maila w ca³o¶ci
+    czyli z linijk± Bcc. Tutaj pojawiaj± siê ró¿ne zachowania, je¿eli w polu
+    Bcc mamy kilka adresów. Niektóre implementacje modyfikuj± tak Bcc, ¿e
+    zawiera on za ka¿dym razem tylko tego odbiorce do którego trafia mail.
+    \item Ostatni sposób podobny jest do pierwszego tylko zamiast usuwania
+    lini Bcc jest ona s³ana bez ¿adnego adresu 
+  \end{itemize}
+  Sposób u¿ycia Bcc zale¿y od implementacji klienta.
+  \item[Message-ID, In-Reply-To, Regerences] - chocia¿ opcjonalne pola te
+  powinny byæ (i z regu³y s±) obecne w wiadomo¶ci. Message-ID zapewnia
+  wiadomo¶ci unikalny identyfikator, który odnosi siê do danej wersji danej
+  wiadomo¶ci. Unikalno¶æ gwarantowana jest przez host, który generuje to id.
+  Pola In-Reply-To i References s± wykorzystywane przy tworzeniu odpowiedzi na
+  wiadomo¶æ. Zawieraj± one identyfikator wiadomo¶ci oryginalnej (In-Reply-To)
+  oraz identyfikatory innych wiadomo¶ci (References), gdy na przyk³ad wiadomo¶æ
+  jest odpowiedzi± na odpowied¼. Tak wiêc In-Reply-To (je¶li istnieje) wskazuje
+  nam na jak± wiadomo¶æ jest odpowiedzi± ta wiadomo¶æ, za¶ References zawiera
+  wskazanie na ''w±tek'' w którym jest wiadomo¶æ. W trakcie konstrukcji
+  wiadomo¶ci nag³ówki In-Reply-To i References tworzone s± w nastêpuj±cy sposób:
+  \newline
+  In-Reply-To przepisuje zawarto¶æ z Message-ID. Je¶li istnieje kilka
+  wiadomo¶ci nadrzêdnych (parent message) wtedy In-Reply-To bêdzie zawiera³o
+  wszystkie pola Message-ID poprzedników. Je¶li pole Message-ID nie istnieje
+  In-Reply-To oczywi¶cie nie jest tworzone.
+  \newline
+  References przejmuje warto¶æ z wszystkich References (je¶li jakie¶ istniej±)
+  po których przepisywane s± warto¶ci z Message-ID wszystkich wiadomo¶ci
+  nadrzêdnych. Je¶li wiadomo¶ci nadrzêdne nie posiadaj± pola References, a
+  posiadaj± pole In-Reply-To to miejsce References nadrzêdnych wiadomo¶ci
+  przejmuje In-Reply-To. Je¶li nadrzêdne wiadomo¶ci nie maj± ¿adnego z trzech
+  pól o których tutaj mowa, nowa wiadomo¶æ odpowied¼ nie bêdzie mia³a pola
+  References.
+  \newline 
+  Czê¶æ implementacji parsuje pole References, aby odtworzyæ przebieg dyskusji
+  i utworzyæ w±tek z uporz±dkowanymi wiadomo¶ciami. Tak robi na przyk³ad bardzo
+  ostatnimi czasy popularny webowy klient poczty Gmail. Czytanie tak u³o¿onych
+  wiadomo¶ci jest niesamowicie wygodne.
+  \item[Subject, Comments, Keywords] - pola te przeznaczone do celów
+  informacyjnych powinny mieæ formê czyteln± dla ludzi. Subject to tytu³
+  wiadomo¶ci. Comments zawiera bardziej szczegó³owy opis wiadomo¶ci, za¶
+  Keywords to porozdzielane przecinkami najwa¿niejsze wyrazy opisuj±ce
+  wiadomo¶æ.
+  \item[Return-Path, Received] - pola te zawieraj± informacje na temat drogi
+  wiadomo¶ci w systemie (tworzenie ich by³o opisane wcze¶niej)
 \end{description}
 
+Dodatkowo u¿ytkownik mo¿e sobie sam zdefiniowaæ i u¿ywaæ dodatkowych nag³ówków.
+Oczywi¶cie nazwy tych nag³ówkó nie mog± siê pokrywaæ z nazwami ju¿ u¿ywanymi.
+Dlatego przyjmuje siê, ¿e nag³ówki dodatkowo definiowane (nie objête
+specyfikacjami RFC 822 oraz RFC 2822) powinny byæ poprzedzane wyra¿eniem ''X-''
+jak na przyk³ad:
 
+\framebox{X-Mailer: Microsoft Windows Mail 6.0.6001.18000}
 
 \subsubsection{Cia³o wiadomo¶ci}
 
-Cia³o wiadomo¶ci to po prostu linie z³o¿one ze znakó³ US-ASCII. S± tylko dwa
+Cia³o wiadomo¶ci to po prostu linie z³o¿one ze znaków US-ASCII. S± tylko dwa
 wymogi co do znaków w ciele wiadomo¶ci:
 
 \begin{itemize}
@@ -1105,7 +1178,390 @@ wymogi co do znaków w ciele wiadomo¶ci:
 
 \subsubsection{Rozszerzenie wiadomo¶ci, MIME}
 
+Jak zosta³o wspomniane wy¿ej RFC 822 oraz RFC 2822 definiuj± w jaki sposób ma
+wygl±daæ cia³o wiadomo¶ci w bardzo zawê¿ony sposób. Nie uwzglêdniaj± one
+problemu zwi±zanego z obs³ug± wielu jêzyków (tylko znaki US-ASCII s± mo¿liwe w
+ramach cia³a wiadomo¶ci), nie wspominaj±c ju¿ o mo¿liwo¶ci przesy³ania plików
+audio, wideo czy zdjêæ. Dlatego te¿ w 1996 powsta³o pierwsze RFC (2045)
+wychodz±ce na przeciw tym wszystkim problemom. Specyfikacja tych rozszerzeñ
+znalaz³a siê w a¿ 4 RFC (2045-2048), które to zosta³y nazwane Multipurpose
+Internet Mail Extensions w skrócie MIME. 
+
+MIME definiuje kilka dodatkowych nag³ówków, które s³u¿± do opisu cia³a
+wiadomo¶ci. Nag³ówki te pojawiaj± siê w 2 miejscach:
+
+\begin{itemize}
+  \item jako normalne nag³ówki na pocz±tku wiadomo¶ci
+  \item jako nag³ówki w ramach czê¶ci wiadomo¶ci, o których mowa bêdzie pó¼niej 
+\end{itemize}
+
+Pierwszy z dodatkowych nag³ówków to nag³ówek MIME-VERSION, który obowi±zkowo
+musi byæ zawarty w wiadomo¶ci (je¶li ma ona byæ zgodne ze standardem MIME) jako
+g³ówny nag³ówek, za¶ nie jest konieczny w przypadku nag³ówków w czê¶ci
+wiadomo¶ci. Przyk³adowo nag³ówek ten mo¿e wygl±daæ tak:
+
+\framebox{MIME-Version: 1.0}
+
+Kolejnym nag³ówkiem w ramach wiadomo¶ci typu MIME jest nag³ówek Content-Type,
+który definiuje w sposób zapisania danych w wiadomo¶ci. Argument wystêpuj±cy w
+nag³ówku Content-Type jest nazywany ''media type'' (w wolnym t³umaczeniu
+rodzaj/typ danych). Przyk³adowo typ ''image/xyz'' mówi nam, ¿e mamy do
+czynienia z danymi, które przedstawiaj± zdjêcie, nawet je¶li klient pocztowy
+nie jest w stanie rozpoznaæ typu xyz. 
+Dodatkowe parametry przy typie danych nie maj± wp³ywu na ich naturê, a jedynie
+dodatkowo okre¶laj± te dane. Niektóre implementacje mog± nie rozpoznawaæ
+pewnych dodatkowych argumentów MIME i gdy taka sytuacja ma miejsce, argumenty
+te powinny byæ pomijane. Przyk³adowym dodatkowym parametrem dla typu ''text'',
+mo¿e byæ ''charset'' okre¶laj±cy kodowanie tekstu w wiadomo¶ci.
+
+G³ównymi typy MIME (zdefiniowanymi w RFC 2046) to:
+\begin{itemize}
+  \item text - wiadomo¶æ tekstowa. Podtyp ''plain'' okre¶la wiadomo¶æ bez
+  dodatkowego formatowania. Nie wymaga ona ¿adnego dodatkowego oprogramowania
+  poza ewentualnie obs³ug± odpowiedniego kodowania. Mo¿liwe oczywi¶cie s± inne
+  podtypy chocia¿by html, który wskazuje, ¿e dana wiadomo¶æ mo¿e byæ parsowana
+  jakby by³a stron± html
+  \item image - dane ze zdjêciem. Wymagaj± one dodatkowego oprogramowania w
+  celu wy¶wietlenia zdjêcia. Podtypami s± tutaj ró¿ne formaty zdjêæ jak np.
+  jpeg, gif czy png
+  \item audio - dane d¼wiêkowe. Potrzebne jest dodatkowe oprogramowanie w celu
+  ods³uchania d¼wiêku. Pocz±tkowyn podtypem jest ''basic''
+  \item video - dane video. Potrzebne jest dodatkowoe oprogramowanie w celu
+  otwarcia pliku. Pocz±tkowym podtypem jest mpeg.
+  \item application - dane binarne bli¿ej nie sprecyzowane, które mog± byæ
+  poprawnie zinterpretowane przez dodatkowe oprogramowanie. Podtyp
+  ''octet-stream'' powinien byæ u¿ywany je¿eli chcemy aby najprostsz± akcj±,
+  która zostanie nam zaoferowana przez klienta pocztowego to zapis pliku na
+  dysk. ''Application'' powinno byæ tak¿e u¿ywane np. w przypadku arkuszy
+  kalkulacyjnych, materia³ów PostScript czy innych formatów, które w prosty
+  sposób nie s± czytelne.
+  \item multipart - typ ten definiuje, ¿e wiadomo¶æ bêdzie z³o¿ona z kilku
+  czê¶ci. Typ ten posiada 4 podtypy:
+  
+  \begin{itemize}
+    \item mixed - obecnie bardzo czêsto wykorzystywany w przypadku kiedy
+    wiadomo¶æ sk³ada siê z kilku elementów ró¿nych od siebie np. tekstu oraz
+    zdjêcia. 
+    \item alternative - s³u¿y do zdefiniowania tej samej tre¶ci w ró¿nym
+    formatowaniu np. tekst w postaci plain oraz html.
+    \item parallel - s³u¿y do wiadomo¶ci, której czê¶ci maj± byæ zaprezentowane
+    jednocze¶nie
+    \item digest - wykorzystywany przy wiadomo¶ciach z³o¿onych z czê¶ci, z
+    których ka¿da ma inny typ
+  \end{itemize}
+   
+  \item message - enkapsulacja wiadomo¶ci. Zawarto¶æ takiej wiadomo¶ci jest sama
+  w sobie wiadomo¶ci±. Przyk³adowy podtyp ''rfc822'' definiuje wiadomo¶æ zgodn±
+  z RFC 822, za¶ ''partial'' s³u¿y do zdefiniowania czê¶ci wiadomo¶ci zgodnej z
+  RFC 822 w celach transmisji jej fragmentów ze wzglêdu na jej du¿± wielko¶ci
+  uniemo¿liwiaj±c± przekazanie w jednym kawa³ku.
+\end{itemize}
+
+Wiadomo¶ci MIME, które nie posiadaj± nag³ówka Content-type traktowane s± jako
+wiadomo¶ci z nag³ówkiem ''Content-type: text/plain; charset=us-ascii''.
+
+Bardzo istotnym nag³ówkiem jest nag³ówek Content-Transfer-Encoding, który
+definiuje algorytm wg którego zakodowana zosta³a wiadomo¶æ (lub jej czê¶æ).
+Transformacje zapisane w ramach nag³ówka to znane algorytmy kodowania i nie
+zale¿± nigdy one od zewnêtrznych informacji (spoza wiadomo¶ci). Jedn±
+z wa¿niejszych funkcji kodowania wiadomo¶ci jest mo¿liwo¶æ przes³ania
+oryginalnie 8-bitowych danych za pomoc± 7-bitowych znaków US-ASCII.
+
+Dostêpne formy kodowania wiadomo¶ci to:
+\begin{itemize}
+  \item 7bit - dane reprezentowane w postaci krótkich lini ze znakami US-ASCII
+  \item 8bit - dane reprezentowane w postaci krótkich linni ale mog± wystêpowaæ
+  znaki spoza US-ASCII
+  \item binary - oprócz mo¿liwo¶ci wystêpowania znaków spoza US-ASCII mo¿e
+  brakowaæ podzia³u na krótkie linie
+  \item quoted-printable - szczegó³owy opis podany pó¼niej
+  \item base64 - szczegó³owy opis podany pó¼niej
+  \item ietf-token - forma kodowania wyspecyfikowana w okre¶lonym RFC i
+  zarejestrowna w IANA (Internet Assigned Numbers Authority) (wcze¶niej IETF -
+  Internet Engineering Task Force)
+  \item x-token - programi¶ci mog± u¿yæ w³asnego kodowania w nag³ówku
+  Content-Transfer-Encoding np. Content-Transfer-Encoding: x-my-new-encoding.
+  Dodatkowe formy kodowania mog± byæ wyspecyfikowana w RFC. Wymogi takiej
+  specyfikacji znajduj± siê w RFC 2048
+\end{itemize}
+
+Prawid³owy nag³ówek Content-Transfer-Encoding musi zostaæ u¿yty. Nadanie
+wiadomo¶ci z 8-bitowymi danymi jako 7bit jest niedozwolone, za¶ niekodowane dane
+musz± byæ ''oflagowane'' jako binary. Transfer niekodowanych danych
+protoko³em SMTP jest obecnie uwa¿any jako niezgodny ze specyfikacj±.
+
+W odró¿nieniu od typów i podtypów MIME tworzenie w³asnych nazw kodowañ dla
+nag³ówka Content-Transfer-Encoding jest mocno odradzane.
+
+Nag³ówek Content-Transfer-Encoding tyczy siê ca³ego cia³a wiadomo¶ci. Je¿eli
+za¶ znajdzie siê w czê¶ci wiadomo¶ci to dotyczy tylko jej. Je¿eli wiadomo¶æ lub
+jej czê¶æ jest typu multipart, wtedy Content-Transfer-Encoding mo¿e przyjmowaæ
+tylko 7bit, 8bit lub binary.
+
+Content-Transfer Encoding jest bezpo¶rednio powi±zany z drugim nag³ówkiem jakim
+jest Content-Type, chocia¿ wydawa³oby siê, ¿e s± to ca³kowicie rozdzielne
+rzeczy. Po pierwsze niektóre kodowania mog± byæ stosowne w przypadku niektórych
+rodzajów typów MIME, jak choæby w przypadku 8bit-owego transportu (je¿eli
+serwer SMTP udostêpnia tak± mo¿liwo¶æ) nie wymagany jest jakiekolwiek kodowanie dla tekstu
+o okre¶lonym kodowaniu znaków, podczas gdy dla 7bit-owego transportu tekstu
+takie kodowanie jest ju¿ niezbêdne gdy¿ mog± wyst±piæ w nim znaki spoza
+US-ASCII. Po drugie niektóre typy MIME wymagaj± ró¿nych typów kodowania w
+zale¿no¶ci od warunków. Przyk³adowo wiele dokumentów PostScript posiada krótkie
+linie z 7bit-owymi danymi i dlatego te¿ nie wymagaj± one dodatkowego kodowania.
+Inne dokumenty PostScriptowe (szczególnie te u¿ywaj±ce mechanizmu kodowania
+binarnego 2 poziomu) mog± byæ przekazane tylko przy pomocy kodowania binary. I
+wreszcie po trzecie, ¶cis³a specyfikacja pomiêdzy typami MIME, a kodowaniem
+skutecznie ³±czy specyfikacjê protoko³u aplikacji z specyfikacj±
+niskopoziomowego transportu. Nie jest to jednak porz±dane, gdy¿
+zmusza³oby deweloperów typów MIME do posiadania znajomo¶ci rodzajów transportu
+i ich ograniczeñ.
+
+Je¿eli jaka¶ wiadomo¶æ lub jej czê¶æ posiada nierozpoznawalny
+Content-Transfer-Encoding musi byæ traktowana jakby warto¶æ nag³ówka
+Content-Type wynosi³a ''application/octet-stream'' niezale¿nie od tego jak±
+warto¶æ rzeczywi¶cie posiada ten nag³ówek.
+
+Kodowanie Quoted-Printable pozostawia wszystkie bajty o warto¶ci mniejszej od
+128, które nie s± znakami steruj±cymi ASCII (z wyj±tkiem znaku równo¶ci =) bez
+zmian, a pozosta³e (z wyj±tkiem znaku tabulacji poziomej - HT, kod 9) zamienia
+na napis zakodowany w ASCII reprezentuj±cy kod szesnastkowy danego bajtu
+poprzedzony znakiem równo¶ci =. Sam znak równo¶ci w celu unikniêcia
+wieloznaczno¶ci jest zastêpowany ci±giem =3D. Dodatkowe regu³y rz±dz±
+kodowaniem koñców linii, m.in. ''miêkkim'' ³amaniem linii, oraz reprezentacj±
+linii koñcz±cych siê bia³ymi znakami.
+
+Base64 s³u¿y do kodowania ci±gu bajtów przy pomocy ci±gu znaków. Kodowanie to
+przypisuje 64 wybranym znakom (patrz tabelka ni¿ej) warto¶ci od 0 do 63. Ci±g
+bajtów poddawany kodowaniu dzielony jest na grupy po 3 bajty. Poniewa¿ bajt ma
+8 bitów, grupa 3 bajtów sk³ada siê z 24 bitów. Ka¿d± tak± grupê dzieli siê
+nastêpnie na 4 jednostki 6-bitowe. Istniej± wiêc dok³adnie 64 mo¿liw warto¶ci
+ka¿dej takiej jednostki. Wszystkim tym jednostkom s± przypisywane znaki na
+podstawie podanego ni¿ej arbitralnie ustalonego przypisania.
+
+\begin{tabular}{ | c | c | c | c | c | c | }
+\hline
+Warto¶æ & Znak & Warto¶æ & Znak & Warto¶æ & Znak \\ \hline
+\hline
+0 &	A & 22 & W & 44 & s  \\
+1 &	B & 23 & X & 45 & t  \\
+2 &	C & 24 & Y & 46 & u  \\
+3 &	D & 25 & Z & 47 & v  \\
+4 &	E &	26 & a & 48 & w  \\
+5 &	F &	27 & b & 49 & x  \\
+6 &	G &	28 & c & 50 & y  \\
+7 &	H &	29 & d & 51 & z  \\
+8 &	I & 30 & e & 52 & 0  \\
+9 &	J & 31 & f & 53 & 1  \\
+10 & K & 32 & g & 54 & 2 \\
+11 & L & 33 & h & 55 & 3 \\
+12 & M & 34 & i & 55 & 3 \\
+13 & N & 35 & j & 56 & 4 \\
+14 & O & 36 & k & 57 & 5 \\
+15 & P & 37 & l & 58 & 6 \\
+16 & Q & 38 & m	& 59 & 7 \\
+17 & R & 39 & n & 60 & 8 \\
+18 & S & 40 & o & 61 & 9 \\
+19 & T & 41 & p & 62 & + \\
+20 & U & 42 & q & 63 & / \\
+21 & V & 43 & r & pad & = \\
+\hline
+\end{tabular}
+
+Je¶li rozmiar wej¶ciowego ci±gu bajtów nie jest wielokrotno¶ci± liczby 3, to
+stosowane jest dope³nianie (na koñcu wynikowego ci±gu dodawana jest taka ilo¶æ
+symboli dope³nienia (pad), aby ten mia³ d³ugo¶æ podzieln± przez 4).
+
+Widaæ, ¿e dane zakodowane przy pomocy base64 na maszynie, która u¿ywa
+8-bitowego s³owa do reprezentacji znaków powiêkszaj± swój rozmiar o 33%.
+
+Je¶li rozmiar wej¶ciowego ci±gu bajtów nie jest wielokrotno¶ci± liczby 3, to
+stosowane jest dope³nianie (na koñcu wynikowego ci±gu dodawana jest taka ilo¶æ
+symboli dope³nienia (pad), aby ten mia³ d³ugo¶æ podzieln± przez 4).
+
+Widaæ, ¿e dane zakodowane przy pomocy base64 na maszynie, która u¿ywa
+8-bitowego s³owa do reprezentacji znaków powiêkszaj± swój rozmiar o 33%.
+
+Wspomnieæ te¿ nale¿y o nag³ówku Content-ID, który jest w zastosowaniu podobny
+do Message-ID i pozwala na referencjê pomiêdzy ró¿nymi wiadomo¶ciami. Tak samo
+jak Message-ID warto¶æ zawarta w Content-ID musi pozostaæ unikalna. 
+
+Ostatnim dodatkowym nag³ówkiem jaki zawarty jest w standardzie MIME to
+nag³ówek Content-Description. Warto¶æ tego nag³ówka to tekst US-ASCII. Opisuje
+on po prostu cia³o danego za³±cznika np. ''rysunek Galaktyki Andromedy''.
+
+Dodatkowe nag³ówki opisuj±ce za³±czniki mog± zostaæ w przysz³o¶ci zdefiniowane.
+Nazwa ka¿dego nowego nag³ówka powinna rozpoczynaæ siê od ''Content-'' np.
+''Content-Newone''. 
+
+Jak by³o wcze¶niej wspomniane typ MIME multipart s³u¿y do tworzenia wiadomo¶ci
+sk³adaj±cych siê z za³±czników ró¿nego rodzaju. Minimalnie mo¿e ona zawieraæ
+jeden za³±cznik. Ka¿dy z nich poprzedzony jest lini± podzia³u (boundary line),
+za¶ po ostatnim z za³±czników wystêpuje linia koñcz±ca. Po ka¿dej lini
+rozpoczynaj±cej za³±cznik znajduj± siê nag³ówki okre¶laj±ce go (opisane
+wcze¶niej), nastêpnie wystêpuje pusta linia, a za ni± znajduje siê cia³o.
+Ze wzglêdu na posiadanie nag³ówków i cia³a za³±cznik podobny jest do wiadomo¶ci
+zgodnej z RFC 822, jednak mo¿e on na przyk³ad nie zawieraæ nag³ówków. Taki
+za³±cznik traktowany jest (podobnie jak wiadomo¶æ MIME bez nag³ówka
+Content-Type) jako posiadaj±cy nag³ówek Content-Type typu text/plain;
+charset=US-ASCII. Linia dziel±ca za³±czniki wiadomo¶ci nie mo¿e pojawiæ siê w
+tek¶cie cia³a za³±cznika. Dlatego te¿ jest niezwykle istotne, aby
+oprogramowanie klienckie tworzy³o wiadomo¶ci zawieraj±ce bardzo unikalne linie
+podzia³u. Przyk³adowa linia podzia³u mo¿e wygl±daæ nastêpuj±co:
+\newline
+\newline
+- - - -=\_NextPart\_001\_0064\_01C82582.9D9EB7E0
+\newline
+\newline
+
+Poni¿ej przyk³adowa wiadomo¶æ (ze wzglêdu na czytelno¶æ wiadomo¶ci niektóre
+nag³ówki zosta³y usuniête, a za³±czniki zosta³y zmniejszone). Sk³ada siê ona z 2
+za³±czników:
+
+\begin{itemize}
+  \item multipart/mixed z boundary \newline 
+  - - - -=\_NextPart\_000\_0063\_01C82582.9D9C6DF0), który sam w sobie
+  jest typu multipart/alternative (text/plain i text/html) z boundary \newline 
+  - - - -=\_NextPart\_001\_0064\_01C82582.9D9EB7E0
+  \item image/jpeg - zdjêcie w formacie jpeg
+\end{itemize}
+
+Tre¶æ wiadomo¶ci:\newline
+\newline
+Date: Mon, 12 Nov 2007 23:20:30 +0100\newline
+From: "jerzy\_bielecki" <jbielecki@klc.vectranet.pl>\newline
+To: <redakcja@astronet.pl>\newline
+MIME-Version: 1.0\newline
+Message-ID: <006701c8257a$3d2100b0$45e7584e@compurbae2b8cf>\newline
+Subject: Luna\newline
+Content-Type: multipart/mixed;\newline
+\hspace*{1cm}boundary="- - -
+-=\_NextPart\_000\_0063\_01C82582.9D9C6DF0"\newline
+\newline
+This message is in MIME format. Since your mail reader does not
+understand\newline
+this format, some or all of this message may not be legible.\newline
+\newline
+- - - - - -=\_NextPart\_000\_0063\_01C82582.9D9C6DF0\newline
+\newline
+Content-Type: multipart/alternative;\newline
+\hspace*{1cm} boundary="- - -
+-=\_NextPart\_001\_0064\_01C82582.9D9EB7E0"\newline
+\newline
+This message is in MIME format. Since your mail reader does not understand\newline
+this format, some or all of this message may not be legible.\newline
+\newline
+- - - - - -=\_NextPart\_001\_0064\_01C82582.9D9EB7E0\newline
+\newline
+Content-Type: text/plain;
+\newline
+\hspace*{1cm}charset="iso-8859-2"\newline
+Content-Transfer-Encoding: quoted-printable\newline
+\newline
+Witam!\newline
+\newline
+mentu fotografii) !\newline
+Powi=EAkszy=B3em dodatkowo jasn=B1 "plamk=EA" i uczytelni=B3em filtrem grafi=\newline
+cznym - interesuj=B1cy efekt ...\newline
+Pomo=BFecie ?\newline
+\newline
+Pozdrawiam - Jerzy W. Bielecki\newline
+\_\_\_\_\_\_\_\_\_\_\_\_\newline
+Poczta sprawdzona przez G DATA AntiVirus\newline
+Wersja: AVK 18.584 z 12.11.2007\newline
+Informacje: www.gdata.pl\newline
+\newline
+\newline
+\newline
+- - - - - -=\_NextPart\_001\_0064\_01C82582.9D9EB7E0\newline
+Content-Type: text/html;\newline
+\hspace*{1cm}charset="iso-8859-2"\newline
+Content-Transfer-Encoding: quoted-printable\newline
+\newline
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\newline
+<HTML><HEAD>\newline
+<META http-equiv=3DContent-Type content=3D"text/html; charset=3Diso-8859-2">\newline
+<META content=3D"MSHTML 6.00.6000.16544" name=3DGENERATOR>\newline
+<STYLE></STYLE>\newline
+</HEAD>\newline
+<BODY bgColor=3D\#ffffff>\newline
+Witam!<BR>\newline
+Powi=EAkszy=B3em dodatkowo jasn=B1 "plamk=EA" i uczytelni=B3em filtrem
+grafi=<BR>\newline
+cznym - interesuj=B1cy efekt ...<BR>\newline
+Pomo=BFecie ?<BR>\newline
+\newline
+Pozdrawiam - Jerzy W. Bielecki<BR>\newline
+\_\_\_\_\_\_\_\_\_\_\_\_<BR>\newline
+Poczta sprawdzona przez G DATA AntiVirus<BR>\newline
+Wersja: AVK 18.584 z 12.11.2007<BR>\newline
+Informacje: www.gdata.pl<BR>\newline
+\newline
+\newline
+</BODY></HTML>\newline
+\newline
+- - - - - -=\_NextPart\_001\_0064\_01C82582.9D9EB7E0- -\newline
+\newline
+- - - - - -=\_NextPart\_000\_0063\_01C82582.9D9C6DF0
+\newline
+Content-Type: image/jpeg;\newline
+\hspace*{1cm}name="IMG\_7661xLunaPlusAJW9plusResizeLunaPlusUczytelnienia.jpg"\newline
+Content-Transfer-Encoding: base64\newline
+Content-Disposition: attachment;\newline
+\hspace*{1cm}filename="IMG\_7661xLunaPlusAJW9plusResizeLunaPlusUczytelnienia.jpg"\newline
+\newline
+/9j/4AAQSkZJRgABAQEASABIAAD/4RAXRXSSTaS\newline
+hpZgAASUkqAAgAAAAJAA8BAgAGAAAAegAASasS\newline
+AAAAgAAAABIBAwABAAAAAQAAABoBBQABAAS\newline
+AgAUAAAAsAAAABMCAwABAAAAAQAAAGmHBA\newline
+\newline
+- - - - - -=\_NextPart\_000\_0063\_01C82582.9D9C6DF0- -\newline
+\newline
+
 \subsection{Obecne wykorzystanie protoko³u i jego forma}
+
+Protokó³ SMTP w obecnej formie wykorzystuje wiele rozszerzeñ, których powstanie
+by³o naturalnym wynikiem rozwoju Internetu. Podstawowym brakiem protoko³u SMTP
+w formie z RFC 2821 jest brak jakiejkolwiek autoryzacji czyli potwierdzenia
+to¿samo¶ci klienta pod³±czaj±cego siê do serwera. Klient, który poprawnie
+przejdzie proces autoryzacji mo¿e u¿yæ serwera, do którego jest
+pod³±czony, w celach przekazania wiadomo¶ci (ang. relay). Serwer po przyjêciu
+tej wiadomo¶ci jest odpowiedzialny za jej dostarczenie. Autoryzacja zapobiega m.in.
+przed relay-owaniem poczty od nieautoryzowanych u¿ytkowników czyli tzw.
+spammerów. Przyk³adowa sesja SMTP z poprawn± autoryzacj±:
+
+S: 220 smtp.example.com ESMTP server ready
+C: EHLO jgm.example.com
+S: 250-smtp.example.com
+S: 250 AUTH CRAM-MD5 DIGEST-MD5
+C: AUTH FOOBAR
+S: 504 Unrecognized authentication type.
+C: AUTH CRAM-MD5
+S: 334
+PENCeUxFREJoU0NnbmhNWitOMjNGNndAZWx3b29kLmlubm9zb2Z0LmNvbT4=
+C: ZnJlZCA5ZTk1YWVlMDljNDBhZjJiODRhMGMyYjNiYmFlNzg2ZQ==
+S: 235 Authentication successful.
+
+Widaæ wiêc, ¿e w ca³ej komunikacji pojawia siê dodatkowe polecenie AUTH. Serwer
+najpierw informuje klienta, ¿e autoryzacja jest obs³ugiwana. Nastêpnie klient
+korzysta z polecenia AUTH, którego sk³adnia jest nastêpuj±ca:
+
+\framebox{AUTH SPACE auth\_type [SPACE (base64 / "=")] *(CRLF [base64]) CRLF}
+
+i próbuje dowiedzieæ siê jaka forma autoryzacji jest dostêpna. Serwer odpowiada
+kodem 334 je¿eli dany typ autoryzacji obs³uguje lub 504 w przeciwnym wypadku. W
+przypadku poprawnej odpowiedzi wysy³a on zakodowany base64 ci±g znaków, na
+podstawie którego klient przesy³a inny ci±g znaków tak¿e zakodowany base64.
+Ci±g ten z regu³y zawiera has³o i nazwê u¿ytkownika po³±czone z danymi
+odkodowanymi z serwera. W przypadku prawid³owego ci±gu znaków od klienta serwer
+dokonuje autoryzacji (odpowied¼ 235).
+
+Mimo rozszerzenia SMTP-AUTH ca³y czas protokó³ SMTP nie daje gwarancji, ¿e
+wiadomo¶æ pochodzi od osoby, za któr± podaje siê nadawce. Wystarczy przecie¿
+z³amaæ has³o (w przypadku s³abych hase³) metod± brute-force i podszywaæ siê pod
+dan± osobê.
+
+Coraz czêstszym problemem jest te¿ phishing (zwany te¿ spoofingiem). Polega on
+na konstruowaniu wiadomo¶ci 
 
 \subsubsection{Kwestie bezpieczeñstwa, rozszerzenia protoko³u}
 
