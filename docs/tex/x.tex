@@ -1519,6 +1519,7 @@ AgAUAAAAsAAAABMCAwABAAAAAQAAAGmHBA\newline
 
 \subsection{Obecne wykorzystanie protoko³u i jego forma}
 
+\subsubsection{SMTP-AUTH}
 Protokó³ SMTP w obecnej formie wykorzystuje wiele rozszerzeñ, których powstanie
 by³o naturalnym wynikiem rozwoju Internetu. Podstawowym brakiem protoko³u SMTP
 w formie z RFC 2821 jest brak jakiejkolwiek autoryzacji czyli potwierdzenia
@@ -1560,28 +1561,257 @@ wiadomo¶æ pochodzi od osoby, za któr± podaje siê nadawce. Wystarczy przecie¿
 z³amaæ has³o (w przypadku s³abych hase³) metod± brute-force i podszywaæ siê pod
 dan± osobê.
 
-Coraz czêstszym problemem jest te¿ phishing (zwany te¿ spoofingiem). Polega on
-na konstruowaniu wiadomo¶ci 
+\subsubsection{Phishing i obrona przed nieautoryzowanymi mailami}
 
-\subsubsection{Kwestie bezpieczeñstwa, rozszerzenia protoko³u}
+Coraz czêstszym problemem jest te¿ phishing (zwany te¿ spoofingiem). Polega on
+na konstruowaniu wiadomo¶ci, w których adres nadawcy (podany w nag³ówku) oraz
+jej inne czê¶ci s± tak spreparowane jakby wydawa³y siê mailem z innego ¼ród³a.
+Najczê¶ciej zmienianymi nag³ówkami s± From, Return-Path, Reply-To. Maile takie
+najczêsciej powi±zane s± z tzw. phishingiem webowym. Polega to na spreparowaniu
+wiadomo¶ci i zawarciu w niej odniesienia do strony internetowej, która
+przypomina nam znan± strone internetow±, któr± jest równie¿ odpowiednio
+spreparowana. Czêsto wiadomo¶ci te próbuj± podszywaæ siê pod wiadomo¶ci
+przesy³ane nam z naszych banków, a linki w nich zawarte prowadz± do stron
+przypominaj±cych strony logowañ do systemu bankowego. Po zalogowaniu siê na
+takiej stronie internata staje siê ofiar±, poniewa¿ jego login i has³o
+przekazywane jest osobom, które spreparowa³y maila, jak i stronê internetow±.
+
+Aby zapobiec takim sytuacjom powsta³y rozszerzenia, których celem jest
+potwierdzenie to¿samo¶ci nadawcy wiadomo¶ci. Podobn± funckjê spe³niaj± na
+przyk³ad certyfikaty na szyfrowanych stronach internetowych. Niektóre z tych
+rozszerzeñ to:
+
+\begin{itemize}
+  \item SPF - Sender Policy Framework - uwierzytelnia tylko adres MAIL
+  FROM.\newline
+  Sprawdza, czy e-mail przychodz±cy z danego serwera pocztowego
+  mo¿e stosowaæ okre¶lon± nazwê domenow± w MAIL FROM. Opiera siê na infrastrukturze
+  DNS oraz rekordach TXT
+  \item DKIM - DomainKeys Identified Mail - uwierzytelnia tre¶æ i niektóre
+  nag³ówki wiadomo¶ci.\newline
+  Opiera siê na cyfrowym podpisywaniu tre¶ci wiadomo¶ci i czê¶ci nag³ówków
+  (podpis w oddzielnym nag³ówku) oraz infrastrukturze DNS do dystrybucji kluczy
+  publicznych. Powsta³ z po³±czenia Yahoo! DomainKeys i Cisco Identified Internet Mail.
+  \item CSV - Certified Server Validation - uwierzytelnia tylko parametr
+  polecenia HELO/EHLO.\newline
+  Okre¶la poziom zaufania przy po³±czeniu nadchodz±cym z innego MTA na
+  podstawie jego adresu IP oraz parametru polecenia HELO lub EHLO. Stosuje
+  infrastrukturê DNS oraz rekordy SRV.
+  \item Microsoft Sender ID - uwierzytelnia MAIL FROM oraz From.\newline
+  Syntaktycznie zgodny z SPF. Rozszerza u¿ycie SPF do nag³ówków From:. Oparty
+  na SPF oraz propozycji Microsoftu z 2004 r.: Caller ID for E-Mail.
+\end{itemize}
+
+W obecnej formie ka¿da z powy¿szych propozycji (prócz ma³o efektywnego i
+praktycznie niestosowanego CSV) wprowadza powa¿ne ograniczenia w u¿ywaniu
+poczty.
+
+Wiêkszo¶æ wymusza stosowanie wybranych rozwi±zañ na administratorach
+serwerów, które kontaktuj± siê z chronionym serwerem. ¯adna z nich nie
+jest natomiast standardem, a implementacja zmian jest czêsto k³opotliwa
+(np. nie ka¿dy MTA umo¿liwia stosowanie SRS). Skuteczno¶æ powy¿szych rozwi±zañ
+jest zbyt niska w porównaniu z ograniczeniami, jakie wprowadzaj±. Redukuj± spam
+i ataki wirusów w stopniu mniejszym, ni¿ inne rozwi±zania które nie maj± tak
+powa¿nych efektów ubocznych (np. greylisting).
+
+\subsubsection{Pipelining}
+
+Wa¿nym rozszerzeniem protoko³u SMTP jest opisany w RFC 1854 tzw. pipelining.
+Pipeling jest cech± komunikacji w ramach protoko³u polegaj±c± na wykonaniu
+kilku ¿±dañ na raz, bez czekania na poszczególne odpowiedzi z serwera. 
+
+\includegraphics[scale=0.6]{pipelining.png}
+
+Serwer SMTP informuje klienta, ¿e obs³uguje rozszerzenie pipeliningu poprzez
+zawarcie s³owa kluczowego PIPELINING w odpowiedzi na EHLO klienta. Klient, je¿eli
+potrafi obs³ugiwaæ to rozszerzenie, mo¿e trasmitowaæ grupy komend bez
+oczekiwania na rezultat ka¿dej z nich. Polecenia RSET, MAIL FROM, SEND FROM,
+SOML FROM, SAML FROM i RCPT TO mog± wystêpowaæ dowolnie w grupie, za¶ EHLO, DATA,
+VRFY, EXPN, TURN, QUIT oraz NOOP wystêpuj± jako ostatnie, poniewa¿ powodzenie
+tych poleceñ lub b³±d w nich powoduj± zmianê stanu, na któr± reaguje klient.
+Dodatkowe polecenia wprowadzone przez rozszerzenia protoko³u tak¿e wystêpuj±
+jako ostatnie, chyba ¿e ich specyfikacje okre¶laj± dodatkowe mo¿liwo¶ci.
+
+Klient, który implementuje pipelining musi sprawdziæ wszystkie statusy
+odpowiedzi z serwera SMTP. Przyk³adowo je¿eli odpowiedzi± serwera na RCPT TO
+bêdzie brak akceptacji dla adresu, klient musi sprawdziæ status odpowiedzi
+DATA. Nie mo¿e on zak³adaæ, ¿e polecenie DATA nie zostanie zaakceptowane w
+wyniku braku akceptacji polecenia RCPT TO. 
+
+Przyk³adowa sesja z u¿yciem pipeliningu ma nastêpuj±c± postaæ:
+\newline
+\newline
+S: <wait for open connection>\newline
+C: <open connection to server>\newline
+S: 220 innosoft.com SMTP service ready\newline
+C: EHLO dbc.mtview.ca.us\newline
+S: 250-innosoft.com\newline
+S: 250 PIPELINING\newline
+C: MAIL FROM:<mrose@dbc.mtview.ca.us>\newline
+C: RCPT TO:<ned@innosoft.com>\newline
+C: RCPT TO:<dan@innosoft.com>\newline
+C: RCPT TO:<kvc@innosoft.com>\newline
+C: DATA\newline
+S: 250 sender <mrose@dbc.mtview.ca.us> OK\newline
+S: 250 recipient <ned@innosoft.com> OK\newline
+S: 250 recipient <dan@innosoft.com> OK\newline
+S: 250 recipient <kvc@innosoft.com> OK\newline
+S: 354 enter mail, end with line containing only "."\newline
+...\newline
+C: .\newline
+C: QUIT\newline
+S: 250 message sent\newline
+S: 221 goodbye\newline
+
+\subsubsection{Szyfrowanie}
+
+Komuniakcja pomiêdzy klientem, a serwerem w protokole SMTP odbywa siê za pomoc±
+komend przesy³anych otwartym tekstem. W wielu przypadkach wiadomo¶æ
+transportowana jest przez wiele routerów i serwerów, co do których mo¿emy nie
+mieæ zaufania. Mo¿e nast±piæ przechwycenie informacji, albo jej zmiana.
+
+Próba rozwi±zania tego problemu doprowadzi³a do powstania mechanizmu TLS,
+bardziej znany jako SSL, który rozszerza komunikacjê TCP o ochronê prywatno¶ci
+i autentykacjê.
+
+W celu obs³u¿enia TLS-u stworzono rozszerzenie do protoko³u SMTP i wprowadzono
+dodatkowe polecenie STARTTLS. Odpowiedzi klienta na tê komendê mog± byæ
+nastêpuj±ce:
+
+\begin{itemize}
+  \item 220 Ready to start TLS
+  \item 501 Syntax Error (no parameters allowed) w przypadku gdy do
+  bezparametrowego polecenia STARTTLS klint poda³ parametr
+  \item 454 TLS not available due to temporary reason
+\end{itemize}
+
+W przypadku otrzymania odpowiedzi 220 klient powinien zacz±æ negocjacje TLS
+przed wszystkimi innymi poleceniami. Po negocjacji TLS (szczegó³y dzia³ania
+rozszerzenia TLS w wersji 1.0 zwarte jest w RFC 2246, obecnie rozwijana jest
+wersja 1.1 opisana w RFC 4346) obie strony uzgadniaj± czy kontynuowaæ dalsz±
+komunikacjê. W przypadku niepowodzenia autentykacji lub szyfrowania i tak mo¿e
+nast±piæ do dalszej komunikacji klient-serwer i akceptacji przez serwer
+wiadomo¶ci. Je¿eli serwer stwierdzi, ¿e wynegocjowany poziom zaufania jest zbyt
+niski powinien przes³aæ klientowi komendê SMTP QUIT. 
+
+Przyk³adowa sesja z uwzglêdnieniem negocjacji TLS mo¿e przyjmowaæ nastêpuj±c±
+postaæ:
+\newline
+\newline
+S: <waits for connection on TCP port 25>\newline
+C: <opens connection>\newline
+S: 220 mail.imc.org SMTP service ready\newline
+C: EHLO mail.ietf.org\newline
+S: 250-mail.imc.org offers a warm hug of welcome\newline
+S: 250 STARTTLS\newline
+C: STARTTLS\newline
+S: 220 Go ahead\newline
+C: <starts TLS negotiation>\newline
+C \& S: <negotiate a TLS session>\newline
+C \& S: <check result of negotiation>\newline
+C: <continues by sending an SMTP command>\newline
+. . .\newline
+\newline
+
+Nale¿y jednak zaznaczyæ, ¿e je¿eli komunikacja pomiêdzy klientem, a serwer by³a
+przeprowadzona przy u¿yciu TLS-u, nie oznacza to, ¿e ca³y transport wiadomo¶ci
+by³ szyfrowany. Po drodze niestety mo¿e doj¶æ do nieszyfrowanego lub
+nieautoryzowanego przekazywania wiadomo¶ci.
 
 \newpage
 
 \section{Dzisiejsze narzêdzia do filtracji protoko³u SMTP}
 
-Dzisiejsze
-
 \subsection{Konieczno¶æ wprowadzenia filtracji}
 
-Konieczno¶æ
+Co¶ o spamie ilo¶ci spamu procentowo konieczno¶ci zarz±dzaniem mailami w
+firmach itd. itp.
 
 \subsection{Produkty komercyjne}
 
-Produkty komercyjne
+Obecnie na rynku znajduje siê sporo produktów s³u¿±cych do filtracji w ramach
+protoko³u SMTP. Niektóre z nich s± czê¶ci± wiêkszych projektów, inne zosta³y
+zaprojektowane tylko w tym celu.
 
-\subsubsection{Clearswift}
+\subsubsection{Clearswift - MIME sweeper for SMTP}
 
-Clearswift
+MIMEsweeper for SMTP e-mail software to bardzo wyrafinowany system do
+zarz±dzania poczt± email. Wed³ug twórców systemu ¿aden inny system nie oferuje
+tak obszernych mo¿liwo¶ci kompleksowego zarz±dzania infrastruktur± maili.
+Dziêki rozwojowi przez ponad 20 lat systemów do zarz±dzania e-mailami,
+obecny produkt firmy Clearswift sta³ siê idealnym rozwi±zaniem dla firm, które
+pragn± w pe³ni ochroniæ komunikacjê e-mail.
+
+Firma Clearswift zajmuje siê sektorem zabezpieczeñ komunikacyji i dostarcza
+filtry emailowe i webowe dla oko³o 25 milionów u¿ytkowników skupionych wokó³ 17
+tysiêcy firm. Zosta³a za³o¿ona w roku 1982, a jej obecna siedziba mie¶ci siê w
+Theale, niedaleko Reading w Wielkiej Brytani.
+
+Dwie najwa¿niejsze funkcjonalno¶ci jakie dostarcza MIMEsweeper for SMTP to:
+\begin{itemize}
+  \item Routowanie i relayowanie wiadomo¶ci w ramach SMTP w zale¿no¶ci od
+  zdefiniowanych zasad
+  \item Procesowanie wiadomo¶ci w ramach domeny w oparciu o zdefiniowane zasady
+  bezpieczeñstwa
+\end{itemize}
+
+W ramach polityki bezpieczeñstwa firmy MIMEsweeper umo¿liwia skonfigurowanie
+wielu zasad bezpieczeñstwa, które zosta³y podzielone na 3 g³ówne typy:
+\begin{enumerate}
+  \item Polityka deploymentu - okre¶la ona sposób implementacji MIMEsweepera w
+  danej sieci. Zale¿na jest ona od:
+  \begin{itemize}
+    \item architektury sieci w ramach okre¶lonej domeny
+    \item sposobu pod³±czenia sieci do Internetu
+    \item ilo¶ci osób zarz±dzaj±cych polityk± bezpieczeñstwa i samym systemem
+    \item elastyczno¶ci systemu
+  \end{itemize}
+  \item Polityka routowania i relayowania poczty. Mo¿na tutaj okre¶liæ:
+  \begin{itemize}
+  	\item z jakich hostów bêdziemy akceptowaæ maile
+  	\item jakie hosty mog± ³±czyæ siê do naszego serwera i u¿ywaæ go do
+  	relayowania poczty
+  	\item z jakich hostów albo adresów poczty nie przyjmujemy
+  	\item dozwolon± ilo¶æ odbiorców
+  	\item dozwolon± wielko¶æ wiadomo¶ci email
+  	\item ilo¶æ wiadomo¶ci email jakie MIMEsweeper mo¿e jednocze¶nie przetwarzaæ
+  \end{itemize}
+  \item Polityka ochrony zawarto¶ci. Okre¶la ona regu³y przetwarzania przez
+  system maili takie jak:
+  \begin{itemize}
+    \item kto mo¿e wysy³aæ i odbieraæ maile
+    \item dok±d maile mog± byæ wysy³ana albo sk±d odbierane
+    \item jaki rodzaj wiadomo¶ci wykryæ
+    \item jaki rodzaj tekstu i jakie obiekty analizowaæ w wykrytych
+    wiadomo¶ciach
+    \item jaki rodzaj akcji podj±æ po analizie
+    \item co zg³osiæ po wykryciu maila
+    \item jakie informacje o systemie ¶ledziæ
+    \item jakie przetwarzane wiadomo¶ci ¶ledziæ
+    \item jak± analizê zawarto¶ci i jej wykrycie ¶ledziæ
+  \end{itemize}
+\end{enumerate}
+
+Ca³o¶æ oprogramowania MIMEsweeper podzielona jest na serwisy, które umo¿liwiaj±
+realizacjê wcze¶niej wymienionych zadañ. Serwisy te to:
+
+\begin{itemize}
+  \item serwis odbieraj±cy - zgodnie z ustalonymi zasadami polityki
+  bezpieczeñstwa waliduje przychodz±ce po³±czenie, odbiera maila i przekazuje
+  do serwisu zabezpieczeñ do dalszego procesowania
+  \item serwis zabezpieczeñ - sprawdza zawarto¶æ maila i konfrontuje go z
+  skonfigurowan± wcze¶niej polityk± bezpieczeñstwa
+  \item serwis dostarczaj±cy - przekazuje pocztê do odbiorców
+  \item serwis odpowiedzialny za infrastrukturê - zajmuje siê monitorowaniem
+  systemu, konfiguracj± i kontrol± zadañ nie objêtych przez inne serwisy
+  \item serwis analityczny - z³o¿onych z dwóch odrêbnych serwis. Pierwszy z
+  nich zbiera dane o systemie i przekazuje je do drugiego serwisu
+  odpowiedzialnego za stworzenie z nich bazy danych w odpowiedniej postaci
+  \item system ¶ledzenia - odpowiedzialny za zbieranie wszystkich danych,
+  których wcze¶niej zosta³y zdefiniowane w systmie do ¶ledzenia
+\end{itemize}
+
+\includegraphics[scale=0.6]{mimesweeper_services.png}
 
 \subsubsection{Aladdin eSafe}
 
