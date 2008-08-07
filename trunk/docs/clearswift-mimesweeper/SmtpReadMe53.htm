@@ -1,0 +1,806 @@
+<html><head>
+
+
+<title>ReadMe for MIMEsweeper for SMTP 5.3</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<style type="text/css">
+
+BODY {BACKGROUND: #ffffff; COLOR: #000000}
+
+P {FONT: 8pt Verdana, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 3pt}
+P.backto {FONT: 8pt Tahoma, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 3pt; TEXT-ALIGN: right}
+P.RelDoc {FONT: bold 10pt Tahoma, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 0pt; TEXT-ALIGN: center}
+P.Product {FONT: bold 11pt Tahoma, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 0pt; TEXT-ALIGN: center}
+P.Technology {FONT: 10pt Tahoma, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 0pt; TEXT-ALIGN: center}
+P.subtitle {FONT: bold 11pt Tahoma, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 0pt; TEXT-ALIGN: center}
+
+BLOCKQUOTE {FONT: 7pt Verdana, sans-serif}
+SUP {FONT: 6pt Verdana, sans-serif}
+CODE {FONT: 8pt Courier, monospace, arial}
+CITE {FONT: italic 9pt Times, serif}
+HR {COLOR: #0062C8; ALIGN: right; STYLE: groove}
+
+H1 {FONT: bold 11pt Tahoma, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 6pt}
+H2 {FONT: bold 10pt Tahoma, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 6pt}
+H3 {FONT: bold 9pt Tahoma, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 6pt}
+H4 {FONT: bold 8pt Tahoma, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 6pt}
+
+OL LI {LIST-STYLE: decimal}
+OL OL LI {LIST-STYLE: lower-alpha; start: 1}
+OL {FONT: 8pt Verdana, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 3pt}
+UL LI {LIST-STYLE: disc}
+UL UL LI {LIST-STYLE: disc}
+UL {FONT: 8pt Verdana, sans-serif; MARGIN-BOTTOM: 0pt; MARGIN-TOP: 3pt}
+UL OL LI {LIST-STYLE: decimal}
+LI {MARGIN-BOTTOM: 3pt; MARGIN-LEFT: -11pt}
+
+PRE {FONT: 8pt Courier, monospace; x-text-tab-stops: repeat .15in}
+
+TABLE {BACKGROUND: #A3CEFB; BORDER-BOTTOM: #0062C8 2px ridge; BORDER-LEFT: #0062C8 2px ridge; BORDER-RIGHT: #0062C8 2px ridge; BORDER-TOP: #0062C8 2px ridge; MARGIN-BOTTOM: 1pt; MARGIN-TOP: 1pt; cellpadding: 1pt}
+CAPTION {FONT: bold 8pt Verdana, sans-serif; MARGIN-BOTTOM: 3pt; MARGIN-TOP: 3pt}
+TH {BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-BOTTOM: #0062C8 2px ridge; BORDER-LEFT: #0062C8 2px ridge; BORDER-RIGHT: #0062C8 2px ridge; BORDER-TOP: #0062C8 2px ridge; FONT: bold 8pt Tahoma, sans-serif; TEXT-ALIGN: center; VERTICAL-ALIGN: top}
+TR {VERTICAL-ALIGN: top}
+TD {BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-BOTTOM: #0062C8 1px ridge; BORDER-LEFT: #0062C8 1px ridge; BORDER-RIGHT: #0062C8 1px ridge; BORDER-TOP: #0062C8 1px ridge; FONT: 8pt Verdana, sans-serif; VERTICAL-ALIGN: top}
+
+SPAN {FONT-SIZE: 8pt; FONT-STYLE: normal; FONT-VARIANT: normal; FONT-WEIGHT: normal; LINE-HEIGHT: normal}
+SPAN.interface {FONT: bold 8pt Helvetica, monospace}
+
+A:link {COLOR: #0062C8}
+A:visited {COLOR: #0062C8}
+</style>
+<!-- AUTHORS: Search and replace these variables in this template:
+* "PRODUCT_NAME" -- e.g. MAILsweeper for SMTP
+* "a.b.c" -- e.g. 4.3.2
+* "Beta z" -- e.g. Beta 1
+* "Revision n.n_n" of this document -- e.g. 1.0_2 for draft 2 of this beta ReadMe doc.
+* "Month" -- e.g. September
+* "yyyy" -- e.g. 2002
+ -->
+
+</head><body>
+
+<p class="RelDoc"><a name="top">ReadMe for</a></p>
+<p class="Product">MIMEsweeper for SMTP 5.3</p>
+<p class="subtitle"></p>
+
+<p>Read this document before commencing installation of the product, and refer to it for information on known problems with 
+this release.</p>
+
+
+<h2><a name="ToC">Contents</a></h2>
+<p>This <cite>ReadMe</cite> document contains the following topics:
+</p><ul>
+<!-- AUTHORS: Delete first LI if beta supplied with full installer -->
+	<li><a href="#DocumentationProvided">Documentation provided with this release</a></li>
+	<li><a href="#NewFeatures">New features overview</a></li>
+	<li><a href="#53Install">Installing MIMEsweeper for SMTP 5.3</a></li>
+	<li><a href="#53Upgrade">Upgrading to MIMEsweeper for SMTP 5.3</a></li>
+	<li><a href="#problemsknown">Problems known in this release</a></li>
+	<li><a href="#DocErrors">Documentation and Help errors and omissions</a></li>
+</ul>
+<p></p>
+
+<h4>Other Release Documents</h4>
+<p>Details of other aspects of MIMEsweeper for SMTP 5.3 are provided in the following release documents:</p>
+<ul>
+	<!--<LI><A HREF="SmtpVersionDifferences53.htm">Features Introduced in Previous Releases</A></LI>-->
+	<li><a href="http://download2.mimesweeper.com//TechnicalDocumentation/SmtpPrerequisites53.htm">Prerequisites for MIMEsweeper for SMTP 5.3</a></li>
+	<!--<LI><A HREF="SmtpNewFeatures53.htm">New Features in MIMEsweeper for SMTP 5.3</A></LI>--> 
+	<li><a href="http://download2.mimesweeper.com//TechnicalDocumentation/SmtpAntivirusTools53.htm">Anti-virus Tools ReadMe for MIMEsweeper for SMTP 5.3</a></li>
+	<li><a href="http://download2.mimesweeper.com//TechnicalDocumentation/SmtpProblemsFixed53.htm">Problems fixed in this release</a></li>
+</ul>
+
+<p>Each release document is linked, so you can access any of the documents from the one you are currently using.</p>
+
+<br>
+
+<table border="1" cellpadding="3" cellspacing="4">
+<tbody><tr>
+	<td><strong>Contact Information</strong></td>
+	<td>We are constantly reviewing our products. You can obtain product 
+      updates, information about our other products, and contact details on our website: <a href="http://www.clearswift.com/">http://www.clearswift.com</a>.</td>
+</tr>
+</tbody></table>
+<hr align="right" size="2" width="100%">
+
+
+<h1><a name="DocumentationProvided">Documentation provided with this release</a></h1>
+<p>The following documentation is provided with MIMEsweeper for SMTP 5.3:</p>
+
+<h3>MIMEsweeper for SMTP 5.3 Getting Started Guide</h3>
+<p>The Getting Started Guide contains the information you need to plan your MIMEsweeper 
+deployment and perform the installation.</p>
+<h3>MIMEsweeper for SMTP 5.3 Reference</h3>
+<p>The Reference contains three sections:</p>
+<ul>
+<li>The <strong>MIMEsweeper Policy Editor</strong> section describes the function and operation of each element of the MIMEsweeper Policy Editor user interface.</li>
+<li>The <strong>MIMEsweeper Manager</strong> section describes each part of MIMEsweeper Manager, including the four management centers and the System Health window.</li>
+<li>The <strong>Appendices</strong> provide supplementary information
+including descriptions of things such as system maintenance facilities
+and low level message processing information.</li>
+</ul>
+<h3>Help for MIMEsweeper Policy Editor</h3>
+<p>The MIMEsweeper Policy Editor's help system provides comprehensive help on using the Policy Editor to 
+configure your MIMEsweeper system's content security policy.</p>
+
+<h3>Help for MIMEsweeper Manager</h3>
+<p>MIMEsweeper Manager's help system provides detailed guidance for administrators on using MIMEsweeper Manager to 
+manage and monitor MIMEsweeper's email message processing functions.</p>
+
+<h3>Help for Personal Message Manager (PMM)</h3>
+<p>PMM's help system provides the PMM end-user with help in managing their withheld messages.</p>
+
+<p class="backto"><a href="#ToC">Back to <cite>Contents</cite></a>
+</p><hr align="right" size="2" width="100%">
+
+<h1><a name="NewFeatures">New features overview</a></h1>
+<p>The new features in MIMEsweeper for SMTP relate to the following areas:
+</p><ul>
+
+<li><p><strong>Edge Integration</strong></p>
+<p>In a MIMEsweeper for SMTP installation, you can now incorporate Edge
+server appliances to handle specific scenarios such as virus detection
+and blocking, and spam detection meaning that the MIMEsweeper
+environment does not need to perform all of the spam filtering. You can
+also monitor these servers using MIMEsweeper Manager. The Edge servers
+will also appear in the System Health and Message Center areas of
+MIMEsweeper Manager.</p>
+<p>See the <i>MIMEsweeper Manager Online Help</i> for information on configuring and using Edge servers in your deployment.</p></li>
+
+<li><p><strong>PMM Enhancements</strong></p>
+<p>In an environment that uses Windows Authentication, users can now
+configure their PMM setups to manage spam messages sent to an
+organization’s public folders. For example, a designated user could
+manage the spam messages sent to contact addresses advertised on an
+organization’s website.</p>
+<p>See the <i>PMM Online Help</i> for information.</p>
+
+</li><li><p><strong>Database and authentication changes</strong></p>
+<ul>
+<li><p>The default database server delivered with the installation
+software for new customers uses SQL Server 2005 Express which provides
+a larger maximum database size, and additional management
+functionality. The database server for existing customers is unchanged
+from MSDE.</p></li>
+<p></p>
+
+
+<li><p>In addition to SQL Server authentication supported in previous versions, this release supports
+Windows Authentication for MIMEsweeper for SMTP's database operations. 
+If upgrading, Windows Authentication can be configured after installation using the System Maintenance application. 
+For a new installation, Windows Authentication is available for selection in the installation procedure.</p></li>
+</ul>
+<p>In the <i>Getting Started Guide</i>, in 
+<i>Chapter 3, Installation</i>, see the <i>Preparing the Database Environment</i> section for information on 
+setting up the database software, and configuring your MIMEsweeper software to use Windows authentication. </p>
+</li>
+
+<li><p><strong>Lexical Analysis Enhancements</strong></p>
+<p>MIMEsweeper for SMTP lexical analysis now supports PERL/POSIX syntax for defining regular expressions
+to detect text. The REGEXP syntax available in previous versions is also supported. 
+In addition, lexical analysis can now detect Credit Card Numbers, US Social Security Numbers, and 
+UK National Insurance Numbers. Performance has also been improved.</p>
+<p>In the <i>MIMEsweeper for SMTP Reference</i>, in <i>Chapter 5, References</i>, see <i>Expression List Properties</i> and 
+<i>Configuring Regular
+(PERL/POSIX) Expressions</i> for more information.</p>
+</li>
+
+<li><p><strong>Document Analysis Enhancements</strong></p>
+<p>You can now detect text in:</p>
+<ul>
+<li>Headers, footers and document properties in a Microsoft Office document.</li>
+<li>Headers, footers and document properties in an OpenOffice document.</li>
+<li>Document properties in a PDF document.</li>
+</ul>
+<p>We now support decomposition of Office 2007 and OpenOffice file formats.</p>
+<p>In the <i>MIMEsweeper for SMTP Reference</i>, in <i>Chapter 4, Scenarios</i>, see <i>Text Analyzer</i> for more information.</p></li>
+
+<li><p><strong>Multi-Domain Management</strong></p>
+<p>You can now configure MIMEsweeper for SMTP Mail administrators to
+restrict the mail domains within the organization that they can manage.
+Administrators can manage only those messages originating from, or
+addressed to, the mail domains for which
+they have administration rights. The MIMEsweeper 5.3 system can support
+in excess of 1000 domains.</p>
+<p>See the <i>MIMEsweeper Manager Security Center</i> online help for details. </p></li>
+
+<li><p><strong>Additional formats</strong></p>
+<p>The Data Types scenario now has the ability to detect the following additional formats:</p>
+<ul>
+<li><p>3GP Multimedia.</p></li>
+<li><p>Advanced System Format (ASF).</p></li>
+<li><p>Flash video (FV).</p></li>
+<li><p>Free Lossless Audio Code (FLAC).</p></li>
+<li><p>Google video (GV).</p></li>
+<li><p>Monkey’s Audio (APE).</p></li>
+<li><p>MP4 Audio.</p></li>
+<li><p>Ogg Vorbis compressed audio file.</p></li>
+<li><p>PlayStation Portable Multimedia.</p></li>
+<li><p>Sun Sound File (AU).</p></li>
+<li><p>HTML encoded within RTF (HTML).</p></li>
+<li><p>HTML with script (HTML).</p></li>
+<li><p>Microsoft Office Embedded Objects.</p></li>
+<li><p>Microsoft Office editdata.mso.</p></li>
+<li><p>Microsoft Outlook file attachment.</p></li>
+<li><p>Open Office Calc Document (ODS).</p></li>
+<li><p>Open Office Chart.</p></li>
+<li><p>Open Office Graphic Document (ODG).</p></li>
+<li><p>Open Office Impress Document (ODP).</p></li>
+<li><p>Open Office Master Document (ODM).</p></li>
+<li><p>Open Office Math Document (ODF).</p></li>
+<li><p>Open Office Writer Document (ODT).</p></li>
+<li><p>Open Package Convention.</p></li>
+<li><p>Pattern Matched.</p></li>
+<li><p>StarView Metafile (SVM).</p></li>
+<li><p>ALSI Protected Documents.</p></li>
+<li><p>NEC InfoCage protected format.</p></li>
+<li><p>Pointsec encrypted files.</p></li>
+<li><p>Microsoft Visio Document (VSD).</p></li>
+<li><p>Initial Graphics Exchange Specification (IGES).</p></li>
+</ul>
+
+<p>In the <i>MIMEsweeper for SMTP Reference</i>, see <i>Appendix B, Data Types</i> for more information. </p></li>
+
+<li><p><strong>Pattern Matcher Enhancements</strong></p>
+<p>The Pattern Matcher scenario now has the additional ability to search a file, in reverse, from the end of the 
+file to the start with an optional offset back from the end of file marker. 
+The Text Analyzer has also changed to reflect changes to the scanning criteria.</p>
+<p>In the <i>MIMEsweeper for SMTP Reference</i>, in <i>Chapter 4: Scenarios</i>,
+see <i>Pattern Matcher</i> for more information. </p></li>
+</ul>
+
+<p class="backto"><a href="#ToC">Back to <cite>Contents</cite></a>
+</p><hr align="right" size="2" width="100%">
+
+<h1><a name="53Install">Installing MIMEsweeper for SMTP version 5.3</a></h1>
+<p>This section details the issues involved when installing MIMEsweeper for SMTP 5.3:</p>
+<ul>
+<li><a href="#AddingLicense">Adding new license information</a></li>
+<li><a href="#AdobeAcrobat">Adobe Reader</a></li>
+<li><a href="#DisableAV1">Disabling Anti-virus software</a></li>
+<li><a href="#StandbyDeployServ">Standby MIMEsweeper server (Available in Advanced and Enterprise versions only)</a></li>
+<li><a href="#Virtualization">Running Clearswift products within virtualization software</a></li>
+<li><a href="#webservernamingissues">Web server naming issues</a></li>
+</ul><p></p>
+ 
+<p class="backto"><a href="#ToC">Back to <cite>Contents</cite></a>
+</p><hr align="right" size="1" width="60%">
+
+
+<h3><a name="AddingLicense">Adding new license information</a></h3>
+<!-- <p>Added in response to R Burroughs' review, Nov 21</p> -->
+<ul><li><p>The MIMEsweeper for SMTP 5.3 installation requires an
+updated license key. Before you commence the installation, ensure that
+you have to hand:</p>
+
+<ul>
+<li>A valid license key for MIMEsweeper for SMTP 5.3</li>
+<li><p>A valid IMAGEmanager for 5.3 license key, if you intend to use the IMAGEmanager scenario to analyze images.</p></li>
+</ul>
+</li></ul>
+<p class="backto"><a href="#53Install">Back to <cite>Installing MIMEsweeper for SMTP version 5.3</cite></a>
+</p><hr align="right" size="1" width="80%">
+
+
+<h3><a name="AdobeAcrobat">Adobe Reader</a></h3>
+<ul>
+<li>To read the <i>MIMEsweeper for SMTP 5.3 Getting Started Guide</i> and the <i>MIMEsweeper for SMTP 5.3
+ Reference</i>, you must have Adobe Reader installed on your system. You can download the latest copy from the <a href="http://www.adobe.com/products/acrobat/readstep2_allversions.html">Adobe Systems</a> website.</li>
+</ul>
+<p class="backto"><a href="#53Install">Back to <cite>Installing MIMEsweeper for SMTP version 5.3</cite></a>
+</p><hr align="right" size="1" width="80%">
+
+
+<h3><a name="DisableAV1">Disabling Anti-virus software</a></h3>
+<ul>
+<li>Before installing MIMEsweeper for SMTP, disable any anti-virus software that is running
+on the server. When you complete the installation, re-enable the anti-virus software. 
+This prevents any conflicts that may arise during the installation process.</li>
+</ul>
+<p class="backto"><a href="#53Install">Back to <cite>Installing MIMEsweeper for SMTP version 5.3</cite></a>
+</p><hr align="right" size="1" width="80%">
+
+<h3><a name="StandbyDeployServ">Standby MIMEsweeper server (Available in Advanced and Enterprise versions only)</a></h3>
+<!-- <p>PR23692 saw</p> -->
+<ul>
+<li>For deployments that require high availability, it is recommended
+that you set up a standby server when planning your MIMEsweeper
+deployment, to provide a contingency machine in the event of an
+emergency or increased message processing activity. This additional
+server can be installed with all or any of the MIMEsweeper deployment
+components, and can be promoted to Primary Configuration Server (PCS)
+status assuming the MIMEsweeper machine meets the minimum requirements
+as specified in the <a href="http://download2.mimesweeper.com//TechnicalDocumentation/SmtpPrerequisites53.htm">Prerequisites for MIMEsweeper for SMTP 5.3</a>  release document.</li>
+
+<h4>To set up a standby server in your MIMEsweeper deployment:</h4>
+<p>To set up a standby server, you must follow the installation Route 4 as specified in the <i>MIMEsweeper for SMTP Getting Started Guide</i>.</p> 
+
+<p>This installation route describes the process for configuring a
+custom install type then installing an additional server. The
+MIMEsweeper machine can be set up with all the MIMEsweeper deployment
+components but, if preferred, the machine can be disabled.</p>
+</ul>
+<p class="backto"><a href="#53Install">Back to <cite>Installing MIMEsweeper for SMTP version 5.3</cite></a>
+</p><hr align="right" size="1" width="80%">
+
+<h3><a name="Virtualization">Running Clearswift products within virtualization software</a></h3>
+<ul>
+	<li>Although the Clearswift products will install and function
+adequately within virtualization software, the performance
+characteristics of virtual machine hardware can be significantly
+different from dedicated hardware solutions. The potential adverse
+effects on the operational running of Clearswift products on virtual
+hardware solutions have currently not been fully quantified.</li>
+</ul>
+
+
+<p class="backto"><a href="#53Install">Back to <cite>Installing MIMEsweeper for SMTP version 5.3</cite></a>
+</p><hr align="right" size="1" width="80%">
+
+<h3><a name="webservernamingissues">Web server naming issues</a></h3>
+<!-- <p>PR23026</p> -->
+<ul><li><p>In the MIMEsweeper for SMTP installation, web servers that host web applications, that is MIMEsweeper 
+Manager, and Personal Message Manager (PMM) should not have any underscore characters (_)
+in their names. An underscore in a web server's name can affect the way that Internet Explorer maintains
+session state and cookie information.</p></li></ul>
+
+<p class="backto"><a href="#53Install">Back to <cite>Installing MIMEsweeper for SMTP version 5.3</cite></a>
+</p><hr align="right" size="2" width="100%">
+
+
+<h1><a name="53Upgrade">Upgrading to MIMEsweeper for SMTP 5.3</a></h1>
+<p>This section details the issues involved when upgrading the software from previous versions:</p>
+
+<ul>
+ <li><a href="#Upgrade1">Installation</a></li>
+ <li><a href="#PR28902">Invalid Expressions in the Expression List references</a></li>
+ </ul>
+
+<p class="backto"><a href="#ToC">Back to <cite>Contents</cite></a>
+</p><hr align="right" size="1" width="60%">
+
+<h3><a name="Upgrade1">Installation</a></h3>
+<!--NO PR - SW-->
+<ul>
+<li>
+<p>The installation can upgrade from any combination of MIMEsweeper for SMTP 5.2 with 
+Service Pack 2 or above. For a new installation, see the MIMEsweeper™ for SMTP 5.3 Getting Started Guide.</p></li>
+</ul>
+
+<p class="backto"><a href="#53Upgrade">Back to <cite>Upgrading to MIMEsweeper for SMTP 5.3</cite></a>
+</p><hr align="right" size="1" width="80%">
+
+
+<h3><a name="PR28902">Invalid Expressions in the Expression List references</a></h3>
+<!--PR28902 - SW-->
+<ul>
+<li><p>When it starts, the MIMEsweeper for SMTP Security Service now
+checks for invalid expressions defined in any Expression List
+references. </p>
+<p>In MIMEsweeper 5.3 the Policy Editor now prevents you from entering
+an invalid expression. In earlier versions, invalid expressions were
+allowed. If you use Expression Lists in your policy, when you complete
+an upgrade from the previous version, check the MIMEsweeper Log for
+evidence of invalid expressions.</p>
+<p>To check the log:</p>
+
+<ol>
+<li>From MIMEsweeper Manager, access the System Center, and click on a server link to open the server's page.</li>
+<li>On the server's page, click on the <strong>Logs</strong> tab, and from the <strong>Log Name:</strong> drop-down list, select <strong>MIMEsweeper log</strong> to display the log entries.</li>
+<li>Look for entries of the form:<br><code>There is a problem with the <b><i>Expression name</i></b> user-defined expression list - invalid expressions will be ignored.</code><br>
+This is followed by an error message indicating the expression is invalid. A further error message describes the problem.<br>
+These errors do not prevent the Security Service from starting, and the invalid expressions are ignored.
+</li>
+</ol><p></p>
+</li>
+</ul>
+
+<p class="backto"><a href="#53Upgrade">Back to <cite>Upgrading to MIMEsweeper for SMTP 5.3</cite></a>
+</p><hr align="right" size="2" width="100%">
+
+<h1><a name="problemsknown">Problems known in this release</a></h1>
+<p>Problems exist in the following areas of this release of MIMEsweeper for SMTP 5.3:</p>
+<!-- AUTHORS: As a general rule, put topics in alpha order if there is no logical or significant order you must observe. -->
+
+<ul>
+	<li><a href="#PR28517">Using the System Maintenance Utility to move the Operations Database</a></li>
+	<li><a href="#PR29368A">Quarantine Messages Batch Delete operation can sometimes fail to complete</a></li>
+	<li><a href="#PR29368B">Manager and System Health displays can sometimes fail to initialize, or can fail to refresh after initialization</a></li>
+	<li><a href="#PR29515">MIMEsweeper Manager will not initialize when using Windows 2008</a></li>
+	<li><a href="#PR29574">Windows Server 2008 Uninstall authorization problem</a></li>
+	<li><a href="#PR29564">Authorization problems when running the System Maintenance utility on Windows Server 2008 machines</a></li>
+	<li><a href="#PR29548">Security Center, Security Permissions, Securable Items display</a></li>
+	<li><a href="#PR29514">Using Personal Message Manager (PMM) in NTLM environments</a></li>
+	<li><a href="#PR29584">New PMM accounts with Windows Integrated PMM</a></li>
+	<li><a href="#PR28742">Installation and System Maintenance wizards cannot access SQL Server</a></li>
+	<li><a href="#ER29584">Anti-virus real-time scanning</a></li>
+	<li><a href="#PR29679">Unable to create Audit database when using a named instance of SQL Server and Dynamic Ports</a></li>
+	<li><a href="#PR28511">Task failure when using System Maintenance Utility tasks</a></li>
+</ul>
+<p class="backto"><a href="#ToC">Back to <cite>Contents</cite></a>
+</p><hr align="right" size="1" width="60%">
+
+<!-- AUTHORS: The following problem area topics are laid out in 3 different ways. Choose the layout or layouts most suitable for describing problems with your beta product. -->
+<!-- Include PR number, if appropriate, in comment by relevant text. -->
+
+<h2><a name="PR28517">Using the System Maintenance Utility to move the Operations Database</a></h2>
+<!--PR28517 - SW-->
+<ul><li><p>If you attempt to use the System Maintenance Utility to move the Operations Database, ensure that the database software 
+on the target machine is the same version or higher than the database software on the source machine. If the target machine 
+database software version is lower than the source machine software version, the move process fails. 
+</p></li></ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR29368A">Quarantine Messages Batch Delete operation can sometimes fail to complete</a></h2>
+<!--PR29368 - SW-->
+<ul>
+<li>With some browser configurations, the MIMEsweeper Manager
+Quarantine Messages Batch Delete operation can fail to complete, and
+the Batch Operation Status screen fails to close.
+If this problem occurs, configure Internet Explorer as follows:</li>
+<ol>
+<br>
+<li>From the <strong>Tools</strong> menu, select <strong>Internet Options</strong>.</li>
+<li>On the <strong>Internet Options</strong> page, select the <strong>Security</strong> tab, and then click the <strong>Custom level</strong> button.</li>
+<li>In the Settings list, scroll down to the Miscellaneous, Allow META REFRESH item.</li>
+<li>Select the <strong>Enable</strong> radio button for the item, and then click <strong>OK</strong>, and <strong>OK</strong> again to save the settings.</li>
+</ol>
+
+</ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR29368B">Manager and System Health displays can sometimes fail to initialize, or can fail to refresh after initialization</a></h2>
+<!--PR29368 - SW-->
+<ul>
+<li>As with the MIMEsweeper Manager Quarantine Messages Batch Delete
+operation issue, this is caused by the Internet Explorer browser
+configurations.
+If this problem occurs, configure Internet Explorer as follows:</li>
+<ol>
+<br>
+<li>From the <strong>Tools</strong> menu, select <strong>Internet Options</strong>.</li>
+<li>On the <strong>Internet Options</strong> page, select the <strong>Security</strong> tab, and then for the appropriate Security zone click the <strong>Custom level</strong> button.</li>
+<li>In the Settings list, scroll down to the Miscellaneous, Allow META REFRESH item, and select the <strong>Enable</strong> radio button for the item.</li>
+<li>Scroll further down the list to the Scripting, Active scripting item and select the <strong>Enable</strong> radio button for the item.</li>
+<li>Click <strong>OK</strong>, and <strong>OK</strong> again to save the settings.</li>
+</ol>
+
+</ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR29515">MIMEsweeper Manager will not initialize when using Windows 2008</a></h2>
+<!--PR29515 - SW-->
+<ul>
+<li>MIMEsweeper Manager can fail to initialize when using Windows 2008 due to the Enhanced Security Configuration option being 
+enabled. If this problem occurs, configure the Internet Explorer Enhanced Security Configuration (ESC) as follows:</li>
+<ol>
+<br>
+<li>On the <strong>Internet Explorer Enhanced Security Configuration</strong> page, select <strong>Off</strong> for both Administrators and Users.</li>
+<li>Click <strong>OK</strong> to save the settings.</li>
+</ol>
+
+</ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR29574">Windows Server 2008 Uninstall authorization problem</a></h2>
+<!--PR29574 - SW-->
+<ul>
+<li>If you attempt to uninstall MIMEsweeper for SMTP running on a
+Windows Server 2008 platform using the Add/Remove Programs option, you
+may receive an <b>Insufficient Access Permissions</b> error. This is caused by the manner in which Windows Server 2008 handles access permissions. </li>
+
+<p>To avoid this problem, you need to retain a copy of the MIMEsweeper
+for SMTP software that you used to install the software. To uninstall
+the software:
+</p><ol>
+<li>Run the installation software's <strong>setup.exe</strong> program. </li>
+<li>From the Program Maintenance screen, select the <b>Remove</b> option, and follow the prompts to remove the application.</li>
+</ol>
+
+</ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR29564"></a>Authorization problems when running the System Maintenance utility on Windows Server 2008 machines</h2>
+<!--PR29564 - SW-->
+<ul><li>On Windows Server 2008 systems that have the User Account
+Control (UAC) feature enabled, you must run the System Maintenance
+Utility with Administrator privileges.
+<p>To run the utility with administrator privileges, right-click the utility's shortcut, and from the menu, select <strong>Run as Administrator</strong>.</p>
+
+<p>To configure the shortcut to the System Maintenance Utility application so that you can run it as normal from the Start menu:</p>
+<p>
+</p><ol><li>Locate the shortcut to the program: In the <strong>Start</strong>, <b>Programs</b> menu, locate and right-click the <strong>System Maintenance Utility</strong> item, and select <strong>Properties</strong>. The shortcut's location is available under the <strong>General</strong> tab.</li>
+
+<li>Configure administrator privileges for the shortcut:
+<ol type="a">
+<li>Right-click the System Maintenance Utility shortcut, and from the drop-down list, select <strong>Properties</strong>.</li> 
+<li>On the Properties dialog box, select the <b>Compatibility</b> tab, and select the <strong>Run this program as an administrator</strong> checkbox.</li>
+<li>Click <strong>OK</strong> to save the configuration.</li>
+</ol>
+</li></ol>
+<p></p> 
+</li>
+</ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR29548">Security Center, Security Permissions, Securable Items display</a></h2>
+<!--PR29548 - SW-->
+<ul>
+<li><p>In MIMEsweeper Manager, on the Security, Permissions page, the
+list of securable items can display in HTML code format rather than as
+a list of items. </p>
+<p>If this problem occurs, configure your browser as follows:
+</p><ol>
+<li>From the <strong>Tools</strong> menu, select <strong>Internet Options</strong> to display the Internet Options page.</li>
+<li>On the Internet Options page, select the <strong>Security</strong> tab and click the <strong>Custom level</strong> button.</li>
+<li>Under the Active X controls and plug-ins option, locate the <strong>Binary and script behaviors</strong> option and enable it.</li>
+<li>Click <strong>OK</strong> and <b>OK</b> again to save the settings.</li>
+</ol>
+
+<p></p>
+</li>
+</ul>
+
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR29514">Using Personal Message Manager (PMM) in NTLM environments</a></h2>
+<!--PR29514 - SW-->
+<ul>
+<li><p>In environments that use NTLM, with some configuration combinations, users cannot access their PMM accounts. This can occur if:
+</p><ul>
+<li>MIMEsweeper for SMTP uses Windows Authentication.</li>
+<li>PMM is set up to use Integrated Windows Authentication.</li>
+<li>The MIMEsweeper for SMTP Web Server is logged on using a local administrator account.</li>
+</ul>
+<p></p>
+<p>In these environments, the user account under which MIMEsweeper for
+SMTP Web Server operates must be logged in as a network administrator.</p></li>
+</ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+
+<h2><a name="PR29584">New PMM accounts with Windows Integrated PMM</a></h2>
+<!--PR29584 - SW-->
+<ul><li><p>In multi-domain environments that use Windows Integrated
+PMM, new account creation can fail if the mail domain part of a user's
+email address is not defined in the Policy Editor's SMTP Relay Domain
+settings. For users with multiple email addresses, the system is unable
+to create a PMM account for both the primary address, and any secondary
+mail addresses for these users. </p>
+
+<p>If a new PMM user is unable to login to PMM, check that the user's
+configuration meets the above requirements. You can check a user's
+primary and secondary addresses using the <b>Active Directory Users and Computers</b> application that runs your Primary Directory Server. To determine your Primary Directory Server:
+</p><ol>
+<li>In MIMEsweeper Manager, access the Message Center and click the <b>Configure PMM</b> button. </li>
+<li>On the Configure Personal Message Manager page, select the
+Authentication Settings tab to display the directory server information.</li>
+</ol>
+</li></ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR28742">Installation and System Maintenance wizards cannot access SQL Server</a></h2>
+<!--PR28742 - SW-->
+<ul>
+<li>The MIMEsweeper for SMTP Installation Wizard, and the System
+Maintenance utility are sometimes unable to access a SQL Server 2005
+database server.
+<p>In this event, start the SQL Server Browser service on the target
+database server, to publish the database server's availability. This
+service can be started from the Services management console within the
+Control Panel's Administrative Tools.</p>
+</li>
+</ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="ER29584">Anti-virus real-time scanning</a></h2>
+<!--ER29584 - SW--> 
+<ul><li><p>If a real-time anti-virus scanner is installed on your server, not only should it be disabled during installation, 
+but it should also be configured to exclude the areas of the disk used by the 5.3 software.</p>
+</li></ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR29679">Unable to create Audit database when using a named instance of SQL Server and Dynamic Ports</a></h2>
+<!--PR29679 - SW-->
+<ul>
+<li>
+<p>When the MIMEsweeper for 5.3 installer is used to install SQLExpress under an Instance Name (not the default option), 
+SQLExpress is configured to use Dynamic Ports. Dynamic Port allocation means that SQL Server will select an available port 
+when the service is started that may change if the service is subsequently stopped and restarted.</p>
+<p>In order for MIMEsweeper to access its SQL databases when running with Dynamic Ports, the SQL Server Browser Service 
+must be enabled and started. This service maps requests from applications for a specific SQL instance to the port number 
+that is currently assigned to that instance.</p>
+<p>When configuring MIMEsweeper Auditing and Message Tracking to use a Named Instance of SQLExpress,  
+the auditing and tracking wizards request an Instance Name AND Port to define the connection. 
+If Dynamic Ports are in use, this causes problems because the current port used by SQL may change at a later date.</p> 
+<p>To use a Named Instance with Dynamic Ports:</p> 
+<ul>
+<li>Select the <strong>Database Connection</strong> tab of the <strong>Auditing and Message Tracking</strong> wizards.</li>
+<li>In the <strong>Specify Server</strong> edit box, enter the <strong>Server Name</strong> followed by a backslash followed by the <strong>Instance Name</strong>, 
+i.e. <code>Server\Instance</code>, for example, <code>DBServer\MIMEsweeper</code>.<p></p>
+</li>
+</ul>
+
+<h3>Configuring SQLExpress to use fixed ports</h3>
+<p>To configure SQLExpress to use a fixed port instead of dynamic ports you should:</p>
+<ol>
+<li>Run the SQL Server Configuration Manager.</li>
+<li>Under the <strong>SQL Server 2005 network Configuration</strong> node, click <strong>Protocols for <i>InstanceName</i></strong> (where <i>InstanceName</i> is the instance of 
+SQLExpress).</li>
+<li>Double-click <strong>TCP/IP</strong> to display the <strong>Properties</strong> dialog.</li>
+<li>Click the <strong>IP Addresses</strong> tab.</li>
+<li>In the <strong>IP All</strong> section, change the <strong>TCP Dynamic Ports</strong> number to zero.</li>
+<li>Type the required port number in <strong>TCP Port</strong>, for example, 1433.</li>
+<li>Click <strong>Apply</strong> and then <strong>OK</strong>.</li>
+<li>The service running this instance of SQL will need to be restarted for the changes to take effect. 
+The service will be called <code>SQL Server (<i>InstanceName</i>)</code>, for example, <code>SQL Server (SQLEXPRESS)</code>.</li>
+</ol>
+</li>
+</ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR28511">Task failure when using System Maintenance Utility tasks</a></h2>
+<!--PR28511 - SW--> 
+
+<ul><li><p>An error message may be displayed when using the following System Maintenance Utility tasks:</p></li>
+<ul>
+<li>Make this machine the Primary Configuration Server (Advanced License only).</li>
+<li>Move the Operations Database to another SQL Server (Advanced License only).</li>
+<li>Make this machine the Primary Configuration Server and Operations Database host (Standard License only).</li>
+<li>Change Operations Database to use Windows Authentication.</li>
+<li>Configure Web and Audit Applications to use Windows Authentication.</li>
+</ul>
+<br>
+<p>The displayed error message will be as follows:</p>
+<br>
+<code>Failed to grant the 'Log on as a service' permission to user 'DOMAIN\User'. Please use the Local Security Policy 
+console to apply this manually before retrying this task.</code>
+<br><br>
+<p>To rectify this problem, you need to grant the <strong>Log on as a service</strong> security right to the Application 
+Service Account you entered during the task wizard, as follows:</p>
+<ol>
+<li>Open the <strong>Control Panel</strong>, select <strong>Administrative Tools</strong> then <strong>Local Security Policy</strong> management console.</li>
+<li>Drill down to <strong>User Rights Assignment</strong> within <strong>Local Policies</strong>.</li>
+<li>Open the <strong>Log on as a service</strong> properties page in the right-hand pane.</li>
+<li>Click <strong>Add User or Group</strong> and enter your Application Service Account.</li>
+<li>Click <strong>Apply</strong> to save the changes.</li>
+</ol>
+<br>
+<p>After making this change, you should retry the failed task.</p>
+</ul>
+
+<p class="backto"><a href="#problemsknown">Back to <cite>Problems known in this release</cite></a>
+</p><hr align="right" size="2" width="100%"><p></p>
+
+
+<h1><a name="DocErrors">Documentation and Help errors and omissions</a></h1>
+<ul>
+<li><a href="#PR29571">Installing pre-requisite software in a Windows Server 2008 environment</a></li>
+<li><a href="#PR29392">Text processing results view</a></li>
+<li><a href="#PR28391">Text Analyzer scenario content</a></li>
+</ul>
+
+<p class="backto"><a href="#ToC">Back to <cite>Contents</cite></a>
+</p><hr align="right" size="1" width="60%"><p></p>
+
+
+<h2><a name="PR29571">Installing pre-requisite software in a Windows Server 2008 environment</a></h2>
+<!--PR29571 / PR29512 - SW-->
+<ul><li><p>The method provided for installing the Message Queueing and
+IIS pre-requisite software is different for Windows Server 2008
+environments. </p>
+<h3>Activating pre-requisite software</h3>
+<p>In a Windows Server 2008 environment, select the activation checkbox in the following locations:</p>
+<ul>
+<li><strong>Message Queueing</strong> within <strong>Features</strong> in the <strong>Server Manager</strong>.</li>
+<li>After adding <strong>Web Server (IIS)</strong> as a role in the <strong>Server Manager</strong>, activate the following role services:</li>
+<ul>
+<li><strong>ASP.NET</strong> within <strong>Roles Services</strong> within <strong>Web Server (IIS)</strong> in the<strong> Server Manager</strong>.</li>
+<li><strong>Windows Authentication</strong> within <strong>Security</strong> within <strong>Roles Services</strong> within <strong>Web Server (IIS)</strong> in the<strong> Server Manager</strong>.</li>
+<li><strong>IIS 6 Metabase Compatibility</strong> within <strong>IIS 6 Management Compatibility</strong> within <strong>Management Tools</strong> within <strong>Roles Services</strong> within <strong>Web Server (IIS)</strong> in the<strong> Server Manager</strong>.</li>
+</ul>
+</ul>
+</li>
+<p>For further information, refer to the Windows Server 2008 system documentation.</p>
+</ul>
+
+
+<p class="backto"><a href="#DocErrors">Back to <cite>Documentation and Help errors and omissions</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR29392">Text processing results view</a></h2>
+<!--PR29392 - SW-->
+<ul>
+<li>The help topic that describes the Text Analysis results screen does not describe the <b>c:</b> and the <b>w:</b> tags.
+
+<p></p><ul>
+<li>The <b>c:</b> tag represents the position of the matching text as a character offset from the start of text, starting from zero.</li>
+<li>The <b>w:</b> tag represents the offset position of the word that contains the matching text, from the start of the text.</li>
+</ul><p></p></li>
+
+</ul>
+
+<p class="backto"><a href="#DocErrors">Back to <cite>Documentation and Help errors and omissions</cite></a>
+</p><hr align="right" size="1" width="80%"><p></p>
+
+<h2><a name="PR28391">Text Analyzer scenario content</a></h2>
+<!--PR28391 - SW-->
+<ul>
+<li>In the Policy Editor online help, in the topic that covers
+configuring the Text Analyzer scenario, the help includes information
+for the <strong>Scan areas</strong> tab. The topic states that the <strong>Scan areas</strong> tab includes an option for configuring  Microsoft Office document areas. 
+<p>In MIMEsweeper for SMTP 5.3, this option has been renamed to <strong>Documents</strong>.</p>
+</li>
+</ul>
+
+<p class="backto"><a href="#DocErrors">Back to <cite>Documentation and Help errors and omissions</cite></a></p>
+<hr align="right" size="2" width="100%"><p></p>
+
+
+<!-- AUTHORS: Update this information at each draft (using _c) and for final release (a.b only) -->
+<blockquote>
+    <blockquote>Revision&nbsp;1.0 July 2008<br>
+	Published by Clearswift Ltd. July 2008<br>
+	© 2008 Clearswift Ltd<br>
+	All rights reserved</blockquote>
+	
+    <blockquote>The materials contained herein are the sole property of 
+      Clearswift Ltd. No part of this publication may be reproduced or 
+      disseminated or transmitted in any form or by any means electronic, 
+      mechanical, photocopying, recording, or otherwise stored in any 
+      retrievable system or otherwise used in any manner whatsoever without the 
+      express permission of Clearswift Ltd.</blockquote>
+	  
+    <blockquote>Information in this document contains references to fictional 
+      persons, companies, products and events for illustrative purposes. Any 
+      similarities to real persons, companies, products and events is 
+      coincidental and Clearswift shall not be liable for any loss suffered as a 
+      result of such similarity.</blockquote>
+	
+    <blockquote>Licensed under US Patent No. 5,623,600</blockquote>
+	
+    <blockquote>Protected by UK Patent 2,366,706</blockquote>
+		  
+    <blockquote>The Clearswift Logo and Clearswift product names including 
+    MIMEsweeper<sup><font size="-2">TM</font></sup>, MAILsweeper<sup><font size="-2">TM</font></sup>, e-Sweeper<sup><font size="-2">TM</font></sup>, IMAGEmanager<sup><font size="-2">TM</font></sup>, REMOTEmanager<sup><font size="-2">TM</font></sup>, 
+    SECRETsweeper<sup><font size="-2">TM</font></sup>, ENTERPRISEsuite<sup><font size="-2">TM</font></sup>, ClearPoint<sup><font size="-2">TM</font></sup>, ClearSecure<sup><font size="-2">TM</font></sup>, ClearEdge<sup><font size="-2">TM</font></sup>, ClearBase<sup><font size="-2">TM</font></sup>, 
+    ClearSurf<sup><font size="-2">TM</font></sup>, DeepSecure<sup><font size="-2">TM</font></sup>, Bastion<sup><font size="-2">TM</font></sup><font size="-2"> II<sup></sup></font><sup></sup>, X.400 Filter<sup><font size="-2">TM</font></sup>, FlashPoint<sup><font size="-2">TM</font></sup>, 
+    ClearDetect<sup><font size="-2">TM</font></sup>, ClearSupport<sup><font size="-2">TM</font></sup>, ClearLearning<sup><font size="-2">TM</font></sup>
+are trademarks or registered trademarks of Clearswift Ltd. All other
+trademarks are the property of their respective owners. Clearswift Ltd.
+(registered number 3367495) is registered in Britain with registered
+offices at 1310 Waterside, Arlington Business Park, Theale, Reading,
+Berkshire RG7 4SA, England. Users should ensure that they comply with
+all national legislation regarding the export, import, and use of
+cryptography.</blockquote>
+	</blockquote>
+	
+<hr align="right" size="2" width="100%"><p></p>
+
+</body></html>
