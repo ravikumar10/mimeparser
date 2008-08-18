@@ -1813,33 +1813,409 @@ realizacjê wcze¶niej wymienionych zadañ. Serwisy te to:
 
 \includegraphics[scale=0.6]{mimesweeper_services.png}
 
-\subsubsection{Aladdin eSafe}
+\subsubsection{Aladdin - eSafe Mail}
 
-Aladdin eSafe
+eSafe firmy Aladdin to bardzo elastyczne i ³atwe w zarz±dzaniu rozwi±zanie dla
+mniejszych i wiêkszych systemów informatycznych. Pozwala na instalacjê w wielu
+konfiguracjach w zale¿no¶ci od potrzeb klienta. Sam produkt eSafe zawiera
+w sobie:
+\begin{itemize}
+  \item eSafe Gateway - wprowadza dodatkowo warstwê bezpieczeñstwa. W
+  przyk³adowym modelu mo¿e ona byæ umieszczona za firewallem przed serwerem
+  proxy. Chroni sieæ przed atakami, wirusami, botami czy trojanami.
+  \item eSafe Web - ochrona przed wszystkimi atakami zwi±zanymi z technologiami
+  webowymi. Poza standardow± ochron± przed wirusami, oprogramowaniem ¶ledz±cym
+  u¿ytkowników (spyware) czy filtrowaniem adresów URL, rozwi±zanie to dostarcza
+  chocia¿by blokowanie znanych exploitów, politykê bezpieczeñstwa obiektów
+  ActiveX czy blokowanie stron HTML zawieraj±cymi zdefiniowane s³owa kluczowe
+  \item eSafe Web SSL - analiza szyfrowanych zawarto¶ci webowych czyli m.in.
+  inspekcja szyfrowanego ruchu (HTTPS, SSL, TLS), automatyczne uniewa¿nianie
+  cerfytikatów na podstawie CRL (Certificate Revocation List) czy obs³uga
+  blacklist i whitelist dla administratorów.
+  \item eSafe Mail - kompleksowa ochrona wiadomo¶ci email
+  \item eSafe Modules - dodatkowe modu³u rozszerzaj±ce oprogramowanie eSafe
+  takie jak:
+  \begin{itemize}
+    \item AppliFilter - monitoruje i blokuje nieautoryzowany ruch internetowy
+    aplikacji z grup takich jak P2P (peer-to-peer), IM (instant messaging) czy
+    Spyware.
+    \item URL Filtering - monitoruje i blokuje dostêp do zdefiniowanych jako
+    nieodpowiednie stron internetowych
+    \item Advanced Antispam - filtr niechcianej poczty. Wysy³a na bie¿±co
+    zapytania o weryfikacjê reputacji nadawcy, klasyfikuj±c na tej podstawie
+    pocztê oraz nadawców i ewentualnie blokuj±c przes³anie szkodliwej
+    zawarto¶ci do adresata. Uzyskiwana skuteczno¶æ osi±gnê³a w tym wzglêdzie
+    poziom 98\% przy czym badania nowego rozwi±zania wykazuj±, ¿e zakres
+    b³êdu (np. zatrzymanie oczekiwanej poczty lub poczty nie bêd±cej spamem)
+    wynosi 0,05\%.
+    \item SpywareNeutralizer - skaner oprogramowania typu spyware
+    \item Advanced Reporter - modul do tworzenia raportów na podstawie logów z
+    eSafe
+  \end{itemize}
+\end{itemize}
 
-\subsubsection{Surfcontrol Email Filter}
+Produktem zwi±zanym z filtracj± SMTP w ramach projektu eSafe, pomijaj±c
+dodatkowy modu³ do zaawansowanego zarz±dzania polityk± antypsamow± Advance
+Antispam, jest oczywi¶cie eSafe Mail. Sercem tego produktu jest Dual Engine
+Email Security. 
 
-Suontrol Email Filter
+Ten dualny silnik pracuje w trybie czasu rzeczywistego - jego zadaniem jest
+b³yskawiczna weryfikacja reputacji nadawcy wiadomo¶ci i poddanie analizie
+wzorców dystrybucji przychodz±cych maili. Rozwi±zanie monitoruje ruch w
+¶wiatowym Internecie pod k±tem wykrywania podejrzanych, masowych maili, badaj±c
+przede wszystkim kluczowe punkty przep³ywu poczty elektronicznej, m.in. w¶ród
+dostawców Internetu (ISP). Dziêki temu rozwi±zaniu eSafe mo¿e najszybciej jak
+to mo¿liwe zidentyfikowaæ spam oraz z³o¶liwe oprogramowanie, zanim trafi± one
+do firmowej sieci. Narzêdzie monitoruje masowo wysy³ane wiadomo¶ci pod k±tem
+zagro¿enia spamem, phishingiem, z³o¶liwymi kodami, jednocze¶nie bez blokowania
+np. tak¿e masowo wysy³anych i subskrybowanych newsletterów.
+W po³±czeniu z dualnym silnikiem antyspamowaym wspomnianym wcze¶niej (Advance
+Antispam), rozwi±zanie eSafe staje siê potê¿nym narzêdziem do ochrony poczty
+email.
+
+\subsubsection{Surfcontrol - E-mail Filter}
+
+Pakietu E-mail Filter firmy Surfcontrol to system kompleksowego zarz±dzania
+poczt± elektroniczn±. Dostêpny jest jako samodzielna brama SMTP lub jako
+rozszerzenie do serwera poczty Exchange firmy Microsoft. Oprogramowanie to
+umo¿liwia:
+\begin{itemize}
+  \item opanowanie spamu
+  \item ochronê danych poufnych
+  \item filtrowanie obra¼liwych tre¶ci
+  \item dodawanie kolejnych warstw ochronnych przed wirusami
+  \item optymalizacjê zasobów serwera pocztowego
+\end{itemize}
+
+Oprogramowanie E-mail Filter umo¿liwia w ramach administracji polityk±
+bezpieczeñstwa m.in.:
+\begin{itemize}
+  \item tworzenie regu³ tej polityki za pomoc± kreatora regu³
+  metod± drag-and-drop
+  \item wyodrêbnianie, usuwanie, opó¼nianie lub wysy³anie do adresata dowolnej
+  przesy³ki, która narusza wcze¶niej zdefiniowane regu³y
+  \item przegl±danie zawarto¶ci poczty przez administratorów
+  \item wprowadzenie filtrowania sieci na poziomie przedsiêbiorstwa z
+  mo¿liwo¶ci± zdalnego zarz±dzania
+  \item automatyczne powiadamianie wyznaczonej osoby o próbie naruszenia
+  polityki
+  \item generowanie raportów w zale¿no¶ci od potrzeb u¿ytkownika
+  \item filtrowanie poczty wewnêtrznej (tylko w przypadku serwera Exchange 5.5)
+  oraz wiadomo¶ci przychodz±cych/wychodz±cych
+\end{itemize}
+
+Filtrowanie tre¶ci wiadomo¶ci wykorzystuje jeden z najobszerniejszych  w bran¿y
+s³ownik w celach sugerowania potencjalnie obra¼liwych, istotnych dla firmy,
+zastrze¿onych lub innych tre¶ci wysokiego ryzyka.
+
+Firma Surfcontrol udostêpnia dodatkowe modu³y do oprogramowania E-Mail Filter.
+S± nimi:
+\begin{itemize}
+  \item Anti-Spam Agent (poprzednio: RiskFilter) - chroni firmê przed spamem
+  \item Virtual Learning Agent - chroni przed przypadkowym lub zamierzonym
+  wys³aniem poczty zawieraj±cej zastrze¿one dane
+  \item Virtual Image Agent - w oparciu o wprowadzone kryteria, filtruje
+  niew³a¶ciwe obrazki zawieraj±ce tre¶ci dla doros³ych
+  \item Anti-Virus Agent - skaner antywirusowy, który ochroni organizacjê
+  przed plag± wirusów w przesy³kach pocztowych
+\end{itemize}
 
 \subsection{Produkty open-source}
+
+Oprócz produktów komercyjnych na rynku znajduj± siê te¿ produkty darmowe. 
+
+\subsubsection{Amavisd-new i dodatkowe filtry}
+
+Amavisd-new to wysokiej jako¶ci interfejs pomiêdzy MTA, a filtrami zawarto¶ci:
+skanerem wirusów i filtrem spamu. Oprogramowanie napisane jest w jêzyku Perl.
+Komunikuje siê z MTA poprzez (E)SMTP lub LMTP (Local Mail Transfer Protocol)
+albo przy pomocy innego dodatkowego oprogramownia. 
+Czêstymi filtrami zawarto¶ci u¿ytymi wraz z amavisd-new s± chocia¿by
+SpammAssassin do walki ze spamem oraz skaner antywirusowy ClamAV.
+SpamAssassin to napisany g³ównie w perlu zestaw skryptów do skanowania
+zawarto¶ci poczty elektronicznej i oceny prawdopodobieñstwa czy dana wiadomo¶æ
+jest spamem, czy te¿ nie. W swoich oznaczeniach program stosuje metodê
+punktow±, gdzie im wy¿sza ocena, tym wiêksze prawdopodobieñstwo ¿e tre¶æ
+wiadomo¶ci jest niepo¿±dana. Posiada mo¿liwo¶æ ''uczenia siê'' wiadomo¶ci
+chcianych i nie chcianych co przy zastosowaniu odpowiedniej ilo¶ci
+przyk³adowych wiadomo¶ci pozwala na osi±gniêcie ca³kiem zadowalaj±cych efektów
+filtracji.
+Clam AntiVirus jest zestawem narzêdzi antywirusowych dla systemów UNIX,
+dostêpnym na licencji GPL oraz zaprojektowanym z my¶l± o skanowaniu wiadomo¶ci
+e-mail na poziomie serwerów pocztowych. Pakiet dostarcza wielu narzêdzi, takich
+jak elastyczny i skalowalny wielow±tkowy demon, skaner z linii poleceñ, i
+zaawansowane narzêdzie do automatycznych aktualizacji baz sygnatur wirusów.
+G³ównym elementem pakietu jest silnik antywirusowy, dostêpny w formie
+wspó³dzielonej biblioteki.
+
+\subsubsection{Smtp vilter}
+
+Smtp-vilter to filtr zawarto¶ci dla serwera smtp sendmail. Potrafi on wykryæ
+wiadomo¶ci z wirusami oraz spam. Wykryte na podstawie regu³ wiadomo¶ci mog±
+zostaæ przepuszczone, odrzucone lub zaznaczone. Filtr opiera siê na dodatkowym
+oprogramowaniu do skanowania zawarto¶ci. Komunikacja z sendmail odbywa siê
+poprzez milter API.
 
 \newpage
 
 \section{Opracowany filtr poczty SMTP}
 
+Przedstawione powy¿ej oprogramowanie komercyjne to bardzo du¿e systemy, w
+których filtrowanie wiadomo¶ci jest jednym z mniejszych programów lub modu³ów.
+Oprogramowanie to oczywi¶cie nie jest za darmo i czêsto zakupienie i wdro¿enie
+takiego systemu wi±¿e siê z niema³ymi kosztami. Firmy, które nie mog± pozwoliæ
+sobie na takie rozwi±zanie czêsto wybieraj± wspomniane produkty open-sourcowe.
+Produkty te jednak nie s± kompletne, czêsto zale¿ne s± od dodatkowych
+programów. Rozwój ich nie jest tak dynamiczny, jak w przypadku produktów
+komercyjnych, i czêsto spoczywa na g³owie tylko kilku programistów. Dlatego
+powsta³a idea stworzenia w³asnego oprogramowania zwi±zanego z filtracj±
+protoko³u SMTP. Za jêzyk programowania s³u¿±cy do implementacji projektu
+zosta³a wybrany Java.
+
 \subsection{Za³o¿enia projektu}
+
+G³ównym zadaniem oprogramowania jest udostêpnienie mo¿liwo¶ci
+segregacji wiadomo¶ci na podstawie zdefiniowanych regu³. Regu³y pozwalaj± na
+okre¶lenie jakie elementy wiadomo¶ci maj± byæ analizowane i jakie akcje podj±æ
+po analizie. Komunikacja z oprogramowaniem odbywa siê poprzez protokó³ SMTP -
+klient pragn±cy wys³aæ wiadomo¶æ do hosta X komunikuje siê najpierw z filtrem i
+jemu przekazuje wiadomo¶æ. Wiadomo¶æ taka zostaje poddana analizie i ewentualnie
+odrzucona lub przes³ana do hosta docelowego.
 
 \subsection{Modu³y projektu}
 
+Filtr sk³ada siê z nastêpuj±cych modu³ów:
+\begin{itemize}
+  \item odbieraj±cego i wysy³aj±cego
+  \item parsera wiadomo¶ci
+  \item parser regu³
+  \item analizatora wiadomo¶ci
+  \item kolejki
+\end{itemize}
+
+Ogólny schemat przep³ywu wiadomo¶ci w filtrze jest nastêpuj±cy:
+\begin{enumerate}
+  \item Wiadomo¶æ jest odbierana przez modu³ do odbierania wiadomo¶ci, a
+  nastêpnie trafia do kolejki przychodz±cej
+  \item Wiadomo¶ci z kolejki wyjmowane s± i przekazywane do analizatora.
+  Wiadomo¶ci analizowane s± wspó³bie¿nie, a ilo¶æ ich jednocze¶nie
+  procesowanych zale¿y od konfiguracji filtra.
+  \item Analizator jest ¶cisle zwi±zany z parserem wiadomo¶ci oraz parserem
+  regu³. Wyniki parsowania wiadomo¶ci i parsowania regu³ s± przekazywane do
+  analizatora w postaci odpowiednio zdefiniowanych struktur. Na tej podstawie
+  analizator decyduje jak± akcjê podj±æ. Mo¿liwe s± 3 scenariusze:
+  \begin{itemize}
+    \item wiadomo¶æ zostanie zatrzymana przez filtr
+    \item wiadomo¶æ zostanie przepuszczona i przekazana dalej bez ¿adnych zmian
+    \item wiadomo¶æ zostanie przepuszczona, a jej struktura ulegnie zmianie -
+    dodane zostan± odpowiednie nag³ówki
+  \end{itemize}
+  \item W przypadku przepuszczenia wiadomo¶ci przekazywana jest ona do kolejnej
+  kolejki wychodz±cej
+  \item Wiadomo¶ci z kolejki wychodz±cej obs³ugiwane s± przez modu³ wysy³aj±cy.
+  Zajmuje siê on wyjmowaniem wiadomo¶ci z kolejki i wysy³aniem ich do hosta
+  docelowego. Wiadomo¶ci z tej kolejki obs³ugiwane s± wspó³bie¿nie, a liczba
+  równocze¶nie procesowanych wiadomo¶ci zale¿y od konfiguracji filtra. Gdy
+  wiadomo¶æ zostanie poprawnie wys³ana usuwana jest z kolejki. W przypadku
+  nieudanego wys³ania wiadomo¶ci jest ona tak¿e usuwana z kolejki - wielokrotne
+  próby wys³ania wiadomo¶ci nie s± obs³ugiwane.
+\end{enumerate}
+
+Rysunek jak to wygl±da.
+
 \subsubsection{Parser wiadomo¶ci}
+
+Parser wiadomo¶ci to g³ówna czê¶æ projektu - najbardziej wymagaj±ca
+programistycznie i najistotniejsza w sensie dalszej analizy wiadomo¶ci. Na jego
+potrzeby stworzone zosta³y nastêpuj±ce struktury (wyra¿one klasami w jêzyku
+Java):
+\begin{itemize}
+  \item MimeMessage - g³ówna klasa reprezentuj±ca wiadomo¶æ email (typu MIME).
+  Klasa ta posiada referencjê na listê obiektów typu MimeMessageHeader
+  reprezentuj±c± nag³ówki wiadomo¶ci oraz referencjê do obiektu klasy Part 
+  \item Part - jest to abstrakcyjna klasa, z której dziedzicz± MimePart oraz
+  MimeMultiPart. Instancje tej klasy reprezentuj± cia³o (czê¶æ) wiadomo¶ci,
+  które nastêpuje po nag³ówkach
+  \item MimePart - klasa ta reprezentuje czê¶ci wiadomo¶ci MIME prostego typu -
+  przyk³adowo text/html. Instancja obiektu MimePart jest tworzona zarówno w
+  przypadku, gdy podstawowy typ wiadomo¶ci jest prosty, jak i w przypadku
+  prostego typu za³±czników. Przez podstawowy typ wiadomo¶ci rozumiany jest typ
+  podany w g³ównych (czyli znajduj±cych siê przed cia³em wiadomo¶ci) nag³ówkach
+  wiadomo¶ci
+  \item MimeMultiPart - klasa ta reprezentuje za³±cznik wiadomo¶ci typu
+  multipart. Klasa posiada jedynie referencje do obiektów typu MimePart oraz
+  najbardziej charakterystyczn± informacjê dla typu multipart jak± jest
+  boundary. W klasie tej znajduje siê g³ówna metoda do parsowania wiadomo¶ci,
+  która na podstawie boundary rekursywnie wyodrêbnia za³±czniki z wiadomo¶ci
+  \item MimeMessageHeader - klasa reprezentuj±ca nag³ówek wiadomo¶ci. Sk³ada
+  siê z nazwy nag³ówka oraz cia³a nag³ówka.
+  \item MimeMessageHeaders - klasa reprezentuj±ca listê nag³ówków wiadomo¶ci.
+  Oprócz referencji do nich zawiera g³ówn± metodê parsuj±c± nag³ówki z
+  uwzglêdnieniem foldingu.
+\end{itemize}
+
+Oprócz tych najwa¿niejszych klas reprezentuj±cych odpowiednie elementy z
+wiadomo¶ci istotne by³o zaprojektowanie tak¿e klas pomocniczych. Klasy te to:
+\begin{itemize}
+  \item Preamble - reprezentuje preambu³ê czyli tekst znajduj±c± siê pomiêdzy
+  za³±cznikami nag³ówkami wiadomo¶ci typu multipary, a nag³ówkami wiadomo¶ci
+  \item ContentType - klasa reprezentuj±ca nag³ówek content-type. Zawiera
+  metodê, która odtwarza nag³ówek do postaci prostej, je¿eli jego fragmenty s±
+  podzielone na czê¶ci. Umo¿liwia tak¿e wyodrêbnienie, je¿eli istnieje, boundary
+  z nag³ówka.
+\end{itemize}
+
+G³ówna metoda parsuj±ca wiadomo¶æ i wyodrêbniaj±ca z wiadomo¶ci typu multipart
+za³±czniki opiera siê na wyszukiwaniu wzorca w tek¶cie. Wyszukiwanym wzorcem
+jest boundary, za¶ tekstem cia³o wiadomo¶ci. Algorytm wykorzystywanym przy tym
+wyszukiwaniu to algorytm \textbf{Boyer-Moore'a}.
+
+Uwa¿any jest on za najbardziej efektywny algorytm wyszukiwania wzorca.
+Wykorzystuje siê go powszechnie w aplikacjach gdzie wystêpuje polecenie
+''szukaj'' albo ''zamieñ''. 
+
+Algorytm przyjmuje za³o¿enie, ¿e miêdzy d³ugo¶ci± tekstu (n), a wzorcem (m),
+zachodzi zale¿no¶æ n>=m.
+
+Skanowanie w tym algorytmie odbywa siê od prawej strony wzorca. W przypadku
+niespasowania danego znaku b±d¼ dopsaowania ca³ego wzorca stosuje siê dwie
+funkcje z wcze¶niej wyliczonymi warto¶ciami. S± t±: ''good-suffix shift'' oraz
+''bad-character shift''. ³anie na przyk³adach. Za³ó¿my, ¿e czê¶æ wzorca i
+teskstu zaznaczona jako u pasuje do siebie. Natomiast na kolejnej pozycji wystêpuje
+ró¿nica. W zale¿no¶ci od sytuacji mo¿emy przesun±æ siê w poszukiwaniu o ró¿n±
+warto¶æ:
+\begin{itemize}
+  \item ''good-suffix shift'' - je¿eli wzorzec zawiera w sobie kolejne
+  wyst±pienie u to przesuwamy siê aby pokrywa³o siê ono z tekstem
+  \newline
+  \includegraphics[scale=0.6]{bm1.png}
+  \newline
+  tekst: \hspace*{0.3cm}cccccccbbabbaababbacc\newline
+  wzorzec: \hspace*{0.07cm}abbaabba\newline
+  \newline
+  Niedopasowanie wystêpuje na 4 znaku licz±c od koñca, ale wzorzec zawiera w
+  sobie fragment juz dopasowany (bba), zatem przesuwamy siê tak by kolejny taki
+  fragment we wzrocu spasowa³ siê z tekstem.\newline
+  \newline
+  tekst: cccccccbbabbaababbacc\newline
+  wzorzec:\hspace*{0.665cm}abbaabba
+  
+  \item ''good-suffix shift'' - wzorzec nie zawiera w sobie kolejnego
+  wyst±pienia u to przesuwamy siê tak by suffix wzorca spasowa³ siê maksymalnie z jego
+  dotychczas spasowanym prefiksem
+  \newline
+  \includegraphics[scale=0.6]{bm2.png}
+  \newline
+  tekst: \hspace*{0.3cm}cccccbbabbaababbacc\newline
+  wzorzec: \hspace*{0.1cm}baabba\newline
+  \newline
+  Niedopasowanie wystêpuje na 4 znaku licz±c od koñca, wzorzec nie zawiera w
+  sobie fragmentu juz dopasowanego (bba), ale mo¿emy dopasowaæ jak najd³u¿y
+  suffix (bêdzie to ba)\newline
+  \newline
+  tekst: cccccbbabbaababbacc\newline
+  wzorzec:\hspace*{0.68cm}baabba
+  
+  \item ''bad-character shift'' - przesuwamy siê tak by pierwszy znak od prawej
+  w szukanym wzorcu spasowa³ siê z aktualnie rozpatrywanym znakiem w
+  tek¶cie\newline
+  \newline
+  \includegraphics[scale=0.6]{bm3.png}
+  \newline
+  tekst: \hspace*{0.3cm}cccccccbbabbaababbacc\newline
+  wzorzec: \hspace*{0.1cm}cbcaabba\newline
+  \newline
+  Niedopasowanie wystêpuje na 4 znaku licz±c od koñca (w tek¶cie mamy ''c'' we
+  wzorcu mamy ''a''), zatem przesuwamy wzorzec w ten sposób by pierwsze ''c'' od
+  prawej spasowa³o siê z tym, które ''popsu³o'' nam to dopasowanie\newline
+  \newline
+  tekst: cccccccbbabbaababbacc\newline
+  wzorzec:\hspace*{0.68cm}cbcaabba
+  
+  \item ''bad-character shift'' - przesuwamy siê tak by pierwszy znak od prawej
+  w szukanym wzorcu spasowa³ siê z aktualnie rozpatrywanym znakiem w tek¶cie,
+  je¿eli takiego znaku nie ma to ustawiamy koniec wzorca bezpo¶rednio za
+  nim\newline
+  \includegraphics[scale=0.6]{bm4.png}
+  \newline
+  tekst: \hspace*{0.3cm}ccccccebbabbaababbacc\newline
+  wzorzec: \hspace*{0.1cm}cbcaabba\newline
+  \newline
+  Niedopasowanie wystêpuje na 4 znaku licz±c od koñca (w tek¶cie mamy ''e'' we
+  wzorcu mamy ''a''), we wzorcu "e" nie wystêpuje zatem przesuwamy siê tak by
+  wzorzec by³ bezpo¶rednio za nim\newline
+  \newline
+  tekst: ccccccebbabbaababbacc\newline
+  wzorzec: \hspace*{0.72cm}cbcaabba 
+\end{itemize}
+
+W algorytmie stosujemu zawsze maksymaln± warto¶æ wynikaj±c± z ''good-suffix
+shift'' oraz ''bad-character shift''.
 
 \subsubsection{Parser regu³}
 
+Parser regu³ uruchamiany jest w trakcie ³adowania konfiguracji. Klasa do
+tworzenia z pliku konfiguracyjnego regu³, na podstawie, których dokonywana jest
+pó¼niej analiza, znajduje siê w klasie Configuration. Posiada ona metodê
+loadConfiguration, która analizuje zawarty w poszczególnych liniach tekst i w
+zale¿no¶ci od niego:
+\begin{itemize}
+  \item tworzy regu³y analizy wiadomo¶ci
+  \item konfiguruje parametry filtra 
+\end{itemize}
+
+Mo¿liwe do utworzenia regu³y to:
+\begin{itemize}
+  \item regu³a definiuj±ca konieczno¶æ wyst±pienia lub zakaz wystêpowania
+  konkretnego nag³ówka (lub nag³ówków) w wiadomo¶ci - reprezentowana przez
+  klasê MimeMessageHeaderPresenceRule
+  \item regu³a definiuj±ca wielko¶æ za³±cznika (lub za³±czników) w wiadomo¶ci -
+  reprezentowana przez klasê MaxPartSizeRule
+  \item regu³a definiuj±ca zakaz lub konieczno¶æ obecno¶ci w nag³ówku
+  zdefiniowanego s³owa kluczowego - reprezentowana przez klasê
+  KeywordSearchHeaderRule
+  \item regu³a definiuj±ca akceptowane formaty plików - reprezentowana przez
+  klasê AttachmentAnalizeRule
+  \item regu³a definiuj±ca typy plików jakie bêd± poddawane g³êbszej analizie
+  (przyk³adowo pliki zip mog± byæ sprawdzane pod k±tem poprawno¶ci sumy
+  kontrolnej) - reprezentowana przez klasê FileAnalizerRule
+  \item regu³a definiuj±ca zakaz lub konieczno¶æ obecno¶ci w za³±czniku
+  zdefiniowanego s³owa kluczowego - reprezentowana przez klasê
+  KeywordSearchAttachmentRule  
+\end{itemize}
+
+Wszystkie przedstawione klasy dziedzicz± z bazowej klasy Rule.
+
+Przyk³adowa linia pliku konfiguracyjnego, z której mog± powstaæ dane regu³y
+zostan± podane po¼niej w ramach konfiguracji rozdzia³u o konfiguracji filtra. 
+
 \subsubsection{Analizator wiadomo¶ci}
+
+Analizator wiadomo¶ci s³u¿y okre¶leniu akcji jaka zostanie wykonane (odrzucenie
+wiadomo¶ci lub jej przepuszczenie) na podstawie regu³, które zosta³y stworzone
+w trakcie ³adowania konfiguracji. Wiadomo¶æ dostarczana do analizatora zostaje
+oczywi¶cie wcze¶niej sparsowana przez modu³a parsuj±cy wiadomo¶ci. Posiada ona
+odpowiedni± strukturê, która u³atwia jej analizê. 
+Analizator jest wiêc elementem spajaj±cym regu³y, które s± jego elementem
+nieodzownym elementem, oraz sparsowan± wiadomo¶æ.
+Analizator jest reprezentowany przez klasê Analizer.
 
 \subsubsection{Kolejka}
 
+Kolejka s³u¿y do przetrzymywania wiadomo¶ci odebranych przez filtr. Wiadomo¶ci
+przed analiz± trafiaj± do kolejki wiadomo¶ci przychodz±cych. Nastêpnie ka¿da
+wiadomo¶æ wyjmowana z kolejki trafia do parsera i jest poddawana analizie. Po
+analizie wiadomo¶ci, je¿eli nie s± one odrzucone, trafiaj± do kolejki
+wychodz±cej i tam czekaj± na dalsz± transmisjê. Kolejka udostêpnia API
+umo¿liwiaj±ce wyjmowanie i wk³adanie do niej wiadomo¶ci. Reprezentowana jest
+ona przez klasê Queue.
+
+\subsubsection{Modu³ odbieraj±cy i wysy³aj±cy}
+
+
+
 \subsection{Kompilacja, konfiguracja i uruchomienie projektu}
+
 
 \subsection{Testy wydajno¶ciowe}
 

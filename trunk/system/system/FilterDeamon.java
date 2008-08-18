@@ -1,14 +1,16 @@
 package system;
 
 /**
- * Main class resposible for starting the whole system 
+ * FilterDeamon responsible for starting all 
  * of 
  * @author zbychu
  *
  */
-public class FilterSystem {
+public class FilterDeamon {
 
-	public FilterSystem() {
+	
+	
+	public FilterDeamon() {
 		
 	}
 	
@@ -18,7 +20,7 @@ public class FilterSystem {
 	
 	public static void main(String[] args) {
 		
-		FilterSystem s = new FilterSystem();
+		FilterDeamon s = new FilterDeamon();
 		s.start();
 		
 	}
