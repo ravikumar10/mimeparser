@@ -1,6 +1,7 @@
 package server;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class SMTPUtils {
 	
@@ -17,6 +18,13 @@ public class SMTPUtils {
 	
 	public static String getCommand(String key) {
 		return COMMANDS.get(key);
+	}
+	
+	public static String generateMessageId() {
+		Random r = new Random();
+    	String token = Long.toString(Math.abs(r.nextLong()), 36);
+    	token=System.currentTimeMillis()+token;
+    	return token;
 	}
 	
 }
