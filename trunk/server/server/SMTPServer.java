@@ -1,33 +1,41 @@
 package server;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class SMTPServer {
+public class SMTPServer implements Runnable {
 	
-	public static void main(String argv[]) throws Exception {
-
-		/* Set the port number. */
-		int port = 5678;
-
-		/* Establish the listen socket. */
-        ServerSocket mailSocket = new ServerSocket(port);
-
-		/* Process SMTP client requests in an infinite loop. */
+	private final static int PORT = 5678;
+	
+	@Override
+	public void run() {
+		
+		System.out.println("Starting SMTP server ...");
+		
+		ServerSocket mailSocket = null;
+		try {
+			mailSocket = new ServerSocket(PORT);
+		} catch (IOException e) {
+			System.err.println("Problem z bindowaniem do portu: " + e.toString());
+			return;
+		}
+        
+        System.out.println("Listetning connections on port: " + PORT);
+        
 		while (true) {
-			/* Listen for a TCP connection request. */
-			Socket SMTPSocket = mailSocket.accept();
-
-			/* Construct an object to process the SMTP request. */
-			SMTPConnection connection = new SMTPConnection(SMTPSocket);
-
-			/* Create a new thread to process the request. */
+			
+			Socket SMTPSocket = null;
+			SMTPConnection connection = null;
+			try {
+				SMTPSocket = mailSocket.accept();
+				connection = new SMTPConnection(SMTPSocket);
+			} catch (Exception e) {
+				System.err.println("Problem z akceptowaniem polaczen");
+				return;
+			}
 			Thread thread = new Thread(connection);
-
-			/* Start the thread. */
 			thread.start();
 		}
 	}
-
-	
 }
