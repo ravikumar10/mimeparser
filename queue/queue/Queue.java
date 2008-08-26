@@ -47,6 +47,7 @@ public class Queue {
 		
 		synchronized(this) {
 			if (queueElements.size()<capacity) {
+				System.out.println("Got new message in queue " + name + " ...");
 				queueElements.add(e);
 				return true;
 			} else return false;
@@ -64,6 +65,7 @@ public class Queue {
 	public Object getMessageFromQueue() {
 		synchronized(this) {
 			if (!queueElements.isEmpty()) {
+				System.out.println("Removing message from queue " + name + " ...");
 				return queueElements.remove(0);
 			}
 			return null;
