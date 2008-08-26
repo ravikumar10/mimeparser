@@ -4,12 +4,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import mail.exceptions.ParseException;
 import mail.util.BufferedSharedInputStream;
 import mail.util.LineInputStream;
+import mail.util.LineOutputStream;
 import mail.util.SharedInputStream;
 import mail.util.StringUtils;
 
@@ -51,7 +53,10 @@ public class MimeMultiPart extends Part {
 		
 		LineInputStream lis = new LineInputStream(this.inputStream);
 		
-		boundaryLine=headers.getContentType().getBoundaryLine();
+		if (contentType==null)
+			contentType = headers.getContentType();
+		
+		boundaryLine=contentType.getBoundaryLine();
 		
 		preamble = new Preamble(inputStream, boundaryLine);
 		//sytuacja ponizej zachodzi jest boundaryLine jest nullem
@@ -232,6 +237,14 @@ public class MimeMultiPart extends Part {
 		this.parent=parent;
 		parse();
 	}
+	
+	public MimeMultiPart(InputStream inputStream, ContentType contentType, MimeMessageHeaders mimeMessageHeaders, Part parent) throws ParseException {
+		this.inputStream=inputStream;
+		this.headers=mimeMessageHeaders;
+		this.parent=parent;
+		this.contentType=contentType;
+		parse();
+	}
 
 	@Override
 	public String toString() {
@@ -254,6 +267,57 @@ public class MimeMultiPart extends Part {
 			ret += "\n" + indent + "  Part" + i++ + ":"  + part.toString(n+1).replaceAll("\n", "\n"+indent+"  |");
 		}
 		return ret;
+	}
+	
+	@Override
+	public void writeTo(OutputStream os) {
+		
+		LineOutputStream los = new LineOutputStream(os);
+		
+		//headers
+		if (headers!=null) {
+			for (MimeMessageHeader mimeMessageHeader : headers.getHeaders()) {
+				//writing body
+				los.writeln(mimeMessageHeader.getLine());
+			}
+			los.writeln("");
+		}
+		
+		// preamble
+		if (preamble!=null) los.writeln(preamble.getPreamble());
+		
+		//CRLF
+		//los.writeln("");
+		
+		for (Part part : parts) {
+			//boundary line
+			los.writeln(boundaryLine);
+			
+			//part
+			part.writeTo(os);
+			los.writeln("");
+		}
+		
+		los.writeln(boundaryLine + "--");
+	}
+	
+	public String getBoundaryLine() {
+		return boundaryLine;
+	}
+
+
+	public void setBoundaryLine(String boundaryLine) {
+		this.boundaryLine = boundaryLine;
+	}
+
+
+	public Preamble getPreamble() {
+		return preamble;
+	}
+
+
+	public void setPreamble(Preamble preamble) {
+		this.preamble = preamble;
 	}
 	
 	public static void main(String[] args) {
@@ -299,4 +363,6 @@ public class MimeMultiPart extends Part {
 //		StringUtils.algorithmBM(pattern, text);
 		
 	}
+
+	
 }

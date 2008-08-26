@@ -3,7 +3,7 @@ package tests;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import analize.Analizer;
+import analize.Analyser;
 import configuration.Configuration;
 
 import junit.framework.TestCase;
@@ -23,7 +23,7 @@ public class MessageAnalizerTest extends TestCase {
 		
 		// loading rules
 		Configuration c = new Configuration("configuration/configuration/example_configuration_file.con");
-		Analizer analizer = new Analizer(c.getRules());
+		Analyser analizer = new Analyser(c.getRules());
 		
 		for (String message : messages) {
 			

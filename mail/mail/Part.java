@@ -1,6 +1,7 @@
 package mail;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import mail.exceptions.ParseException;
 
@@ -87,5 +88,7 @@ public abstract class Part {
 	public byte[] getContent() {
 		return content;
 	}
+	
+	public abstract void writeTo(OutputStream os);
 	
 }

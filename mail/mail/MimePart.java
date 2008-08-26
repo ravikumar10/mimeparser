@@ -2,9 +2,14 @@ package mail;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+
+import mail.util.LineOutputStream;
 
 
 public class MimePart extends Part {
+	
+	private final static int LINE_LENGTH = 76;
 	
 	public MimePart () {}
 	
@@ -71,6 +76,8 @@ public class MimePart extends Part {
 		
 	}
 	
+	
+	
 	@Override
 	public String toString() {
 		
@@ -86,6 +93,54 @@ public class MimePart extends Part {
 	@Override
 	public String toString(int n) {
 		return toString();
+	}
+
+	@Override
+	public void writeTo(OutputStream os) {
+		
+		LineOutputStream los = new LineOutputStream(os);
+		
+		// headers
+		if (headers!=null) {
+			for (MimeMessageHeader mimeMessageHeader : headers.getHeaders()) {
+				los.writeln(mimeMessageHeader.getLine());
+			}
+		}
+		
+		// CRLF before body
+		los.writeln("");
+		
+		byte[] writeBuffer = new byte[LINE_LENGTH]; 
+		for (int i = 0; i < content.length; i+=LINE_LENGTH) {
+			if (i+LINE_LENGTH>content.length)
+				System.arraycopy(content, i, writeBuffer, 0, i+LINE_LENGTH-content.length);
+			else
+				System.arraycopy(content, i, writeBuffer, 0, LINE_LENGTH);
+			
+			// here is some kind of hack 
+			// when we parse message to avoid too many buffer grows we each time 
+			// make buffer twice big - this causes that sometime buffer (content) contains
+			// at the end of this 0 - when writing to stream we CANT write it!!!
+			if (writeBuffer[LINE_LENGTH-1]==0) {
+				//buffer contains 0 at the end write sign by sing from it
+				int j=0;
+				while (writeBuffer[j]!=0) {
+					los.write(writeBuffer[j]);
+					j++;
+				}
+				break;
+			} else {
+				//buffer doesn't contain 0 write all of it
+				try {
+					los.write(writeBuffer);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		// content
+		//los.writeln(s);
+		
 	}
 	
 }

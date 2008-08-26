@@ -7,7 +7,7 @@ import java.util.List;
 
 import configuration.Configuration;
 
-import analize.Analizer;
+import analize.Analyser;
 import analize.Rule;
 
 import mail.MimeMessage;
@@ -46,7 +46,7 @@ public class MaxPartSizeRuleTest extends TestCase {
 		String resourceDirName = "resources";
 		List<Rule> rules = new ArrayList<Rule>();
 		rules.add(Configuration.parseRuleLine(rule));
-		Analizer analizer = new Analizer(rules);
+		Analyser analizer = new Analyser(rules);
 		
 		for (int i = 0; i < messages.length; i++) {
 			String message = messages[i];

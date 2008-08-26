@@ -7,7 +7,7 @@ package analize;
  * !!!!!!!!!!!!NIEUZYWANA!!!!!!!!!!!!
  *
  */
-public class MessageHeaderAnalizer extends Analizer {
+public class MessageHeaderAnalizer extends Analyser {
 	
 	
 	
