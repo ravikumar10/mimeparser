@@ -17,7 +17,7 @@ import mail.util.StringUtils;
 
 import configuration.Configuration;
 
-public class Analizer {
+public class Analyser {
 	
 	List<Rule> rules;
 	
@@ -25,9 +25,9 @@ public class Analizer {
 	
 	MimeMessage message;
 
-	public Analizer() {}
+	public Analyser() {}
 	
-	public Analizer(List<Rule> rules) {
+	public Analyser(List<Rule> rules) {
 		this.rules=rules;
 	}
 	

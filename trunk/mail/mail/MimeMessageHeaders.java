@@ -78,8 +78,8 @@ public class MimeMessageHeaders {
 				(line.startsWith(" ") || line.startsWith("\t"))) {
 			    // continuation of header
 			    if (prevline != null) {
-				lineBuffer.append(prevline);
-				prevline = null;
+			    	lineBuffer.append(prevline);
+			    	prevline = null;
 			    }
 			    if (addLineFolded) lineBuffer.append("\r\n");
 			    lineBuffer.append(line);
@@ -107,7 +107,7 @@ public class MimeMessageHeaders {
 	 * @param is
 	 */
 	public void parseAndLoadHeaders(InputStream is) {
-		parseAndLoadHeaders(is, false);
+		parseAndLoadHeaders(is, true);
 	}
 	
 	/**

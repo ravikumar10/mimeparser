@@ -9,7 +9,7 @@
 	<classpathentry kind="src" path="helpers"/>
 	<classpathentry kind="src" path="queue"/>
 	<classpathentry kind="src" path="communicate"/>
-	<classpathentry kind="src" path="server"/>
+	<classpathentry kind="src" path="protocol"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="/mail/build/release/mail.jar" sourcepath="/mail"/>

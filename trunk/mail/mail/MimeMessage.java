@@ -1,10 +1,10 @@
 package mail;
 
 import java.io.InputStream;
-
-import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeMultipart;
+import java.io.OutputStream;
 
 import mail.exceptions.ParseException;
+import mail.util.LineOutputStream;
 
 /**
  * Class represends the sense of the project mail message
@@ -47,7 +47,7 @@ public class MimeMessage {
 		ContentType ct = headers.getContentType();
 		if (ct==null) throw new ParseException("No content type in message");
 		if (ct.getPrimaryType().equals(MULTIPART_TYPE)) {
-			part = new MimeMultiPart(inputStream, headers, null);
+			part = new MimeMultiPart(inputStream, ct, null, null);
 		} else {
 			part = new MimePart(inputStream, ct, headers, null); 
 		}
@@ -60,6 +60,25 @@ public class MimeMessage {
 		if (headers!=null) headerString = "Headers:\n\t" + headers.toString().replace("\n", "\n\t");
 		
 		return headerString+part.toString(1);
+	}
+	
+	
+	public void writeTo(OutputStream os) {
+		
+		LineOutputStream los = new LineOutputStream(os);
+		
+		// putting headers
+		for (MimeMessageHeader mimeMessageHeader : headers.getHeaders()) {
+			los.writeln(mimeMessageHeader.getLine());
+		}
+		
+		los.writeln("");
+		part.writeTo(los);
+		
+		// double CRLF
+		los.writeln("");
+		los.writeln("");
+		//los.writeln(".");
 	}
 	
 	public Part getPart() {
