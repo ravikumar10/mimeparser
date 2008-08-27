@@ -78,7 +78,7 @@ public class AnalyseThread implements Runnable {
 			//putting msg to out queue
 			queue.addMessageToQueue(mm);
 		}
-		System.out.println("Analysing done ...");
+		System.out.println("Analysing done  ...");
 
 	}
 }
