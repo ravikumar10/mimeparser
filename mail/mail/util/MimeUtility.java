@@ -14,12 +14,6 @@ import java.util.regex.Pattern;
 
 import mail.exceptions.ParseException;
 
-import com.sun.mail.util.ASCIIUtility;
-import com.sun.mail.util.BASE64DecoderStream;
-import com.sun.mail.util.BEncoderStream;
-import com.sun.mail.util.QDecoderStream;
-import com.sun.mail.util.QEncoderStream;
-
 public class MimeUtility {
 	
 	private static Hashtable mime2java;
@@ -198,7 +192,7 @@ public class MimeUtility {
 	    if (word.length() > 0) {
 		// Extract the bytes from word
 		ByteArrayInputStream bis = 
-		    new ByteArrayInputStream(ASCIIUtility.getBytes(word));
+		    new ByteArrayInputStream(StringUtils.getBytes(word));
 
 		// Get the appropriate decoder
 		InputStream is;
@@ -888,9 +882,11 @@ public class MimeUtility {
     	byte[] bytes = string.getBytes(jcharset);
     	int len;
     	if (b64) // "B" encoding
-    	    len = BEncoderStream.encodedLength(bytes);
+    	    //len = BEncoderStream.encodedLength(bytes);
+    		len = 0;
     	else // "Q"
-    	    len = QEncoderStream.encodedLength(bytes, encodingWord);
+    	    //len = QEncoderStream.encodedLength(bytes, encodingWord);
+    		len = 0;
     	
     	int size;
     	if ((len > avail) && ((size = string.length()) > 1)) { 
@@ -905,10 +901,12 @@ public class MimeUtility {
     	    ByteArrayOutputStream os = new ByteArrayOutputStream();
     	    OutputStream eos; // the encoder
     	    if (b64) // "B" encoding
-    		eos = new BEncoderStream(os);
+//    		eos = new BEncoderStream(os);
+    	    eos = null;	
     	    else // "Q" encoding
-    		eos = new QEncoderStream(os, encodingWord);
-    	    
+//    		eos = new QEncoderStream(os, encodingWord);
+    	    eos = null;
+    	    	
     	    try { // do the encoding
     		eos.write(bytes);
     		eos.close();

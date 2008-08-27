@@ -3,7 +3,7 @@ package mail;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.sun.mail.util.LineInputStream;
+import mail.util.LineInputStream;
 
 public class Preamble {
 	
