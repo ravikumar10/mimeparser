@@ -2192,13 +2192,12 @@ zostan± podane po¼niej w ramach konfiguracji rozdzia³u o konfiguracji filtra.
 \subsubsection{Analizator wiadomo¶ci}
 
 Analizator wiadomo¶ci s³u¿y okre¶leniu akcji jaka zostanie wykonane (odrzucenie
-wiadomo¶ci lub jej przepuszczenie) na podstawie regu³, które zosta³y stworzone
-w trakcie ³adowania konfiguracji. Wiadomo¶æ dostarczana do analizatora zostaje
-oczywi¶cie wcze¶niej sparsowana przez modu³a parsuj±cy wiadomo¶ci. Posiada ona
-odpowiedni± strukturê, która u³atwia jej analizê. 
-Analizator jest wiêc elementem spajaj±cym regu³y, które s± jego elementem
-nieodzownym elementem, oraz sparsowan± wiadomo¶æ.
-Analizator jest reprezentowany przez klasê Analizer.
+wiadomo¶ci lub jej przepuszczenie oraz ewentualna jej modyfikacja) na podstawie
+regu³, które zosta³y stworzone w trakcie ³adowania konfiguracji. Wiadomo¶æ
+dostarczana do analizatora zostaje oczywi¶cie wcze¶niej sparsowana przez modu³
+parsuj±cy wiadomo¶ci. Analizator jest wiêc elementem spajaj±cym regu³y, które
+s± jego elementem nieodzownym elementem, oraz sparsowan± wiadomo¶æ.
+Analizator jest reprezentowany przez klasê Analyser.
 
 \subsubsection{Kolejka}
 
@@ -2208,13 +2207,26 @@ wiadomo¶æ wyjmowana z kolejki trafia do parsera i jest poddawana analizie. Po
 analizie wiadomo¶ci, je¿eli nie s± one odrzucone, trafiaj± do kolejki
 wychodz±cej i tam czekaj± na dalsz± transmisjê. Kolejka udostêpnia API
 umo¿liwiaj±ce wyjmowanie i wk³adanie do niej wiadomo¶ci. Reprezentowana jest
-ona przez klasê Queue.
+ona przez klasê Queue. Kolejki uzyskujemy z menad¿era kolejek (QueueManager),
+który na podstawie klucza (nazwy kolejki) zwraca nam instancjê obiektu Queue.
+QueueManager jest singletonem. W filtrze stworzone zosta³y dwie kolejki o
+nazwach ''in\_queue'' i ''out\_queue''.
 
 \subsubsection{Modu³ odbieraj±cy i wysy³aj±cy}
 
-
+Modu³ odbieraj±cy wiadomo¶ci, które maj± trafiæ do filtra to serwer
+SMTP, który s³ucha na okre¶lonym porcie przychodz±cych po³±czeñ. Serwer ten nie
+obs³uguje autoryzacji. Ka¿de pod³±czenie siê nowego klienta powoduje
+uruchomienie kolejnego w±tku odbieraj±cego. Serwer reprezentowany jest przez
+klasê SMTPServer, za¶ po³±czenie (w±tek po³±czeniowy) przez klasê
+SMTPConnection.
+Modu³ wysy³aj±cy to daemon, który sprawdza cyklicznie czy w kolejce wychodz±cej
+znajduj± siê wiadomo¶ci. Je¿eli tak jest, wiadomo¶æ usuwana jest z kolejki i
+uruchamiany jest klient SMTP, który stara siê wys³aæ wiadomo¶æ. Nie obs³ugiwane
+jest ponawianie wysy³ania wiadomo¶æ w przypadku nieudanej próby.
 
 \subsection{Kompilacja, konfiguracja i uruchomienie projektu}
+
 
 
 \subsection{Testy wydajno¶ciowe}

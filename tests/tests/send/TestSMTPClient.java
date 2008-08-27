@@ -21,7 +21,7 @@ public class TestSMTPClient extends TestCase {
 		
 		String host = "127.0.0.1";
 		int port = 5678;
-		List<String> senders = Arrays.asList("zbychu@astronet.pl");
+		List<String> senders = Arrays.asList("zbychu@localhost");
 		List<String> receivers = Arrays.asList("mala@mala.pl");
 		SharedFileInputStream is = null;
 		

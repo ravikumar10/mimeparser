@@ -2,6 +2,7 @@ package system;
 
 import analize.AnalyseDaemon;
 import configuration.Configuration;
+import smtp.client.SMTPClientDeamon;
 import smtp.server.SMTPServer;
 
 /**
@@ -22,32 +23,40 @@ public class FilterDaemon {
 	public void start() {
 		
 		startSMTPServer();
-		startAnalizeDeamon();
-		startSendingDeamon();
-		
-	}
-	/**
-	 * starts sending daemon
-	 */
-	private void startSendingDeamon() {
+		startAnalizeDaemon();
+		startSendingDaemon();
 		
 	}
 	
 	/**
 	 * starts analysing daemon
 	 */
-	private void startAnalizeDeamon() {
+	private void startAnalizeDaemon() {
 		
 		AnalyseDaemon analizeDeamon = new AnalyseDaemon(configuration);
 		Thread thread = new Thread(analizeDeamon);
 		thread.start();
 	}
 	
+	/**
+	 * Starts smtp server
+	 */
 	private void startSMTPServer() {
 		
 		SMTPServer smtpServer = new SMTPServer();
 		Thread thread = new Thread(smtpServer);
 		thread.start();
+	}
+	
+	/**
+	 * Starts sending daemon
+	 */
+	public void startSendingDaemon() {
+		
+		SMTPClientDeamon smtpClientDeamon = new SMTPClientDeamon();
+		Thread thread = new Thread(smtpClientDeamon);
+		thread.start();
+		
 	}
 	
 	public static void main(String[] args) {

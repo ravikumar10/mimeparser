@@ -135,7 +135,7 @@ public class MimeMultiPart extends Part {
 		    	if (positionInTmpBuffer==0) {
 		    		int c1;
 		    		while ((c1 = inputStream.read()) != -1) {
-		    			if (c1 == '\n' || c1 == '\t') {
+		    			if (c1 == '\n' || c1 == '\t' || c1 == '\r') {
 		    				inputStream.mark(5*slidingWindowBufferLenght);
 		    				shift--;
 		    			} else { 

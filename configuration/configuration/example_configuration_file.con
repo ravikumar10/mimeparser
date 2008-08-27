@@ -39,7 +39,7 @@ max_threads = 6 // max threads run
 // rule_name#header_type#search_keyword#list_of_headers#present=true/false#filter_out=true/false
 // example:
 // rule03#2#To, Received#zbychu@astronet.pl#true#true //coment
-rule03#2#Subject#javamail#true#true //coment
+rule03#2#Subject#luna#true#true //coment
 // ########### explanation of rule ###############
 // filter out (drop) [last true] all message that contains 
 // [before last false] search_keyword: zbychu@astronet.pl 

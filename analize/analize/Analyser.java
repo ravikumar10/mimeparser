@@ -61,7 +61,10 @@ public class Analyser {
 		List<Rule> ret = new ArrayList<Rule>();
 		
 		//analizing headers
-		ret.addAll(analizeHeaders(part.getHeaders(),isRootPart));
+		if (isRootPart)
+			ret.addAll(analizeHeaders(this.message.getHeaders(), isRootPart));
+		else
+			ret.addAll(analizeHeaders(part.getHeaders(),isRootPart));
 		
 		//analizing other rules
 		ret.addAll(analizePartRules(part, isRootPart));

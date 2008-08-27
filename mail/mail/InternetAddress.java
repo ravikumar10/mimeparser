@@ -5,12 +5,12 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import javax.mail.internet.HeaderTokenizer;
-import javax.mail.internet.MimeUtility;
 
 import mail.exceptions.AddressException;
 import mail.exceptions.MimeMessageHeaderAddressValidationException;
 import mail.util.AddressParser;
+import mail.util.HeaderTokenizer;
+import mail.util.MimeUtility;
 
 /**
  * TODO!!!
