@@ -35,6 +35,10 @@ public class MimeMessageHeaders {
 		headers.add(mimeMessageHeader);
 	}
 	
+	public void addHeader(MimeMessageHeader mimeMessageHeader, int position) {
+		headers.add(position,mimeMessageHeader);
+	}
+	
 	public MimeMessageHeader getHeader(String headerName) {
 		for (MimeMessageHeader header : headers) {
 			if (header.getName().equalsIgnoreCase(headerName)) {
@@ -175,7 +179,9 @@ public class MimeMessageHeaders {
 	}
 	
 	public ContentType getContentType() throws ParseException {
-		return new ContentType(getHeader("content-type").getValue());
+		MimeMessageHeader header = getHeader("content-type");
+		if (header==null) return null;
+		return new ContentType(header.getValue());
 	}
 	
 	public List<MimeMessageHeader> getHeaders() {

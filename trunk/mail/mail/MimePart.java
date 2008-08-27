@@ -138,9 +138,5 @@ public class MimePart extends Part {
 				}
 			}
 		}
-		// content
-		//los.writeln(s);
-		
 	}
-	
 }

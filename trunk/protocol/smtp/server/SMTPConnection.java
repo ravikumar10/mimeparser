@@ -11,6 +11,7 @@ import java.util.List;
 
 import queue.Queue;
 import queue.QueueManager;
+import queue.QueueMessage;
 import smtp.SMTPUtils;
 
 /**
@@ -371,12 +372,11 @@ public class SMTPConnection implements Runnable {
 		System.out.println("Mail is :\n" + new String(messageBuffer));
 		
 		//putting mail to queue
-		queue.addMessageToQueue(messageBuffer);
+		//adds some while here if adding message to queue fails with retrying
+		queue.addMessageToQueue(new QueueMessage(messageBuffer,senders,receivers));
 		
 		// reply 250 OK id=message_id
 		reply(OK_250 + " id=" + SMTPUtils.generateMessageId());
-		
-		
 		
 		return true;
 	}

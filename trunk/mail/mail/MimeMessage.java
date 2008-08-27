@@ -2,6 +2,8 @@ package mail;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import mail.exceptions.ParseException;
 import mail.util.LineOutputStream;
@@ -29,9 +31,41 @@ public class MimeMessage {
 	MimeMessageHeaders headers;
 	String boundary;
 	
+	/**
+	 * senders list
+	 */
+	List<String> senders = new ArrayList<String>();
+	
+	/**
+	 * receivers list
+	 */
+	List<String> receivers = new ArrayList<String>();
+	
+	public List<String> getSenders() {
+		return senders;
+	}
+
+	public void setSenders(List<String> senders) {
+		this.senders = senders;
+	}
+
+	public List<String> getReceivers() {
+		return receivers;
+	}
+
+	public void setReceivers(List<String> receivers) {
+		this.receivers = receivers;
+	}
+
 	public MimeMessage() {}
 	
 	public MimeMessage(InputStream inputStream) throws ParseException {
+		createMimeMessage(inputStream);
+	}
+	
+	public MimeMessage(InputStream inputStream, List<String> senders, List<String> receivers) throws ParseException {
+		this.senders = senders;
+		this.receivers = receivers;
 		createMimeMessage(inputStream);
 	}
 	

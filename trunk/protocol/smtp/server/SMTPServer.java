@@ -9,6 +9,15 @@ import smtp.server.SMTPConnection;
 public class SMTPServer implements Runnable {
 	
 	private final static int PORT = 5678;
+	private int port;
+	
+	public SMTPServer() {
+		this.port = PORT;
+	}
+	
+	public SMTPServer(int port) {
+		this.port = port;
+	}
 	
 	@Override
 	public void run() {
@@ -17,13 +26,13 @@ public class SMTPServer implements Runnable {
 		
 		ServerSocket mailSocket = null;
 		try {
-			mailSocket = new ServerSocket(PORT);
+			mailSocket = new ServerSocket(port);
 		} catch (IOException e) {
 			System.err.println("Problem z bindowaniem do portu: " + e.toString());
 			return;
 		}
         
-        System.out.println("Listetning connections on port: " + PORT);
+        System.out.println("Listetning connections on port: " + port);
         
 		while (true) {
 			
@@ -43,7 +52,7 @@ public class SMTPServer implements Runnable {
 	
 	public static void main(String[] args) {
 		
-		SMTPServer smtpServer = new SMTPServer();
+		SMTPServer smtpServer = new SMTPServer(5679);
 		Thread thread = new Thread(smtpServer);
 		thread.start();
 		

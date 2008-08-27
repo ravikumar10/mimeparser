@@ -2,6 +2,7 @@ package analize;
 
 import configuration.Configuration;
 import queue.Queue;
+import queue.QueueMessage;
 
 /**
  * Deamon responsible for taking messages from queue and analizing
@@ -29,13 +30,13 @@ public class AnalyseDaemon implements Runnable {
 			Object queueElement = queue.getMessageFromQueue();
 			if (queueElement!=null) {
 				// starting analysing thread
-				byte[] messageBuffer = (byte[]) queueElement;
-				AnalyseThread analizeThread = new AnalyseThread(messageBuffer, configuration);
+				QueueMessage queueMessage = (QueueMessage) queueElement;
+				AnalyseThread analizeThread = new AnalyseThread(queueMessage, configuration);
 				Thread analizer = new Thread(analizeThread);
 				analizer.start();
 			} else {
 				// nothing in the queue
-				System.out.println("Nothing in queue - sleeping for " + SLEEP_TIME + " ...");
+				System.out.println("Nothing in in_queue - sleeping for " + SLEEP_TIME + " ...");
 				try {
 					Thread.sleep(this.SLEEP_TIME);
 				} catch (InterruptedException e) {
