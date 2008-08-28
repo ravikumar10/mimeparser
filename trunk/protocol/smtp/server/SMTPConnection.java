@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import queue.Queue;
 import queue.QueueManager;
 import queue.QueueMessage;
@@ -20,6 +22,8 @@ import smtp.SMTPUtils;
  */
 public class SMTPConnection implements Runnable {
 
+	
+	public static Logger logger = Logger.getLogger("log");
 	
 	private Queue queue = Queue.getQueue("in_queue");
 	
@@ -71,7 +75,7 @@ public class SMTPConnection implements Runnable {
 		try {
 			processRequest();
 		} catch (Exception e) {
-			System.out.println(e);
+			logger.error("Error in processing" + e);
 		}
 	}
 
@@ -84,7 +88,7 @@ public class SMTPConnection implements Runnable {
 			InputStreamReader sr = new InputStreamReader(is);
 			fromClient = new BufferedReader(sr);
 		}catch (IOException e) {
-			System.out.println("Initialization error: "+e);
+			logger.error("Initialization error: "+e);
 		}
 		
 		// sending hello to client after connection
@@ -108,11 +112,11 @@ public class SMTPConnection implements Runnable {
 			if (isConnectionClosed) break;
 		}
 		
-		System.out.println("Closing connection");
+		logger.debug("Closing connection");
 		try {
 			socket.close();
 		}catch (IOException e) {
-			System.out.println("Close connection error: "+e);
+			logger.error("Close connection error: "+e);
 		}
 	}
 
@@ -132,9 +136,9 @@ public class SMTPConnection implements Runnable {
 				}
 			} while (message.length()<=0);
 		} catch (IOException e) {
-			System.out.println("Read socket error: "+e);
+			logger.error("Read socket error: "+e);
 		}
-		System.out.println(("K: " + message));
+		logger.debug("K: " + message);
 		return message;
 	}
 	
@@ -144,10 +148,10 @@ public class SMTPConnection implements Runnable {
 	 */
 	private void reply (String command){
 		try {
-			System.out.println(("S: " + command));
+			logger.debug("S: " + command);
 			if (!socket.isClosed()) toClient.writeBytes(command+CRLF);			
 		} catch (IOException e) {
-			System.out.println("Write socket error: "+e);
+			logger.error("Write socket error: "+e);
 		}
 	}
 	
@@ -294,7 +298,7 @@ public class SMTPConnection implements Runnable {
 		
 		// excluding sender and putting to senders list
 		String sender = requestCommand.substring(SMTPUtils.getCommand("mailfrom").length());
-		System.out.println("Sender: " + sender);
+		logger.debug("Sender: " + sender);
 		this.senders.add(sender);
 		
 		reply(OK_250);
@@ -319,7 +323,7 @@ public class SMTPConnection implements Runnable {
 		
 		// excluding receiver and putting to receivers list
 		String receiver = requestCommand.substring(SMTPUtils.getCommand("rcptto").length());
-		System.out.println("Receiver: " + receiver);
+		logger.debug("Receiver: " + receiver);
 		this.receivers.add(receiver);
 		
 		reply(OK_250);
@@ -355,7 +359,6 @@ public class SMTPConnection implements Runnable {
 		
 		while(!isEndOfMessage) {
 			tmp=fetch();
-			System.out.println("tmp:" + tmp + ":");
 			if (!tmp.equals(END_OF_MESSAGE)) {
 				//rozszerzanie bufora
 				if (messageLenght+tmp.length()>messageBuffer.length) {
@@ -369,7 +372,7 @@ public class SMTPConnection implements Runnable {
 			} else isEndOfMessage=true;
 		}
 		
-		System.out.println("Mail is :\n" + new String(messageBuffer));
+		logger.debug("Mail is :\n" + new String(messageBuffer));
 		
 		//putting mail to queue
 		//adds some while here if adding message to queue fails with retrying

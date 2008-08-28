@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import mail.exceptions.ParseException;
 import mail.util.BufferedSharedInputStream;
 import mail.util.LineInputStream;
@@ -26,7 +28,7 @@ import mail.util.StringUtils;
 
 public class MimeMultiPart extends Part {
 	
-	
+	public static Logger logger = Logger.getLogger("log");
 	
 	/**
 	 * part may contains other multiparts or can be simple part
@@ -99,7 +101,7 @@ public class MimeMultiPart extends Part {
 		    	
 		    	if (i<0) {
 		    		// very useful for debuging
-		    		//System.out.println("Part: " + new String(tmpBuffer));
+		    		logger.debug("Part: " + new String(tmpBuffer));
 		    		
 		    		analizeAndCreatePart(tmpBuffer);
 		    		this.content=tmpBuffer;
@@ -162,13 +164,13 @@ public class MimeMultiPart extends Part {
     			byte[] tmpContent = new byte[3];
     			System.arraycopy(tmpBuffer, 0, tmpContent, 0, 3);
     			if (new String(tmpContent).startsWith("--\n")) {
-    				//System.out.println("napotkalem znak konca");
+    				logger.debug("Found end of line");
     				break;
     			}
     			
     			// EOS - end of stream
     			if (tmpBuffer[0]==0 || slidingWindowBuffer[0]==0) {
-    				//System.out.println("koniec streamu");
+    				logger.debug("End of stream");
     				break;
     			}
     			

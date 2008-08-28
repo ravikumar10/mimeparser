@@ -1,23 +1,34 @@
-<project>
+<project basedir=".">
 
 	<property name="lib.dir" value="lib"/>
 	<property name="build.dir" value="build/classes"/>
+	<property name="conf.dir" value="configuration/configuration"/>
 
 	<path id="classpath">
-  		<fileset dir="${lib.dir}" includes="*.jar"/>
+			<path location="${build.dir}"></path>
+  		<fileset dir="${lib.dir}" includes="**/*.jar"/>
   </path>
 	
 	<target name="compile">
 	    <mkdir dir="${build.dir}"/>
-	    <javac verbose="true" srcdir="." destdir="${build.dir}" classpathref="classpath"/>
+	    <javac verbose="false" srcdir="." destdir="${build.dir}" classpathref="classpath"/>
 	</target>
 	
-	<target name="run">
-				<java dir="${build.dir}" classname="system.FilterDaemon" fork="true"/>	    
-		</target>
+	<target name="copy_configuration">
+			<copy file="${conf.dir}/log4j.properties" tofile="${build.dir}/log4j.properties" />
+		  <copy file="${conf.dir}/example_configuration_file.conf" tofile="${build.dir}/configuration/conf.conf" />
+	</target>
 	
-	<target name="run_daemon">
-			<java dir="${build.dir}" classname="system.FilterDaemon" fork="true" spawn="true"/>	    
+	<target name="run" depends="copy_configuration">
+			<java dir="${build.dir}" classname="system.FilterDaemon" classpathref="classpath" fork="true" />
+	</target>
+	
+	<target name="run_daemon" depends="copy_configuration">
+			<java  dir="${build.dir}" classname="system.FilterDaemon" fork="true" spawn="true" id="3" classpathref="classpath"/>	    
 	</target>
 
+	<target name="stop_deamon">
+			<exec executable="./kill.sh"></exec>
+	</target>
+	
 </project>

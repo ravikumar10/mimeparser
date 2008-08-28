@@ -1,5 +1,7 @@
 package smtp.client;
 
+import org.apache.log4j.Logger;
+
 import queue.Queue;
 import smtp.SMTPSendingFailedException;
 import mail.MimeMessage;
@@ -16,10 +18,12 @@ public class SMTPClientDeamon implements Runnable {
 	private int SLEEP_TIME = 3000;
 	private int SMTP_PORT = 5679;
 	
+	public static Logger logger = Logger.getLogger("log");
+	
 	@Override
 	public void run() {
 		
-		System.out.println("Starting sending deamon ...");
+		logger.info("Starting sending deamon ...");
 		
 		while(true) {
 			
@@ -29,17 +33,17 @@ public class SMTPClientDeamon implements Runnable {
 				
 				String sender = mm.getSenders().iterator().next();
 				if (sender==null) {
-					System.out.println("No senders");
+					logger.error("No senders");
 					continue;
 				}
 				String host = MimeUtility.getHostFromAddress(sender);
 				if (host==null) {
-					System.out.println("No host in senders");
+					logger.error("No host in senders");
 					continue;
 				}
 				SMTPClient client = new SMTPClient(host, SMTP_PORT, mm.getSenders(), mm.getReceivers());// sending message
 				
-				System.out.println("Sending message");
+				logger.info("Sending message");
 //				try {
 //					client.connect();
 //					client.sendMessage(mm);
@@ -47,13 +51,13 @@ public class SMTPClientDeamon implements Runnable {
 //				} catch (SMTPSendingFailedException e) {
 //					e.printStackTrace();
 //				}
-				System.out.println("Sent message");
+				logger.info("Sent message");
 			} else {
-				System.out.println("Nothing in out_queue - sleeping for " + SLEEP_TIME + " ...");
+				logger.info("Nothing in out_queue - sleeping for " + SLEEP_TIME + " ...");
 				try {
 					Thread.sleep(this.SLEEP_TIME);
 				} catch (InterruptedException e) {
-					System.err.println("Nie udalo sie uspic watku");
+					logger.error("Nie udalo sie uspic watku");
 					continue;
 				}
 			}

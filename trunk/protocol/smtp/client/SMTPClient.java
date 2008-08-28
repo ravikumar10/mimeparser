@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import smtp.SMTPSendingFailedException;
 
 import mail.MimeMessage;
@@ -27,6 +29,8 @@ public class SMTPClient {
 	private String password;
 	private Socket serverSocket;
 	private int port;
+	
+	public static Logger logger = Logger.getLogger("log");
 	
 	private Hashtable extMap;
 	private OutputStream serverOutput;
@@ -79,7 +83,7 @@ public class SMTPClient {
 		try {
 			serverSocket.connect(new InetSocketAddress(host, port));
 		} catch (IOException e) {
-			System.err.println("Nieudane podlaczenie do hosta: " + host + " na porcie: " + port);
+			logger.error("Connection to host: " + host + " on port: " + port + " failed");
 		}
 		// stream initialization
 		initStreams();
@@ -139,7 +143,7 @@ public class SMTPClient {
 					int resp = readServerResponse();
 					isClosed = true;
 					if (resp != 221 && resp != -1)
-					System.out.println("DEBUG SMTP: QUIT failed with " + resp);
+					logger.debug("QUIT failed with " + resp);
 				}
 			}
     	} finally {
@@ -152,7 +156,7 @@ public class SMTPClient {
     	    if (serverSocket != null)
     		serverSocket.close();
     	} catch (IOException ioex) {	    // shouldn't happen
-    	    System.out.println("Real problem in closing connection " + ioex.toString());
+    	    logger.error("Real problem in closing connection " + ioex.toString());
     	} finally {
     	    serverSocket = null;
     	    serverOutput = null;
@@ -167,7 +171,8 @@ public class SMTPClient {
 			serverInput = new BufferedInputStream(serverSocket.getInputStream());
 			lineInputStream = new LineInputStream(serverInput);
 		} catch (IOException e) {
-			System.out.println("Problem with server sockets initilization");
+			logger.error("Problem with server sockets initilization");
+			
 		}
     }
 	
@@ -177,7 +182,7 @@ public class SMTPClient {
 		    serverOutput.write(CRLF.getBytes());
 		    serverOutput.flush();
 		} catch (IOException ex) {
-		    System.err.println("Sending comman problem " + ex.toString());
+		    logger.error("Sending comman problem " + ex.toString());
 		}
     }
 	
@@ -216,7 +221,7 @@ public class SMTPClient {
 						line = line.substring(0, i);
 				    }
 				    
-					System.out.println("DEBUG SMTP: Found extension \"" +
+					logger.debug("Found extension \"" +
 							    line + "\", arg \"" + arg + "\"");
 				    extMap.put(line.toUpperCase(Locale.ENGLISH), arg);
 				}
@@ -245,7 +250,7 @@ public class SMTPClient {
 			    lastServerResponse = serverResponse;
 			    lastReturnCode = -1;
 			    
-				System.out.println("DEBUG SMTP: EOF: " + serverResponse);
+				logger.debug("EOF: " + serverResponse);
 			    return -1;
 			}
 			buf.append(line);
@@ -254,7 +259,7 @@ public class SMTPClient {
 	            serverResponse = buf.toString();
         } catch (IOException ioex) {
 		    
-			System.out.println("DEBUG SMTP: exception reading response: " + ioex);
+			logger.debug("Exception reading response: " + ioex);
 			//ioex.printStackTrace(out);
 		    lastServerResponse = "";
 		    lastReturnCode = 0;
@@ -280,9 +285,9 @@ public class SMTPClient {
 		}
         
 		if (returnCode == -1)
-		    System.out.println("DEBUG SMTP: bad server response: " + serverResponse);
+		    logger.error("bad server response: " + serverResponse);
 		
-		System.out.println("Server response " + serverResponse);
+		logger.debug("Server response " + serverResponse);
 		
         lastServerResponse = serverResponse;
 		lastReturnCode = returnCode;

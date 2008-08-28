@@ -3,6 +3,8 @@ package queue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 /**
  * Represends queue itself. It enables putting and getting
  * type of objects you desire to it (filter uses this
@@ -10,6 +12,8 @@ import java.util.List;
  * @author zbychu
  */
 public class Queue {
+	
+	public static Logger logger = Logger.getLogger("log");
 	
 	final static int MAX_CAPACITY = 20;
 	
@@ -47,7 +51,7 @@ public class Queue {
 		
 		synchronized(this) {
 			if (queueElements.size()<capacity) {
-				System.out.println("Got new message in queue " + name + " ...");
+				logger.info("Got new message in queue " + name + " ...");
 				queueElements.add(e);
 				return true;
 			} else return false;
@@ -65,7 +69,7 @@ public class Queue {
 	public Object getMessageFromQueue() {
 		synchronized(this) {
 			if (!queueElements.isEmpty()) {
-				System.out.println("Removing message from queue " + name + " ...");
+				logger.info("Removing message from queue " + name + " ...");
 				return queueElements.remove(0);
 			}
 			return null;

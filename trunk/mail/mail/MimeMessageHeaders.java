@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.apache.log4j.Logger;
+
 import mail.exceptions.ParseException;
 
 
@@ -19,6 +21,8 @@ import mail.util.HeadersUtils;
 import mail.util.LineInputStream;
 
 public class MimeMessageHeaders {
+	
+	public static Logger logger = Logger.getLogger("log");
 	
 	private List<MimeMessageHeader> headers;
 	
@@ -100,7 +104,7 @@ public class MimeMessageHeaders {
 			}
 		    } while (line != null && line.length() > 0);
 		} catch (IOException ioex) {
-		    //logging
+		    logger.error("Parsing error " + ioex.toString());
 		}
 	}
 	
@@ -135,12 +139,10 @@ public class MimeMessageHeaders {
 		    } else
 			headers.add(new MimeMessageHeader(line));
 		} catch (StringIndexOutOfBoundsException ex) {
-			//logger
-			ex.printStackTrace();
+			logger.error("Parsing error " + ex.toString());
 		    return;
 		} catch (NoSuchElementException ex) {
-			//logger
-			ex.printStackTrace();
+			logger.error("Parsing error " + ex.toString());
 			return;
 		}
 	}

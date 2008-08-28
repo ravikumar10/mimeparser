@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.apache.log4j.Logger;
+
 import smtp.server.SMTPConnection;
 
 public class SMTPServer implements Runnable {
+	
+	public static Logger logger = Logger.getLogger("log");
 	
 	private final static int PORT = 5678;
 	private int port;
@@ -22,17 +26,17 @@ public class SMTPServer implements Runnable {
 	@Override
 	public void run() {
 		
-		System.out.println("Starting SMTP server ...");
+		logger.info("Starting SMTP server ...");
 		
 		ServerSocket mailSocket = null;
 		try {
 			mailSocket = new ServerSocket(port);
 		} catch (IOException e) {
-			System.err.println("Problem z bindowaniem do portu: " + e.toString());
+			logger.error("Problem z bindowaniem do portu: " + e.toString());
 			return;
 		}
         
-        System.out.println("Listetning connections on port: " + port);
+		logger.info("Listetning connections on port: " + port);
         
 		while (true) {
 			
@@ -42,7 +46,7 @@ public class SMTPServer implements Runnable {
 				SMTPSocket = mailSocket.accept();
 				connection = new SMTPConnection(SMTPSocket);
 			} catch (Exception e) {
-				System.err.println("Problem z akceptowaniem polaczen");
+				logger.error("Problem z akceptowaniem polaczen");
 				return;
 			}
 			Thread thread = new Thread(connection);
