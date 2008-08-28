@@ -13,7 +13,11 @@
 	</target>
 	
 	<target name="run">
-			<java dir="${build.dir}" classname="system.FilterDaemon" fork="true" spawn="true"></java>	    
+				<java dir="${build.dir}" classname="system.FilterDaemon" fork="true"/>	    
+		</target>
+	
+	<target name="run_daemon">
+			<java dir="${build.dir}" classname="system.FilterDaemon" fork="true" spawn="true"/>	    
 	</target>
 
 </project>
