@@ -8,7 +8,6 @@
 	<classpathentry kind="src" path="system"/>
 	<classpathentry kind="src" path="helpers"/>
 	<classpathentry kind="src" path="queue"/>
-	<classpathentry kind="src" path="communicate"/>
 	<classpathentry kind="src" path="protocol"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
