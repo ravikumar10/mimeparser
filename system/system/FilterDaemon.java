@@ -1,7 +1,10 @@
 package system;
 
+import org.apache.log4j.Logger;
+
 import analize.AnalyseDaemon;
 import configuration.Configuration;
+import configuration.ConfigurationValidationException;
 import smtp.client.SMTPClientDeamon;
 import smtp.server.SMTPServer;
 
@@ -14,6 +17,8 @@ import smtp.server.SMTPServer;
  */
 public class FilterDaemon {
 
+	public static Logger logger = Logger.getLogger("log");
+	
 	private Configuration configuration;
 	
 	public FilterDaemon(Configuration configuration) {
@@ -61,16 +66,20 @@ public class FilterDaemon {
 	
 	public static void main(String[] args) {
 		
-		System.out.println("Reading configuration ...");
-		Configuration configuration = new Configuration("configuration/configuration/example_configuration_file.con");
+		logger.info("Reading configuration ...");
+		Configuration configuration = new Configuration("configuration/conf.conf");
 		
-		System.out.println("Validating configuration ...");
-		
-		//TODO!! validate configuration !!!
+		logger.info("Validating configuration ...");
+		try {
+			configuration.validateConfiguration();
+		} catch (ConfigurationValidationException e) {
+			logger.error("Configuration not valid: " + e.toString());
+			return;
+		}
 		
 		FilterDaemon s = new FilterDaemon(configuration);
 		
-		System.out.println("Starting filter ...");
+		logger.info("Starting filter ...");
 		s.start();
 		
 	}

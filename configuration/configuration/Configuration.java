@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,9 +33,34 @@ public class Configuration {
 	
 	private List<Rule> rules = new ArrayList<Rule>();
 	
+	private static HashMap<String, Object> systemSettings = new HashMap<String, Object>();
+	
+	static {
+		
+		systemSettings.put("smtp_listen_port", null);
+		systemSettings.put("max_smtp_clients", null);
+		systemSettings.put("max_analyse_threads", null);
+		systemSettings.put("add_header", null);
+		systemSettings.put("max_smtp_sending_clients", null);
+	}
+	
+	
 	public Configuration(String configurationFilename) {
 		this.pathToConfigurationFile=configurationFilename;
 		loadConfiguration();
+	}
+	
+	public void validateConfiguration() throws ConfigurationValidationException {
+		
+		for (String o : systemSettings.keySet()) {
+			if (systemSettings.get(o)==null) {
+				throw new ConfigurationValidationException("No " + o + " key in configuration");
+			}
+		}
+		
+		if (rules.size()==0) {
+			throw new ConfigurationValidationException("No rules in system!");
+		}
 	}
 	
 	/**
@@ -58,11 +84,10 @@ public class Configuration {
 				
 				//getting info about system
 				//String[] setting = line.split("=");
-				Pattern pattern = Pattern.compile("([a-zA-Z_0-9][^#]+)=([a-zA-Z_0-9][^#]+)");
+				Pattern pattern = Pattern.compile("([a-zA-Z_0-9 ][^#]+)=([a-zA-Z_0-9 ][^#]+)");
 				Matcher matcher = pattern.matcher(line);
 				if (matcher.matches()) { // normal settings
-					System.out.println("Settings " + line + "!");
-					continue;
+					parseSystemSettingsLine(line);
 				} else if (line.contains("#")){ // rule
 					Rule rule = parseRuleLine(new String(line.getBytes()));
 					if (rule != null) rules.add(rule);
@@ -76,6 +101,47 @@ public class Configuration {
 		} 
 	}
 	
+	private void parseSystemSettingsLine(String line) {
+		
+		String[] lineSegments = line.split("=");
+		if (lineSegments.length==2) {
+			String option = lineSegments[0].trim();
+			if (option.equals("smtp_listen_port")) {
+				try {
+					Integer port = new Integer(lineSegments[1].trim());
+					systemSettings.put("smtp_listen_port", port.intValue());
+				} catch (NumberFormatException e) {
+					return;
+				}
+			} else if (option.equals("max_smtp_clients")) {
+				try {
+					Integer max_smtp_clients = new Integer(lineSegments[1].trim());
+					systemSettings.put("max_smtp_clients", max_smtp_clients.intValue());
+				} catch (NumberFormatException e) {
+					return;
+				}
+			} else if (option.equals("max_analyse_threads")) {
+				try {
+					Integer max_analyse_threads = new Integer(lineSegments[1].trim());
+					systemSettings.put("max_analyse_threads", max_analyse_threads.intValue());
+				} catch (NumberFormatException e) {
+					return;
+				}
+			} else if (option.equals("max_smtp_sending_clients")) {
+				try {
+					Integer max_smtp_sending_clients = new Integer(lineSegments[1].trim());
+					systemSettings.put("max_smtp_sending_clients", max_smtp_sending_clients.intValue());
+				} catch (NumberFormatException e) {
+					return;
+				}
+			} else if (option.equals("add_header")) {
+				Boolean add_header = new Boolean(lineSegments[1].trim());
+				systemSettings.put("add_header", add_header.booleanValue());
+			}
+		}
+		
+	}
+	
 	public static Rule parseRuleLine(String ruleLine) {
 		
 		Rule ret = null;
@@ -83,8 +149,6 @@ public class Configuration {
 		if (ruleSegments.length>=3) {
 			String ruleName = ruleSegments[0];
 			String ruleType = ruleSegments[1];
-			
-			
 			
 			
 			int ruleTypeInt = 0; 
@@ -154,8 +218,13 @@ public class Configuration {
 	
 	public static void main(String[] args) {
 
-		Configuration c = new Configuration("configuration/configuration/example_configuration_file.con");
-		System.out.println(c);
+		Configuration c = new Configuration("configuration/configuration/example_configuration_file.conf");
+		
+		try {
+			c.validateConfiguration();
+		} catch (ConfigurationValidationException e) {
+			System.err.println("Blad w konfiguracji " + e.toString());
+		}
 	}
 	
 	

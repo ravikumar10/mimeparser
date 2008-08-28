@@ -3,6 +3,8 @@ package analize;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import queue.Queue;
 import queue.QueueMessage;
 
@@ -20,7 +22,9 @@ import configuration.Configuration;
  *
  */
 public class AnalyseThread implements Runnable {
-
+	
+	public static Logger logger = Logger.getLogger("log");
+	
 	private QueueMessage queueMessage;
 	private Configuration configuration;
 //	private Analyser analyser;
@@ -42,7 +46,7 @@ public class AnalyseThread implements Runnable {
 	@Override
 	public void run() {
 		
-		System.out.println("Starting analysing new message ...");
+		logger.info("Starting analysing new message ...");
 		
 		//running parser of the message 
 		ByteArrayInputStream bais = new ByteArrayInputStream(queueMessage.getMessageBuffer());
@@ -50,10 +54,10 @@ public class AnalyseThread implements Runnable {
 		try {
 			mm = new MimeMessage(bais, queueMessage.getSenders(), queueMessage.getReceivers());
 		} catch (ParseException e) {
-			System.out.println("Parsing error " + e.toString());
+			logger.error("Parsing error " + e.toString());
 			return;
 		} catch (MimeMessageHeaderException e) {
-			System.out.println("Parsing error " + e.toString());
+			logger.error("Parsing error " + e.toString());
 			return;
 		}
 		
@@ -67,7 +71,7 @@ public class AnalyseThread implements Runnable {
 		
 		//check if message should be dropped
 		if (droppingRules.size()>0) {
-			System.out.println("Message should be dropped");
+			logger.info("Dropping message - drop rule " + droppingRules.iterator().next().toString());
 		} else {
 			if (addHeader) {
 				//adding header to msg
@@ -78,7 +82,7 @@ public class AnalyseThread implements Runnable {
 			//putting msg to out queue
 			queue.addMessageToQueue(mm);
 		}
-		System.out.println("Analysing done  ...");
+		logger.info("Analysing done  ...");
 
 	}
 }

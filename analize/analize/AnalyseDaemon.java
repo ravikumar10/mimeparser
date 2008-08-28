@@ -1,5 +1,7 @@
 package analize;
 
+import org.apache.log4j.Logger;
+
 import configuration.Configuration;
 import queue.Queue;
 import queue.QueueMessage;
@@ -11,7 +13,9 @@ import queue.QueueMessage;
  *
  */
 public class AnalyseDaemon implements Runnable {
-
+	
+	public static Logger logger = Logger.getLogger("log");
+	
 	private Queue queue = Queue.getQueue("in_queue");
 	private Configuration configuration;
 	private int SLEEP_TIME = 3000;
@@ -23,7 +27,7 @@ public class AnalyseDaemon implements Runnable {
 	@Override
 	public void run() {
 		
-		System.out.println("Starting analize deamon ...");
+		logger.info("Starting analize deamon ...");
 		
 		while(true) {
 			
@@ -36,11 +40,11 @@ public class AnalyseDaemon implements Runnable {
 				analizer.start();
 			} else {
 				// nothing in the queue
-				System.out.println("Nothing in in_queue - sleeping for " + SLEEP_TIME + " ...");
+				logger.info("Nothing in in_queue - sleeping for " + SLEEP_TIME + " ...");
 				try {
 					Thread.sleep(this.SLEEP_TIME);
 				} catch (InterruptedException e) {
-					System.err.println("Nie udalo sie uspic watku");
+					logger.error("Nie udalo sie uspic watku");
 					continue;
 				}
 			}

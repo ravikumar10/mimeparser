@@ -49,10 +49,6 @@ public class Analyser {
 		Part p = this.message.getPart();
 		List<Rule> droppingRules = analizePart(p, true);
 		
-		for (Rule rule : droppingRules) {
-			System.out.println("Droping message cause of rule: \n" + rule.getName());
-		}
-		
 		this.droppingRules.addAll(droppingRules);
 	}
 	
