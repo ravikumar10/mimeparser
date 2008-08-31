@@ -53,7 +53,7 @@ public class SMTPClientDeamon implements Runnable {
 //				}
 				logger.info("Sent message");
 			} else {
-				logger.info("Nothing in out_queue - sleeping for " + SLEEP_TIME + " ...");
+				logger.info("Nothing in out_queue - sleeping for " + SLEEP_TIME + " ");
 				try {
 					Thread.sleep(this.SLEEP_TIME);
 				} catch (InterruptedException e) {

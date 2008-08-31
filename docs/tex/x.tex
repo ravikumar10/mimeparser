@@ -19,8 +19,6 @@ Praca in¿ynierska
 
 \tableofcontents
 
-
-
 %%%% PONI¯EJ ZAWARTO¦Æ DOWOLNA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Dokument podzielony powinien byæ na elementy: section, subsection,
@@ -2348,8 +2346,43 @@ ponad trzykrotnie.
 
 \subsubsection{Pozosta³e modu³y}
 
+Poni¿sza tabela przedstawia czasy przebywania wiadomo¶ci w poszczególnych
+modu³ach.
+\newline
+\newline
+\begin{tabular}{ | c | c | c | c | c | c | }
+\hline
+Lp & Odbieranie & Kolejka 1 & Parsowanie & Analiza & Kolejka 2 \\
+\hline
+\hline
+1 & 174 & 2585 & 1 & 7 & 2795 \\
+2 & 170 & 330  & 1 & 3 &  -   \\
+3 & 210 & 143 & 10 & 1 & 2753 \\
+4 & 165 & 2798 & 1 & 1 & 2739 \\
+5 & 988 & 2887 & 240 & 4 & -  \\
+\hline
+\end{tabular}
 
+Kolejka 1 okre¶la czas przebywania odebranej wiadomo¶ci w kolejce wiadomo¶ci
+przychodz±cych, za¶ kolejka 2 okre¶la czas przebywania wiadomo¶ci w kolejce
+wiadomo¶ci wychodz±cych. Brak warto¶ci w kolumnie ''Kolejka 2'' oznacza
+odrzucenie wiadomo¶ci na poziomie analizy. Wiadomo¶ci by³y wysy³ane przez
+klientów, które pod³±cza³y siê do filtra po loopbacku. Czasy wysy³ania nie
+zosta³y uwzglêdnione, gdy¿ zale¿± od systemów zewnêtrznych (w przypadku
+³±czenia siê do serwera po loopbacku bêd± podobne jak czasy w kolumnie
+''Odbieranie'').
 
+Tabela jednoznacznie pokazuje, ¿e oprócz modu³ów odbieraj±cego i wysy³aj±cego
+spory czas wiadomo¶æ spêdza w kolejkach. W przypadku testowanym zwi±zane jest
+to z usypianiem na 3000 ms daemonów analizuj±cych kolejkê w przypadku braku w
+niej elementów. Najkrótsze czasy widoczne s± w kolumnie ''Analiza''.
+Bezpo¶rednio zwi±zane jest to z konfiguracj± regu³ wiadomo¶ci, a konkretnie
+okre¶leniem jednej regu³y wyszukuj±cej w polu ''Subject'' okre¶lonego s³owa. W
+przypadku zwiêkszenia ilo¶ci i skomplikowania regu³ czasy analizy wzrosn± i
+d³ugo¶æ przebywania wiadomo¶ci w tym module mo¿e znacznie wzrosn±æ. Tabela
+pokazuje tak¿e, ¿e czas parsowania wiadomo¶ci, jak to ju¿ wcze¶niej by³o
+zaznaczone, jest bardzo istotnym elementem i jego obni¿enie mo¿e znacznie
+wp³yn±æ na wydajno¶æ ca³ego filtra.
 
 \newpage
 

@@ -72,11 +72,15 @@ public class SMTPConnection implements Runnable {
 	}
 
     public void run() {
+    	logger.debug("Starts receiving message ...");
+    	long begin = System.currentTimeMillis();
 		try {
 			processRequest();
 		} catch (Exception e) {
 			logger.error("Error in processing" + e);
 		}
+		long end = System.currentTimeMillis();
+		logger.debug("Stopped receiveng message; receiving took [ " + (end-begin) + " ] ...");
 	}
 
     private void processRequest(){
@@ -138,7 +142,7 @@ public class SMTPConnection implements Runnable {
 		} catch (IOException e) {
 			logger.error("Read socket error: "+e);
 		}
-		logger.debug("K: " + message);
+		//logger.debug("K: " + message);
 		return message;
 	}
 	
@@ -148,7 +152,7 @@ public class SMTPConnection implements Runnable {
 	 */
 	private void reply (String command){
 		try {
-			logger.debug("S: " + command);
+//			logger.debug("S: " + command);
 			if (!socket.isClosed()) toClient.writeBytes(command+CRLF);			
 		} catch (IOException e) {
 			logger.error("Write socket error: "+e);
@@ -298,7 +302,7 @@ public class SMTPConnection implements Runnable {
 		
 		// excluding sender and putting to senders list
 		String sender = requestCommand.substring(SMTPUtils.getCommand("mailfrom").length());
-		logger.debug("Sender: " + sender);
+//		logger.debug("Sender: " + sender);
 		this.senders.add(sender);
 		
 		reply(OK_250);
@@ -323,7 +327,7 @@ public class SMTPConnection implements Runnable {
 		
 		// excluding receiver and putting to receivers list
 		String receiver = requestCommand.substring(SMTPUtils.getCommand("rcptto").length());
-		logger.debug("Receiver: " + receiver);
+//		logger.debug("Receiver: " + receiver);
 		this.receivers.add(receiver);
 		
 		reply(OK_250);

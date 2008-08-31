@@ -101,7 +101,7 @@ public class MimeMultiPart extends Part {
 		    	
 		    	if (i<0) {
 		    		// very useful for debuging
-		    		logger.debug("Part: " + new String(tmpBuffer));
+//		    		logger.debug("Part: " + new String(tmpBuffer));
 		    		
 		    		analizeAndCreatePart(tmpBuffer);
 		    		this.content=tmpBuffer;
