@@ -52,12 +52,12 @@ public class AnalyseThread implements Runnable {
 		ByteArrayInputStream bais = new ByteArrayInputStream(queueMessage.getMessageBuffer());
 		MimeMessage mm = null;
 		try {
-			logger.debug("Starting parsing message");
+			logger.debug("Starting parsing message ...");
 			long beginTime = System.currentTimeMillis();
 			mm = new MimeMessage(bais, queueMessage.getSenders(), queueMessage.getReceivers());
 			long endTime = System.currentTimeMillis();
-			logger.debug("End of parsing message from " + mm.getSenders().iterator().next());
-			logger.debug("Parsing took [ " + (endTime-beginTime) + " ] miliseconds");
+			logger.debug("End of parsing message from " + mm.getSenders().iterator().next() + " ...");
+			logger.debug("Parsing took [ " + (endTime-beginTime) + " ] miliseconds ...");
 		} catch (ParseException e) {
 			logger.error("Parsing error " + e.toString());
 			return;
@@ -70,7 +70,11 @@ public class AnalyseThread implements Runnable {
 		Analyser analyser = new Analyser(configuration.getRules());
 		//setting message to analize
 		analyser.setMessage(mm);
+		logger.debug("Starting analysing message ...");
+		long beginTime = System.currentTimeMillis();
 		analyser.analize();
+		long endTime = System.currentTimeMillis();
+		logger.debug("Analysing took [ " + (endTime-beginTime) + " ] miliseconds ...");
 		List<Rule> droppingRules = analyser.getDroppingRules();
 		
 		

@@ -40,7 +40,7 @@ public class AnalyseDaemon implements Runnable {
 				analizer.start();
 			} else {
 				// nothing in the queue
-				logger.info("Nothing in in_queue - sleeping for " + SLEEP_TIME + " ...");
+				logger.info("Nothing in in_queue - sleeping for " + SLEEP_TIME + " ");
 				try {
 					Thread.sleep(this.SLEEP_TIME);
 				} catch (InterruptedException e) {
