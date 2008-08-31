@@ -369,10 +369,12 @@ public class SMTPConnection implements Runnable {
 				if (!tmp.equals(CRLF)) tmp+=CRLF;
 				System.arraycopy(tmp.getBytes(), 0, messageBuffer, messageLenght, tmp.length());
 				messageLenght+=tmp.length();
-			} else isEndOfMessage=true;
+			} else {
+				isEndOfMessage=true;
+			}
 		}
 		
-		logger.debug("Mail is :\n" + new String(messageBuffer));
+		//logger.debug("Mail is :\n" + new String(messageBuffer));
 		
 		//putting mail to queue
 		//adds some while here if adding message to queue fails with retrying

@@ -68,6 +68,7 @@ public class FilterDaemon {
 		
 		logger.info("Reading configuration ...");
 		Configuration configuration = new Configuration("configuration/conf.conf");
+		//Configuration configuration = new Configuration("configuration/configuration/conf.conf");
 		
 		logger.info("Validating configuration ...");
 		try {

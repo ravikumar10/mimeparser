@@ -31,9 +31,11 @@ public class LineOutputStream extends OutputStream {
 	
 	public void writeln(String s) {
 		try {
-		    byte[] bytes = StringUtils.getBytes(s);
-		    out.write(bytes);
-		    out.write(newline);
+			if (s!=null) {
+			    byte[] bytes = StringUtils.getBytes(s);
+			    out.write(bytes);
+			    out.write(newline);
+			}
 		} catch (Exception ex) {
 			System.err.println("Writing to os problem " + ex.toString());
 		}
