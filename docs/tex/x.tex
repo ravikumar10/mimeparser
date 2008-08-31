@@ -2214,7 +2214,7 @@ nazwach ''in\_queue'' i ''out\_queue''.
 
 \subsubsection{Modu³ odbieraj±cy i wysy³aj±cy}
 
-Modu³ odbieraj±cy wiadomo¶ci, które maj± trafiæ do filtra to serwer
+Modu³ odbieraj±cy odbiera wiadomo¶ci, które maj± trafiæ do filtra to serwer
 SMTP, który s³ucha na okre¶lonym porcie przychodz±cych po³±czeñ. Serwer ten nie
 obs³uguje autoryzacji. Ka¿de pod³±czenie siê nowego klienta powoduje
 uruchomienie kolejnego w±tku odbieraj±cego. Serwer reprezentowany jest przez
@@ -2227,13 +2227,158 @@ jest ponawianie wysy³ania wiadomo¶æ w przypadku nieudanej próby.
 
 \subsection{Kompilacja, konfiguracja i uruchomienie projektu}
 
+Na konfiguracjê projektu sk³adaj± siê 2 pliki konfiguracyjne zawarte w katalogu
+configuration/configuration (licz±c od g³ównego katalogu projektu):
 
+\begin{itemize}
+  \item log4j.properties - plik s³u¿±cy do konfiguracji logowania. Mo¿na w nim
+  okresliæ:
+  \begin{itemize}
+    \item poziom logowania ogólny - dostêpne poziomy to TRACE, DEBUG, INFO,
+    WARN, ERROR oraz FATAL
+    \item formy logowania - konsola, plik lub inna forma (serwer z logami)
+    \item przy aktywnym logowaniu do pliku nazwê pliku do logowania
+    \item poziom logowania dla poszczególnych pakietów
+  \end{itemize}
+  \item filter.conf - plik s³u¿±cy do konfiguracji filtra. Mo¿na w nim okre¶liæ:
+  \begin{itemize}
+    \item numer portu, na którym nas³uchuje serwer SMTP znajduj±cy siê w ramach
+    filtra
+    \item maksymaln± liczbê klientów jaka jednocze¶nie mo¿e pod³±czyæ siê do
+    filtra (czyli po³±czyæ siê z serwerem SMTP)
+    \item maksymaln± liczba jednocze¶nie uruchomionych w±tków do analizy
+    wiadomo¶ci
+    \item formê modyfikacji wiadomo¶ci po analizie i przed wys³aniem - dodawanie
+    kolejnego nag³ówka do wiadomo¶ci lub pozostawienie wiadomo¶ci w formie
+    pierwotnej
+    \item maksymaln± liczbê klientów wysy³aj±cych jednocze¶nie wiadomo¶ci
+    \item regu³y filtruj±ce wiadomo¶ci
+  \end{itemize}
+\end{itemize}
+
+Kompilacja oraz uruchomienie projektu odbywa siê przy pomocy narzêdzia ant.
+Narzêdzie to wymaga ustawienia w systemie zmiennych systemowych JAVA\_PATH i
+JAVA\_HOME. W pliku build.xml w projekcie zdefiniowane s± zadania (ang. tasks),
+które ant mo¿e uruchamiaæ. G³ówne zadania to:
+
+\begin{itemize}
+  \item compile - kompiluje projekt
+  \item run - uruchamia filtr
+  \item run\_daemon - uruchamia filtr jako daemona
+  \item stop\_deamon - zatrzymuje daemona filtru  
+\end{itemize}
+
+Wszystkie polecenia uruchamiane s± w nastêpuj±cy sposób:
+\newline
+\newline
+ant nazwa\_zadania np. ant compile
+\newline
+
+Przed uruchomieniem projektu nale¿y go skompilowaæ.
+
+Przyk³ad ka¿dej regu³y filtruj±cej wiadomo¶æ (wraz ze szczegó³owym opisem)
+znajduje siê w pliku example\_configuration\_file.conf w katalogu
+configuration/configuration.
 
 \subsection{Testy wydajno¶ciowe}
+
+Stworzony filtr zosta³ poddany testom wydajno¶ciowym. Sprawdzona zosta³a
+wydajno¶æ modu³u parsowania, jak i ca³o¶ci systemu.
+
+\subsubsection{Parser}
+
+Jednym z g³ównych elementów zapewniaj±cych du¿± wydajno¶æ filtra jest parser.
+Filtr zosta³ poddany testom zarówno maj±cym na celu sprwadzenie szybko¶ci
+parsowania w zale¿no¶ci od wielko¶ci wiadomo¶ci i jej skomplikowania, jak i
+zachowania w przypadku coraz wiêkszej liczby wiadomo¶ci parsowanych
+jednocze¶nie.
+
+Poni¿sza tabela przedstawia czas parsowania pojedynczej wiadomo¶ci w
+filtrze w zale¿no¶ci od typu wiadomo¶ci i jej wielko¶ci.\newline
+\newline
+\begin{tabular}{ | c | c | c | }
+\hline
+Wielko¶æ [KB] & Typ & Czas parsowania [ms]\\
+\hline
+\hline
+1,8 & multipart mixed (text+textfile) & 1 \\
+2,4 & text plain & 2 \\
+6,9 & multipart mixed (text+image) & 5 \\
+226 & multipart mixed (text+pdf) & 70 \\
+3400 & multipart mixed (text+image) & 922 \\
+\hline
+\end{tabular}
+
+Ca³kowita d³ugo¶æ parsowania wiadomo¶ci czyli czas mierzony pomiêdzy pocz±tkiem
+parsowania pierwszej wiadomo¶ci, a koñcem parsowania ostatniej wyniós³
+\textbf{3988} ms. W czasie tym zawarty jest tak¿e czas wysy³ania wiadomo¶ci z wy³±czeniem
+pierwszej z nich.
+
+Wyniki jednoznacznie wskazuj±, ¿e szybko¶æ parsowania zwiêksza siê wraz ze
+wzrostem wielko¶ci wiadomo¶ci, a typ wiadomo¶ci nie ma du¿ego wp³ywu na ten
+czas.
+
+Kolejna tabela przedstawia czas parsowania pojedynczej wiadomo¶ci w przypadku
+równoleg³ego przetwarzania wiadomo¶ci od klientów.
+\newline
+\newline
+\begin{tabular}{ | c | c | c | }
+\hline
+Wielko¶æ [KB] & Typ & Czas parsowania [ms]\\
+\hline
+\hline
+1,8 & multipart mixed (text+textfile) & 3 \\
+2,4 & text plain & 1 \\
+6,9 & multipart mixed (text+image) & 32 \\
+226 & multipart mixed (text+pdf) & 147 \\
+3400 & multipart mixed (text+image) & 1011 \\
+\hline
+\end{tabular}
+
+Ca³kowita d³ugo¶æ parsowania wiadomo¶ci czyli czas mierzony pomiêdzy pocz±tkiem
+parsowania pierwszej wiadomo¶ci, a koñcem parsowania ostatniej wyniós³
+\textbf{1089} ms. W czasie tym zawarty jest tak¿e czas wysy³ania wiadomo¶ci z
+wy³±czeniem pierwszej z nich.
+
+Wyniki potwierdzaj±, ¿e poszczególne czasy parsowania s± d³u¿sze w przypadku
+równoleg³ego przetwarzania wiadomo¶ci. Zwi±zane jest to oczywi¶cie z
+konieczno¶ci± prze³±czania siê wirtualnej maszyny pomiêdzy w±tkami. Jednak
+ca³kowity czas parsowania dziêki równoleg³emu przetwarzaniu zosta³ zmniejszony
+ponad trzykrotnie.
+
+\subsubsection{Pozosta³e modu³y}
+
+
+
 
 \newpage
 
 \section{Spostrze¿enia, wnioski}
 
-\newpage
+Stworzenie filtra protoko³u SMTP nie jest prostym zadaniem. Wymaga obszernej
+wiedzy na temat protoko³u SMTP i jego rozszerzeñ, które s± nieustannie
+rozwijane i zmieniane. Konieczne jest stworzenie serwera i klienta SMTP, które
+stanowi± swoistego rodzaju API do komunikacji pomiêdzy filtrem, a systemami
+zewnêtrznymi. Mo¿liwa oczywi¶cie jest inna forma dostêpu do filtra, ale to
+niesie za sob± konieczno¶æ stworzenia odpowiednich wtyczek/rozszerzeñ do
+istniej±cych ju¿ serwerów SMTP. Ze wzglêdu na ich mnogo¶æ, a tak¿e w przypadku
+komercyjnych serwerów brak otwarto¶ci, mo¿e byæ to du¿ym problemem i dostêp do
+filtra z wykorzystaniem protoko³u SMTP wydaje siê najlepszym rozwi±zaniem.
 
+Kolejny problem zwi±zany jest z niezgodno¶ci± niektórych
+implementacji SMTP ze standardami opisanymi w RFC. Ma to wp³yw na postaæ
+wiadomo¶ci przesy³anej przez klienty do filtra i wymusza konieczno¶æ
+dodatkowych zmian w jego implementacji. Dotyczy to oczywi¶cie odpowiednich zmian
+w parserze wiadomo¶ci (obecnie akceptuje on jedynie wiadomo¶ci zgodne z RFC),
+od którego to poprawnego dzia³ania uzale¿nione jest dalsza analiza wiadomo¶ci. 
+
+Du¿ym problemem jest tak¿e ¶rodowisko do testowania, szczególnie je¶li chodzi o
+testowanie wydajno¶ciowe na du¿± skalê. Musi ono umo¿liwiaæ jednoczesne
+uruchomienie wielu klientów wysy³aj±cych wiadomo¶ci ró¿nego typu. Potrzebny
+jest tak¿e serwer docelowy, a najlepiej kilka z ró¿nymi czasami dostêpu, do
+którego wiadomo¶ci powinny byæ s³ane po przej¶ciu przez filtr.
+
+Pomimo wszelkich trudno¶ci otwarty projekt filtra protoko³u SMTP jest ciekawym
+zagadnieniem wartym rozwoju.
+
+\newpage

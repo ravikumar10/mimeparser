@@ -52,6 +52,7 @@ public class StringUtils {
 	    	
 		for (int i = 0; i < size;)
 		    bytes[i] = (byte) chars[i++];
+		
 		return bytes;
 	}
 	
@@ -332,6 +333,8 @@ public class StringUtils {
 		
 		System.out.println(isStringPatternInStringText(pattern, text));
 //		System.out.println(isPatternInText(pattern.getBytes(), text.getBytes()));
+		
+		
 		
 	}
 	
