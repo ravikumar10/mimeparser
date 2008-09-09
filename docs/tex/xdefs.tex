@@ -5,3 +5,72 @@
 \newcommand{\strona}[1]{(str. \pageref{#1})}
 \newcommand{\punkt}[1]{(rys. \ref{#1})}
 \newcommand{\rys}[1]{(rys. \ref{#1})}
+
+%% styl do malowania w ramkach polecen SMTP normalny tryb
+\newcommand{\combox}[1]{
+\newline
+\newline
+\framebox[0.95\textwidth][l]{
+\begin{minipage}[c]{14cm}
+\textit{#1}
+\end{minipage}
+}
+\newline
+\newline
+}
+
+%% styl do malowania w ramkach polecen SMTP bez 
+%% dwoch koncowych \newlineow
+\newcommand{\comboxnonl}[1]{
+\newline
+\newline
+\framebox[0.95\textwidth][l]{
+\begin{minipage}[c]{14cm}
+\textit{#1}
+\end{minipage}
+}
+}
+
+
+%% styl do malowania w ramkach polecen SMTP w itemize
+\newcommand{\comboxinitemize}[1]{
+\newline
+\newline
+\framebox[0.90\textwidth][l]{
+\begin{minipage}[c]{14cm}
+\textit{#1}
+\end{minipage}
+}
+\newline
+\newline
+}
+
+%% styl do malowania ramek zeby bo nich byly ladne
+%% odstepy
+\newcommand{\newlines}[1]{
+\newline
+\newline
+\makebox[0.95\textwidth][l]{
+\begin{minipage}[c]{14cm}
+#1
+\end{minipage}
+}
+\newline
+\newline
+\newline
+}
+
+%% styl do malowania w ramkach polecen SMTP w itemize
+%% bez koncow lini
+\newcommand{\comboxinitemizenonl}[1]{
+\framebox[0.90\textwidth][l]{
+\begin{minipage}[c]{13cm}
+\textit{#1}
+\end{minipage}
+}
+}
+
+%% styl do malowania couriere polecen
+\newcommand{\comcourier}[1] {
+#1
+}
