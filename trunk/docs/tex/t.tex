@@ -1,4 +1,4 @@
-\documentclass[a4paper,onecolumn,10pt]{article}
+\documentclass[a4paper,onecolumn,12pt]{article}
 %% Innym formatem, który poznawczo warto przetestowaæ, ale który nie zosta³
 %% przyjêty dla sprawozdañ, móg³by byæ klasyczny format dwukolumnowy:
 %% \documentclass[a4paper,twocolumn]{article}
@@ -37,19 +37,24 @@
 %% http://sunsite.icm.edu.pl/pub/CTAN/fonts/psfonts/polish/qfonts/
 %%
 \usepackage[T1]{fontenc}
+%%\usepackage{pslatex}
+\usepackage{times}
 
+\usepackage{floatflt}
 %% Dla tekstów pisanych jedynie w jêzyku angielskim, zamiast powy¿szych
 %% komend usepackage wystarcz± dwa poni¿sze, zbêdne s± te¿ czcionki quasi.
 %%
 %% \usepackage[english]{babel}
 %% \usepackage[T1]{fontenc}
 
-
+\linespread{1.25}
 %% W³±czenie dodatkowych pakietów. epsfig w³±cza te¿ graphicx i graphics.
 \usepackage{fancyhdr}
 \usepackage{fancyvrb}
 \usepackage{epsfig}
 \usepackage{color}
+
+\usepackage[left=3.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
 
 %% do grafiki
 \usepackage{graphicx}
@@ -58,10 +63,7 @@
 \input{xdefs.tex}
 
 \begin{document}
-\bibliographystyle{alpha}
-\pagestyle{fancy}
-\fancyhead[LE,RO]{}
-\fancyhead[RE,LO]{\leftmark}
+\bibliographystyle{plain}
 
 %% Tu w³±czany jest w³a¶ciwy dokument. Dziêki separacji x.tex od t.tex
 %% standardowe nag³ówki latexa z t.tex nie odci±gaj± naszej uwagi od meritum

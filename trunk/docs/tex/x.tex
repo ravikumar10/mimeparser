@@ -1,20 +1,193 @@
 %%%% ZAWARTO¦Æ OBLIGATORYJNA - NALE¯Y DOSTOSOWAÆ %%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Tytu³ opracowania
-\title{Filtr protoko³u SMTP\\
+%\title{Filtr protoko³u SMTP\\
 %% Tu nale¿y podaæ nazwê przedmiotu, którego tyczy sprawozdanie.
-\begin{small}
-Praca in¿ynierska
-\end{small}}
+%\begin{small}
+%Praca in¿ynierska
+%\end{small}}
 
 %% Autorzy opracowania, po dwie linie z nazwiskiem i adresem e-mail na
 %% osobê. Ka¿dy opis oddzielony separatorem 'and'.
 %% \author{Tomasz Jordan Kruk\\ T.Kruk@ia.pw.edu.pl \and Jan Nieznany\\ jn@n.pl}
-\author{Zbigniew Artemiuk\\ Z.Artemiuk@stud.elka.pw.edu.pl}
+%%\author{Zbigniew Artemiuk\\ Z.Artemiuk@stud.elka.pw.edu.pl}
 
 % To stworzy w³a¶ciwy format tytu³u oraz spis tre¶ci.
-\maketitle
+%%\maketitle
 
+%%%%%%%%%%%%%%%%%%%% G£ÓWNA STRONA %%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\thispagestyle{empty}
+\noindent
+\textbf{Politechnika Warszawska}\newline
+\textbf{Wydzia³ Elektroniki i Technik Informacyjnych}\newline
+\textbf{Instytut Informatyki}\newline
+\newline
+\hspace*{10cm} Rok akademicki 2007/2008\newline
+
+\vspace{3cm}
+
+% srodek tytula pracy i autor
+\begin{center}
+\begin{LARGE}\textbf{PRACA DYPLOMOWA - IN¯YNIERSKA}
+\end{LARGE}
+\vspace{2cm}
+\begin{LARGE}
+\textbf{Zbigniew Artemiuk}
+\end{LARGE}
+
+\vspace{2.5cm}
+\begin{LARGE}
+\textbf{Filtr protoko³u SMTP}
+\end{LARGE}
+
+\end{center}
+
+\vspace{2.5cm}
+
+% opiekun
+\begin{large}
+\hspace*{9.7cm}\textbf{Opiekun pracy:}\newline
+\hspace*{9cm}\textbf{dr in¿. Grzegorz Blinowski}\newline
+\end{large}
+
+\vspace{2cm}
+
+\noindent
+\begin{small}
+Ocena\hspace*{0.2cm}\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\newline
+\hspace*{1.3cm}\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\newline
+\hspace*{1.3cm}\textit{Podpis Przewodnicz±cego}\newline
+\hspace*{1.3cm}\textit{Komisji Egzaminu Dyplomowego}
+\end{small}
+
+%%%%%%%%%%%%%%%%%%%%%%% ¯YCIORYS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\begin{floatingtable}[l]{}
+\includegraphics[scale=0.4]{ryj.png}
+\end{floatingtable}
+
+\begin{large}
+\noindent
+\hspace*{3cm} \newline
+\hspace*{3cm}
+\textbf{Specjalno¶æ: In¿ynieria Systemów Informatycznych}
+\newline
+\hspace*{3cm}
+\textbf{Data urodzenia: 02.03.1984}
+\newline
+\hspace*{3cm}
+\textbf{Data rozpoczêcia studiów: luty 2004}
+\newline
+\end{large}
+
+\vspace{2.5cm}
+
+\begin{center}
+\begin{LARGE}¯yciorys
+\end{LARGE}
+\end{center}
+
+Urodzi³em siê 2 marca 1984 roku w Przasnyszu. Edukacjê rozpocz±³em w 1991 roku
+w Szkole Podstawowej w Krasnosielcu. W latach 1999-2003 uczêszcza³em do Liceum
+Ogólnokszta³c±cego im. KEN w Przasnyszu do klasy o profilu
+matematyczno-fizycznym. Po zdaniu matury i egzaminów wstêpnych rozpocz±³em
+studia na wydziale Elektroniki i Technik Informacyjnych Politechniki
+Warszawskiej. W roku 2006 wybra³em specjalno¶æ In¿ynieria Systemów
+Informatycznych.
+
+\vspace{6cm}
+
+% podpis
+\hspace*{11cm}Podpis\newline
+\hspace*{10.5cm}\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\newline
+
+\vspace{2cm}
+
+\noindent
+\textbf{EGZAMIN DYPLOMOWY}\newline
+Z³o¿y³ egzamin dyplomowy w dniu
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\newline
+z wynikiem
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\newline
+Ogólny wynik studiów
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots
+\ldots\ldots\ldots .
+\newline
+Dodatkowe uwagi i wnioski Komisji 
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots .
+.\newline
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots \ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots
+\ldots .
+\newline
+
+%%%%%%%%%%%%%%%%%%%%%%  STRESZCZENIE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\noindent
+\begin{LARGE}\textbf{Streszczenie}
+\end{LARGE}
+\newline
+\newline
+W pracy przedstawiono szczegó³owy opis protoko³u SMTP (Simple Mail Transfer
+Protocol) oraz opisano wspó³czesne narzêdzia do filtracji wiadomo¶ci
+przesy³anych za jego pomoc±. Dok³adnie zanalizowane zosta³o nastêpuj±ce
+oprogramowanie:
+
+\begin{itemize}
+  \item MIME Sweeper for SMTP firmy Clearswift
+  \item eSafe Mail firmy Aladdin
+  \item E-mail Filter firmy Surfcontrol 
+\end{itemize}
+
+Przedstawione zosta³y tak¿e modu³y do filtracji w protokole SMTP znajduj±ce siê
+w oprogramowaniu antywirusowym firm Trend Micro (InterScan VirusWall i Inter
+Scan Messaging Security Suite) oraz F-Secure (F-Secure Email Scanning).
+
+Omówiona zosta³a koncepcja stworzenia autorskiego oprogramowania filtruj±cego z
+podzia³em na modu³y: odbieraj±cy (serwer SMTP), kolejkuj±cy wiadomo¶ci,
+parsuj±cy i analizuj±cy oraz wysy³aj±cy (klient SMTP). Po jego stworzeniu
+zosta³y przeprowadzone testy wydajno¶ciowe, których wyniki zosta³y opracowane i
+podsumowane.
+
+%%%%%%%%%%%%%%%%%%%%%%  ABSTRACT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{1cm}
+
+
+\pagestyle{fancy}
+\fancyhead[LE,RO]{}
+\fancyhead[RE,LO]{\leftmark}
+\noindent
+\begin{LARGE}\textbf{Abstract}
+\end{LARGE}
+\newline
+\begin{center}
+\begin{LARGE}\textbf{SMTP protocol filter}
+\end{LARGE}
+\end{center}
+This thesis describes in details the SMTP protocol (Simple Mail Transfer
+Protocol) and available tools for filtering contents of messages sending
+using it. Filtering software listed below was carefully analyzed:
+\begin{itemize}
+  \item MIME Sweeper for SMTP of company Clearswift
+  \item eSafe Mail of company Aladdin
+  \item E-mail Filter of company Surfcontrol
+\end{itemize} 
+
+Some modules for SMTP filtering included in antivirus software of companies
+TrendMicro (InterScan VirusWall i Inter Scan Messaging Security Suite) and
+F-Secure (F-Secure Email Scanning) was also mentioned.
+
+After this, the creation of author's filtering software with modules:
+receiving (SMTP server), queueing messages, parsing and analysing, and sending
+(SMTP client) was discussed. Later, when software was implemented, some
+performance tests were made and the collected data was elaborated and summed up.
+
+%%%%%%%%%%%%%%%%%%%%%%% TRE¦Æ PRACY %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
 \tableofcontents
@@ -28,54 +201,57 @@ Praca in¿ynierska
 
 \section{Wstêp}
 
-Obecnie w Internecie, pomimo szeregu rozwijaj±cych siê form komunikacji,
-chocia¿by technologii takich jak tekstowa komunikacja czasu rzeczywistego (czyli
-IM - instant messaging i popularne chaty) czy te¿ jeszcze bardziej zaawansowanych
-technologii, które umo¿liwiaj± przesy³anie g³osu oraz wideo (chocia¿by Skype),
-pospolite maile ca³y czas znajduj± zastosowanie. U¿ywamy ich chyba obecnie najcze¶ciej
-do kontaktów biznesowych, rodzinnych, przyjacielskich, g³ównie w celach informacyjnych
-(czyli sam tekst), jak równie¿ do przekazywania niewielkich plików. Chyba ka¿dy
-internauta legitymuje siê przynajmniej jedn± skrzynk± mailow± (a czasami jest
-ich znacznie wiêcej). Ka¿dy spotka³ siê tak¿e z niechcian±
-poczt± (niechcianymi mailami), nazywan± bardzo ogólnym okre¶leniem Spam, i
-narzêdziami (chocia¿by tymi wbudowanymi w klientów pocztowych dostêpnych z
-poziomu przegl±darki internetowej), które umo¿liwiaj± odseparowanie takiej
-poczty, od tej która niesie interesuj±c± nas zawarto¶æ merytoryczn±. Separacja
-ta to tzw. filtrowanie ze wzglêdu na obiekt filtracji zwane filtracja poczty.
+\subsection{Systemy przetwarzania poczty elektronicznej}
+
+Obecnie w Internecie istnieje szereg form komunikacji pomiêdzy u¿ytkownikami.
+Dostêpna jest chocia¿by tekstowa komunikacja czasu rzeczywistego (czyli IM -
+instant messaging i popularne chaty) oraz technologie umo¿liwiaj±ce przesy³anie
+g³osu i wideo np. Skype. Mimo rozwoju coraz bardziej zaawansowanych narzêdzi i
+protoko³ów przesy³anie wiadomo¶ci tekstowych ca³y czas znajduje
+zastosowanie. U¿ywamy ich najcze¶ciej do kontaktów biznesowych, rodzinnych,
+prywatnych, g³ównie w celach informacyjnych (czyli sam tekst), jak równie¿
+do przekazywania niewielkich plików. Chyba ka¿dy internauta legitymuje siê
+przynajmniej jedn± skrzynk± mailow±. Ka¿dy spotka³ siê tak¿e z niechcian±
+poczt±, nazywan± bardzo ogólnym okre¶leniem Spam i stara³ siê ju¿ z nim walczyæ
+przy pomocy ró¿nych narzêdzi. Umo¿liwiaj± one odseparowanie niechcianej poczty,
+od tej która niesie interesuj±c± nas zawarto¶æ merytoryczn±. Separacja ta to
+tzw. \textit{filtrowanie} ze wzglêdu na obiekt filtracji zwane filtracj± poczty.
 Dokonanie filtracji wymaga jednak poznania dok³adnie w jaki sposób
 transportowane s± nasze maile, a to wszystko zawarte jest w protokole Simple
-Mail Transfer Protocol (w skrócie SMTP).
-Co¶ tutaj jeszcze dopisaæ o protokole, o jego wadach, o konieczno¶ci filtracji.
+Mail Transfer Protocol (w skrócie SMTP). 
 
-\newpage
+SMTP jest prostym protoko³em tekstowym, dlatego te¿ jego implementacja nie
+stanowi problemu. Jest to jedna z g³ównych cech, która przyczyni³a siê do jego
+rozpowszechnienia. Wkrótce okaza³o siê, ¿e prostota protoko³u wprowadza jednak
+pewne ograniczenia - warto tutaj wspomnieæ o braku autoryzacji czy szyfrowania.
+Szybko jednak podjêto próbê ich usuniêcia na tyle udan±, ¿e mimo
+ci±g³ych licznych niedoskona³o¶ci protokó³ SMTP jest ca³y czas szeroko u¿ywany.
 
-\section{Cel i zakres pracy}
+%%\newpage
 
-Celem pracy jest zaprojektowanie oprogramowania, które po
-uruchomieniu umo¿liwia³oby filtracjê wiadomo¶ci w ramach protoko³u SMTP.
-Oprogramowanie to by³oby konfigurowalne poprzez plik tekstowy zawieraj±cy
-regu³y dotycz±ce wiadomo¶ci SMTP i zachowania oprogramowania po napotkaniu
-takiej wiadomo¶ci. Regu³y te dawa³yby mo¿liwo¶æ nastêpuj±cej filtracji:
+\subsection{Cel i zakres pracy}
+
+Celem mojej pracy jest zaprojektowanie oprogramowania, które umo¿liwia³oby
+filtracjê wiadomo¶ci w ramach protoko³u SMTP. Stworzony filtr by³by
+konfigurowalny poprzez plik tekstowy, który zawiera³by regu³y wiadomo¶ci. Ka¿da
+regu³a pozwala³aby na filtracjê wiadomo¶ci, które:
 
 \begin{itemize}
-  \item wykrywanie wiadomo¶ci posiadaj±cych b±d¼ nie posiadaj±cych okre¶lony
-  nag³ówek (nag³ówki)
-  \item wykrywanie wiadomo¶ci posiadaj±cych b±d¼ nie posiadaj±cych okre¶lonej
-  frazy w nag³ówku (nag³ówkach)
-  \item wykrywanie wiadomo¶ci posiadaj±cych b±d¼ nie posiadaj±cych okre¶lonej
-  frazy w nag³ówkach czê¶ci maila (gdy nie jest to prosty mail)
-  \item wykrywanie okre¶lonych content-type-ow w wiadomo¶ciach
-  \item wykrywanie wiadomo¶ci o okre¶lonej wielko¶ci czê¶ci (je¿eli wiadomo¶æ
-  jest jednoczê¶ciowa to tyczy siê tre¶ci wiadomo¶ci)
+  \item posiadaj± b±d¼ nie posiadaj± okre¶lonego nag³ówka (nag³ówków)
+  \item posiadaj± b±d¼ nie posiadaj± okre¶lonej frazy w nag³ówku (nag³ówkach)
+  \item posiadaj± b±d¼ nie posiadaj± okre¶lonej frazy w nag³ówkach za³±czników
+  \item posiadaj± okre¶lony content-type
+  \item posiadaj± za³±czniki o okre¶lonej wielko¶ci (je¿eli wiadomo¶æ nie
+  zawiera za³±czników regu³a dotyczy wielko¶ci ca³ej wiadomo¶ci)
 \end{itemize}
  
-Po natrafieniu na wiadomo¶æ spe³niaj±c± kryteria danej regu³y zostanie ona w
-zale¿no¶ci od zapisu w konfiguracji: 
+Filtr umo¿liwia³by okre¶lenie reakcji oprogramowania w przypadku wykrycia
+wiadomo¶ci spe³niaj±cej kryteria danej regu³y. Mo¿liwe by³yby nastêpuj±ce akcje:
 
 \begin{itemize}
-  \item odrzucona (wyfiltrowana)
-  \item przepuszczona, a jej obecno¶æ zostanie zaznaczona w logach
-  \item przepuszczona 
+  \item odrzucenie wiadomo¶ci
+  \item przepuszczenie i zmodyfikowanie wiadomo¶ci o dodatkowy nag³ówek   
+  \item przepuszczenie wiadomo¶ci bez jakichkolwiek zmian
 \end{itemize}
 
 \newpage
@@ -90,23 +266,23 @@ Historia powstania protoko³u SMTP jest ¶ci¶le zwi±zana z pocz±tkami Internetu.
 Internet za¶ i jego kreowanie zwi±zane jest bezpo¶rednio ze swoim przodkiem
 czyli ARPANETEm.
 
-ARPANET (Advanced Research Projects Agency Network) zosta³ stworzony przez
-przez jedn± z agencji United States Department of Defense (departament
+ARPANET (Advanced Research Projects Agency Network) \cite{arpanet} zosta³
+stworzony przez jedn± z agencji United States Department of Defense (departament
 bezpieczeñstwa Stanów Zdjednoczonych) o nazwie ARPA (Advanced Research
-Projects Agency). Nazwa agencji zosta³a pó¼niej przekszta³cona na DARPA (D od
-Defence). Agencja ta mia³a zaj±c siê rozwojem nowych technologii na potrzebê
-amerykañskiego wojska.
+Projects Agency). Nazwa agencji zosta³a pó¼niej przekszta³cona na DARPA
+(Defence Advanced Research Projects Agency). Agencja ta mia³a zaj±c siê
+rozwojem nowych technologii na potrzebê amerykañskiego wojska.
 
-W miarê wchodzenia w ¿ycie komputerów wykorzystywanych w ramach agencji
+W miarê coraz wiêkszego wykorzystywania komputerów w ramach agencji
 powsta³a idea stworzenia sieci pomiêdzy nimi, która to umo¿liwi³aby
 komunikacje pomiêdzy ich u¿ytkownikami. Idea ta zosta³a po raz pierwszy
-zaproponowana przez Josepha Carla Robnetta Licklidera z firmy Bolt, Beranek and
-Newman (obecnie BBN Technologies) w sierpniu 1962 w serii notatek na temat
-koncepcji ''Miêdzygalaktycznej Sieci Komputerowej''. Zawiera³a ona prawie
+zaproponowana przez Josepha Carla Robnetta Licklidera \cite{jcr-licklider} z
+firmy Bolt, Beranek \cite{leo-beranek} and Newman (obecnie BBN Technologies) w
+sierpniu 1962 w serii notatek na temat koncepcji ''Miêdzygalaktycznej Sieci Komputerowej''. Zawiera³a ona prawie
 wszystko czego mo¿emy do¶wiadczyæ w dzisiejszym Internecie.
 
-W pa¼dzierniku 1963 roku Licklider zosta³ mianowany szefem programu Behavioral
-Sciences and Command and Control w ARPA. Przekona³ on wtedy Ivana Sutherlanda i
+W pa¼dzierniku 1963 roku Joseph Carl Robnett Licklider zosta³ mianowany szefem
+programu Behavioral Sciences and Command and Control w ARPA. Przekona³ wtedy Ivana Sutherlanda i
 Boba Taylora, ¿e jego wizja jest czym¶ naprawdê istotnym. Sam Licklider nie
 doczeka³ jednak ¿adnych konkretnych prac w kierunku jej urzeczywistnienia, gdy¿
 opu¶ci³ ARPA.
@@ -139,19 +315,19 @@ z ma³y komputerów zwanych Interface Message Processors (bardziej znanych jako
 IMPs), które to obecnie nazywamy routerami. IMPsy z ka¿dej strony zapewnia³y
 funkcje przechowywania i przekazywania pakietów, a po³±czone by³y miêdzy sob±
 przy u¿yciu modemów podpiêtych do ³±czy dzier¿awionych (o przepustowo¶ci 50
-kbit/sekundê). Komputery pod³±czone by³y do IMPsów poprzez specjalny bitowy
+kbit/sekundê). Komputery pod³±czone by³y do IMP-ów poprzez specjalny bitowy
 interfejs. W ten sposób stawa³y siê one czê¶ci± sieci ARPANET.
 
-Do zbudowania pierwszej generacji IMPsów BBN wykorzysta³a komputer Honeywell
-DDP-516. Zosta³ on wyposa¿ony w 24kB pamiêci rdzenia (z mo¿liwo¶ci±
+Do zbudowania pierwszej generacji IMP-ów BBN wykorzysta³a komputer Honeywell
+DDP-516. Zosta³ on wyposa¿ony w 24kB pamiêci rdzeniowej (z mo¿liwo¶ci±
 rozszerzenia) oraz 16 kana³ów Direct Multiplex Control (DMC) do bezpo¶redniogo
 dostêpu do tej pamiêci. Poprzez DMC pod³±czane by³y komputery u¿ytkowników
-(hosty) i modemy. Dodatkowo 516 otrzyma³ ezstaw 24 lamp, które pokazywa³y
+(hosty) i modemy. Dodatkowo 516 otrzyma³ zestaw 24 lamp, które pokazywa³y
 status kana³ów komunikacyjnych IMPa. Do ka¿dego IMPa mo¿na by³o pod³±czyæ do
 czterech hostów i móg³ siê on komunikowaæ z 6 zdalnymi IMPami poprzez
 wspó³dzielone ³±cza.
 
-Zespó³ z BBN (pocz±tkowo 7 osób) szybko stworzy³ pierwsze dzia³aj±ce jednoski
+Zespó³ z BBN (pocz±tkowo 7 osób) szybko stworzy³ pierwsze dzia³aj±ce jednostki
 (IMPy). Ca³y system, który zawiera³ zarówno sprzêt jak i pierwsze
 oprogramowania zarz±dzaj±ce pakietami, zosta³ zaprojektowany i zainstalowany w
 ci±gu 9 miesiêcy.
@@ -196,8 +372,8 @@ no IP), ARPANETowy porotokó³ 1822 zapewnia³ niezawodno¶æ w taki sposób, ¿e
 informowa³ o niedostarczonej wiadomo¶ci. Niemniej protokó³ 1822 nie by³
 odpowiedni do ¿onglowania wieloma po³±czeniami w ró¿nych aplikacjach
 uruchomionych na pojedynczym ho¶cie. Problem ten zosta³ rozwi±zany dziêki
-wprowadzeniu na hostach Network Control Program (NCP), dziêki któremu mo¿liwe
-by³o niezawodne, z kontro³± przep³ywu, dwukierunkowe po³±czenia pomiêdzy
+wprowadzeniu na hostach Network Control Program (NCP) \cite{ncp}, dziêki któremu
+mo¿liwe by³o niezawodne, z kontro³± przep³ywu, dwukierunkowe po³±czenia pomiêdzy
 ró¿nymi procesami na ró¿nych hostach. NCP implementowa³ kolejn± warstwê
 znajduj±c± siê na górze stosu protoko³ów. Dziêki niemu aplikacje, które mia³y
 mieæ ju¿ jak±¶ konkretn± funkcjonalno¶æ, mog³y wykorzystywaæ spójny interfejs i
@@ -229,9 +405,9 @@ skorzystaæ z kodu CPYNET i bezpo¶rednio dostarczaæ wiadomo¶ci poprzez
 po³±czenie sieciowe do zdalnych skrzynek poprzez dopisywanie kolejnych
 informacji do plików na innych hostach.
 
-Brakuj±c± czê¶ci± by³a mo¿liwo¶æ dopisywania do plików przy pomocy CPYNET.
-Dotychczas móg³ on tylko s³aæ i odbieraæ pliki. Dodanie tej funkcjonalno¶ci nie
-by³o czym¶ wielkim dla twórców protoko³u i funkcjonalno¶æ ta wkrótce
+Brakuj±c± funkcjonalno¶ci± oprogramowania by³a mo¿liwo¶æ dopisywania do plików
+przy pomocy CPYNET. Dotychczas móg³ on tylko wysy³aæ i odbieraæ pliki. Dodanie tej funkcjonalno¶ci
+nie by³o czym¶ wielkim dla twórców protoko³u i funkcjonalno¶æ ta wkrótce
 zainstnia³a.
 
 Nastêpnie Tomilson w³±czy³ kod CPYNET do SNDMSG. Pozosta³o jedynie rozró¿nienie
@@ -245,14 +421,14 @@ frequently asked why I chose the at sign, but  the at sign just makes sense''
 (w wolnym t³umaczeniu: Jestem czêsto pytany czemu wybra³em znaczek ma³py, ale
 on po prostu mia³ sens).
 
-Pierwsza wiadomo¶æ zosta³a przes³ana pomiêdzy maszynami, które fizycznie by³y
-obok siebie. Jedyne po³±czenie jakie by³o miêdzy maszynami (oprócz pod³ogi ;] )
-by³o za po¶rednictwem sieci ARPANET. Tomilson przes³a³ wiele wiadomo¶ci do
-samego siebie z jednej maszyny na drug±. Pierwsze tre¶ci wiadomo¶ci od razu
-zosta³y zapomniane. Najprawdopodobniejsza ich tre¶æ by³a w stylu QWERTYUIOP.
-Kiedy Tomilson by³ zadowolony z programu wys³a³ do swoich kolegów z zespo³u
-wiadomo¶æ z instrukcj± jak s³aæ wiadomo¶ci przez sieæ. I tak pierwsza
-wys³ana wiadomo¶æ og³osi³a swoje istnienie.
+Pierwsza wiadomo¶æ zosta³a przes³ana pomiêdzy maszynami, które fizycznie
+znajdowa³y siê w jednym pomieszczeniu. Jedyne po³±czenie jakie by³o miêdzy
+maszynami (oprócz pod³ogi) by³o za po¶rednictwem sieci ARPANET. Tomilson
+przes³a³ wiele wiadomo¶ci do samego siebie z jednej maszyny na drug±. Pierwsze
+tre¶ci wiadomo¶ci od razu zosta³y zapomniane. Najprawdopodobniejsza ich tre¶æ
+mia³a postaæ np. QWERTYUIOP. Kiedy Tomilson by³ zadowolony z programu wys³a³ do
+swoich kolegów z zespo³u wiadomo¶æ z instrukcj± jak s³aæ wiadomo¶ci przez sieæ.
+W ten sposób pierwsza wys³ana wiadomo¶æ og³osi³a swoje istnienie.
 
 Te pierwsze wiadomo¶ci zosta³y wys³ane pod koniec 1971 roku. Nastêpne wydanie
 TENEXa, które ukaza³o siê w 1972 roku, zawiera³o SNDMSG, z mo¿liwo¶ci±
@@ -311,20 +487,24 @@ pierwszym RFC, które deklarowa³o standard Internetowy (ówcze¶nie ARPANETowy).
 
 \subsection{Szczegó³y protoko³u}
 
-W 1982 roku powsta³o g³ówne RFC opisuj±ce protokó³ SMTP - RFC 821. W 2001 roku
-zosta³o ono rozbudowane i powsta³ dokument, który jest obowi±zuj±c± obecnie
+W 1982 roku powsta³o g³ówne RFC opisuj±ce protokó³ SMTP - RFC 821
+\cite{rfc-821}. W 2001 roku zosta³o ono rozbudowane i powsta³ dokument, który jest obowi±zuj±c± obecnie
 specyfikacj± protoko³u. Informacje te zawarte zosta³y w RFC o numerze 2821.
 
 \subsubsection{Model protoko³u, podstawy}
 
+\begin{center}
 \includegraphics[scale=0.4]{klient_serwer_smtp.png}
+\begin{small}
+\newline
+\textit{Schemat komunikacji w protokole SMTP}
+\end{small}
+\end{center}
 
-Komunikacja w protokole SMTP oparta jest na nastepuj±cym modelu: kiedy klient
-SMTP posiada wiadomo¶æ, któr± chce przetransmitowaæ ustanawia dwukierunkowy
-kana³ transmisyjny z serwerem SMTP. Klient SMTP bierze na siebie
-odpowiedzialno¶æ za przetransportowanie wiadomo¶ci do jednego lub wielu
-serwerów SMTP, lub zg³oszenie b³êdu je¶li operacji przekazania maila nie
-powiod³a siê. 
+Komunikacja w protokole SMTP oparta jest na nastêpuj±cym modelu: kiedy klient
+SMTP posiada wiadomo¶æ, któr± chce przetransmitowaæ, ustanawia dwukierunkowy
+kana³ transmisyjny z serwerem SMTP. Nastêpnie stara siê on przekazaæ wiadomo¶æ
+do serwera. W przypadku niepowodzenia operacji zg³asza b³±d.
 
 Adres serwera SMTP klient determinuje poprzez zamianê domeny podanej w
 adresie na po¶redni host (Mail eXchanger) lub ostateczny host docelowy.
@@ -332,13 +512,13 @@ adresie na po¶redni host (Mail eXchanger) lub ostateczny host docelowy.
 Serwer SMTP mo¿e byæ ostatecznym celem albo te¿ po¶rednim ''przeka¼nikiem''
 (po odebraniu wiadomo¶ci to on mo¿e przej±æ rolê klienta SMTP) albo ''bram±''
 (mo¿e transportowaæ wiadomo¶æ dalej u¿ywaj±c innego protoko³u ni¿ SMTP).
-Polecenia protoko³u SMTP generowane s± przez klienta i posy³ane do serwera.
-Odpowiedzi s³ane s± jak reakcja na ¿±dania klienta.
+Polecenia protoko³u SMTP generowane s± przez klienta i przesy³ane do serwera.
+Odpowiedzi wysy³ane s± jak reakcja na ¿±dania klienta.
 
-Innymi s³owy wiadomo¶æ mo¿e byæ przetransportowana w trakcie pojedynczego
+Innymi s³owy transmisja wiadomo¶ci mo¿e sk³adaæ siê z pojedynczego
 po³±czenia pomiêdzy pierwotnym adresatem, a ostatecznym klientem albo mo¿e
-sk³adaæ siê z kilku po¶rednich po³±czeñ. W obu przypadkach zachowana jest
-odpowiedzialno¶æ za wiadomo¶æ - protokó³ wymaga od serwera wziêcia
+byæ dokonana za pomoc± kilku po¶rednich po³±czeñ. W obu przypadkach zachowana
+jest odpowiedzialno¶æ za wiadomo¶æ - protokó³ wymaga od serwera wziêcia
 odpowiedzialno¶ci za dostarczenie wiadomo¶ci albo w przypadku nieprawid³owo¶ci
 za zg³oszenie b³êdu.
 
@@ -353,14 +533,14 @@ Serwer reagujê na ka¿d± komendê odpowiedziami. Wskazuj± one akceptacjê komendy
 (tej przes³anej od klienta) i oczekiwanie na kolejne, b±d¼ te¿ wyst±pienie
 tymczasowych albo sta³ych b³êdów.
 
-Kiedy mail zostanie przetransmitowany, klient mo¿e zamkn±æ po³±czniee albo te¿
-zainicjowaæ kolejn± tranzakcjê innego maila. Dodatkowo klienty SMTP mog± u¿ywaæ
+Kiedy mail zostanie przetransmitowany, klient mo¿e zamkn±æ po³±czenie albo te¿
+zainicjowaæ kolejn± transakcjê innego maila. Dodatkowo klienty SMTP mog± u¿ywaæ
 po³±czenia z serwerem w celach np. weryfikacji adresu email b±d¼ te¿ uzyskanie
 adresów subskrybentów listy dyskusyjnej.
 
 Jak zosta³o wcze¶niej zasugerowane transmisja w protokole mo¿e odbywaæ siê
-bezpo¶rednio pomiêdzy hostem ¶l±cym wiadomo¶c, a hostem docelowym, kiedy s± one
-po³±czone tym samym serwisem transportowym. Kiedy tak nie jest, transmisja
+bezpo¶rednio pomiêdzy hostem wysy³aj±cyn wiadomo¶æ, a hostem docelowym, kiedy s±
+one po³±czone tym samym serwisem transportowym. Kiedy tak nie jest, transmisja
 odbywa siê poprzez hosty po¶rednie. Hosty te wybierane s± poprzez
 mechanizm serwera domen (DNS) zwany Mail eXchanger.
 
@@ -375,10 +555,11 @@ wymaganiami SMTP). Mechanizm rozszerzeñ SMTP okre¶la ¶rodki, za pomoc± których
 klient i serwer mog± dokonaæ wzajemnego ropoznania, a serwer mo¿e tak¿e
 poinformowaæ klienta o rozszerzeniach, które on wspiera.
 
-Wspó³czesna implementacja SMTP musi obs³ugiwaæ podstawowe mechanizmy
-rozszerzeñ. Przyk³adowo serwer musi wspieraæ komendê EHLO, je¶li nawet nie
-implementuje innych specyficznych rozszerzeñ, natomiast klient powinien
-sk³aniaæ siê ku u¿ywaniu komendy EHLO ni¿ HELO. 
+Wspó³czesna implementacja serwera SMTP musi obs³ugiwaæ podstawowe mechanizmy
+rozszerzeñ. Przyk³adowo serwer musi zawieraæ obs³ugê komendy EHLO, je¶li nawet
+nie implementuje ¿adnych rozszerzeñ protoko³u, które definiuje siê w ramach
+odpowiedzi na to polecenie. Klient natomiast powinien sk³aniaæ siê ku u¿ywaniu
+nowej komendy powitalnej EHLO zamiast wychodz±cej z u¿ycia HELO.
 
 SMTP jest szeroko u¿ywany i pojawi³o siê wiele bardzo dobrych implementacji
 protoko³u wyposa¿onych w liczne rozszerzenia. Spo³eczno¶æ w Internecie jednak
@@ -390,10 +571,8 @@ Obecnie szkielet rozszerzeñ sk³ada siê z:
 
 \begin{itemize}
   \item Polecenia EHLO, które powinno byæ u¿ywane zamiast wcze¶niejszego HELO
-  \item Rejestr rozszerzeñ SMTP
-  \item Dodatkowe parametry do poleceñ SMTP MAIL i RCPT
-  \item Opcjonalnych zast±pieñ poleceñ w protokole SMTP, jak na przyk³ad DATA w
-  transmisji nie przy pomocy ASCII (ang. pipelining opisany pó¼niej)
+  \item Rejestru rozszerzeñ SMTP jak np. autoryzacji czy szyfrowania
+  \item Dodatkowych parametrów do poleceñ SMTP MAIL i RCPT
 \end{itemize}
 
 Si³± SMTP jest jego prostota. Do¶wiadczenia z protoko³ami pokazuj±, ¿e te z
@@ -407,40 +586,28 @@ odpowie wiadomo¶ci± zapraszaj±c±.
 
 SMTP serwer po pod³±czeniu siê klienta mo¿e po kodzie powitalnym 220
 poinformowaæ klienta o swoim oprogramowaniu i jego wersji.
-
-\framebox{220 mail.foo.com SuperSMTP v 6.1.2 Service ready}
-
+\combox{220 mail.foo.com SuperSMTP v 6.1.2 Service ready}
 Protokó³ SMTP pozwala serwerowi na odmówienie transakcji podczas gdy formalnie
 umo¿liwia na pod³±czenie siê do serwera SMTP. Wtedy zamiast kodu 220 serwer
-odpowiada kodem 554. 
-
-\framebox{554 Transaction failed (Or, in the case of a
+odpowiada kodem 554.
+\combox{554 Transaction failed (Or, in the case of a
 connection-opening response, ''No SMTP service here'')}
-
 Serwer w tym przypadku musi czekaæ zanim zakoñczeny po³±czenie na
 komende QUIT ze strony klienta. W trakcie tego oczekiwania wszystkie inne
 komendy zostan± potraktowane odpowiedzi± 503.
-
-\framebox{503 Bad sequence of commands}
-
+\combox{503 Bad sequence of commands}
 Kiedy serwer przywita siê z klientem i klient otrzyma wiadomo¶æ powitaln±,
 standardowo wysy³a on polecenie EHLO do serwera i w wiadomo¶ci tej przedstawia
 siê.
- 
-\framebox{EHLO bar.com}
-
+\combox{EHLO bar.com}
 U¿ycie komendy EHLO wskazuje, ¿e klient jest w stanie obs³u¿yæ
 rozszerzenia protoko³u i prosi serwer o ich listê. Starsze systemy SMTP, które
 nie obs³uguj± rozszerzeñ protoko³u czy te¿ starsze klienty SMTP, które nie
 wymagaj± tych¿e rozszerzeñ, mog± u¿ywaæ komendy HELO.
-
-\framebox{HELO bar.com}
-
+\combox{HELO bar.com}
 Serwer w odpowiedzi na HELO nie powinien zwróciæ listy rozszerzeñ. Je¿eli
 serwer zwróci na EHLO 
-
-\framebox{500 Command not recognized}
-
+\combox{500 Command not recognized}
 , wtedy klient powinien byæ w stanie przes³aæ komende HELO.
 
 Nastêpnie dochodzi do transakcji maila. Rozpoczyna siê ona poleceniem MAIL,
@@ -450,13 +617,9 @@ koñczone jest wyznacznikiem koæa maila. Znacznik ten potwierdza transakcjê.
 
 Pierwszym krokiem w procedurze transakcji jest komenda MAIL. Ogólna jej
 sk³adnia wygl±da nastêpuj±co:
-
-\framebox{MAIL FROM:<reverse-path> [SP <mail-parameters> ] <CRLF>}
-
+\combox{MAIL FROM:<reverse-path> [SP <mail-parameters> ] <CRLF>}
 przyk³adowo
-
-\framebox{MAIL FROM:<bob@example.org>}
-
+\combox{MAIL FROM:<bob@example.org>}
 Poleceni to mówi odbiorcy SMTP (serwerowi), ¿e rozpoczynana jest nowa
 transakcja. Dlatego powinien on zresetowaæ (chyba na danym po³±czeniu?)
 wszystkie poprzednie stany tabel i buforów, w³±czaj±c w to odbiorców i dane
@@ -464,47 +627,36 @@ maila. Argument <reverse-path> zawiera adres ¼ród³owej skrzynki mailowej, która
 mo¿e pos³u¿yæ w celu informacji o ewentualnych b³êdach (bêdzie dalej opisane
 [4.2]). Je¶li polecenie zostanie zaakcpetowane serwer odpowiada poleceniem 250
 OK. 
-
-\framebox{250 OK}
-
+\combox{250 OK}
 Je¶li przes³any adres nie zosta³ zaakceptowany serwer musi odpowiedzieæ czy
 b³±d jest sta³y (zawsze bêdzie siê pojawia³ przy tym adresie) czy tymczasowy
 (klient bêdzie móg³ wykonaæ ponown± próbê, która mo¿e zakoñczyæ siê sukcesem).
 Czasami jednak serwer mo¿e dokonaæ akceptacji adresu przekazanego w poleceniu
 MAIL i dopiero po analizie adresów przes³anych w poleceniu RCPT, mo¿e zg³osiæ
 b³±d. Normalnie jednak gdy b³±d jest sta³y odpowied¼ serwera to
-
-\framebox{550 mailbox not found}
-
+\combox{550 mailbox not found}
 albo tymczasowy
-
-\framebox{503 i co tutaj?}
-
+\combox{503 temporary error}
 Historycznie <reverse-path> mo¿e nie tylko zawieraæ adres skrzynki, jednak¿e
 obecne oprogramowanie nie powinno u¿ywaæ routingu ¼ród³a.
 
 Parametry opcjonalne w poleceniu MAIL <mail-parameters> s³u¿± do negocjacji
-rozszerzeñ protoko³u i bêd± opisane pó¼niej. (2.2 sekcja - to juz pisalem -
-moze gdzies dalej bêdzie napisane co dok³adnie mog± tutaj gadaæ)
+rozszerzeñ protoko³u.
 
 Nastêpnym krokiem w transakcji jest polecenie RCPT. Jego sk³adnia to
-
-RCPT TO:<forward-path> [ SP <rcpt-parameters> ] <CRLF>
-
+\combox{RCPT TO:<forward-path> [ SP <rcpt-parameters> ] <CRLF>}
 Argumentem tego polecenia jest adres (z regu³y adres skrzynki oraz domena)
 identyfikuj±cy odbiorcê. Je¶li zostanie on zaakceptowany przez serwer odpowiada
 on komunikatem 250 OK i zapisuje sobie argument forward-path. Je¿eli adres nie
-jest prawid³owy serwer odpowiada kodem 550. Z regu³y odpowied¼ wygl±da tak
-
-\framebox{550 No such user}
-
+jest prawid³owy serwer odpowiada kodem 550. Z regu³y odpowied¼ ma nastêpuj±c±
+postaæ
+\combox{550 No such user}
 Procedura ta mo¿e byæ powtórzona parokrotnie przyk³adowo
-
-\framebox{C: MAIL FROM:<bob@example.org>
-S: 250 Ok
-C: RCPT TO:<alice@example.com>
-S: 250 Ok}
-
+\combox{C: MAIL FROM:<bob@example.org>\newline 
+S: 250 OK\newline 
+C: RCPT TO:<alice@example.com>\newline 
+S: 250 OK
+}
 W tym przypadku kopia maila trafi do 2 u¿ytkowników korzystaj±cych z tego
 samego serwera pocztowego (tej samej domeny). Jak ju¿ wcze¶niej by³o wspomniane
 dzieje siê to przy nawi±zaniu 1 po³±czenia.
@@ -519,34 +671,26 @@ Dodatkowe parametry (<rcpt-parameters>) bêd± omówione pó¼niej.
 
 Trzecim krokiem w trakcie transakcji jest polecenie DATA. Sk³adnia jego jest
 prosta po prostu
-
-\framebox{DATA <CRLF>}
-
+\combox{DATA <CRLF>}
 Je¿eli polecenie zosta³o zaakceptowane serwer SMTP zwraca status 354 i prosi
 klienta aby odpowiedzia³ jak najszybciej tre¶ci± maila, koñcz±c transmisjê
 znacznikiem koñca maila. Przyk³adowo 
-
-\framebox{354 End data with <CR><LF>.<CR><LF>}
-
-Kiedy serwer otrzyma znak koñca wiadomo¶ci, a mail zostanie zapisany odbiorca
-maila odpowiada standardowo 250 OK. Koniec wiadomo¶ci klient zaznacza poprzez
+\combox{354 End data with <CR><LF>.<CR><LF>}
+Serwer po otrzymaniu znaku koñca wiadomo¶ci i zapisaniu maila odpowiada
+standardowo klientowi 250 OK. Koniec wiadomo¶ci klient zaznacza poprzez
 przes³anie linii zawieraj±cej jeden znak ''.'' (kropkê). Wystêpuj± dodatkowo
-odpowiednia procedura zabezpieczaj±ca nieporozumienie zwi±zane z tym, ¿e przy
-przekazywaniu tekstu wiadomo¶ci klient prze¶le linie zawieraj±c± jedynie
-znak kropki ''.'' (4.5.2 sekcja).
+odpowiednia procedura zabezpieczaj±ca przed nieporozumieniem zwi±zanym z
+ewentualnym przes³aniem lini zawieraj±cej pojedyncz± kropkê z tre¶ci wiadomo¶ci,
+która nie oznacza koñca maila.
 
 Polecenie DATA mo¿e nie udaæ siê tylko w 2 przypadkach:
 
 \begin{itemize}
   \item Je¿eli nie by³o polecenia MAIL albo RCPT albo oba zosta³y odrzucone
   wtedy serwer na DATA mo¿ê odpowiedzieæ
-  \newline 
-  \framebox{503 Command out of sequence} 
-  \newline 
+  \comboxinitemize{503 Command out of sequence} 
   albo te¿ 
-  \newline
-  \framebox{554 No valid recipients} 
-  \newline
+  \comboxinitemize{554 No valid recipients} 
   Je¿eli która¶ z tych odpowiedzi (albo inna z serii 5yz czyli mówi±cych
   o b³êdzie) zostanie odebrana przez klienta, nie powinien on przesy³aæ tre¶ci
   wiadomo¶ci. Powinien on robiæ to tylko w przypadku odpowiedzi 354.
@@ -557,7 +701,7 @@ Polecenie DATA mo¿e nie udaæ siê tylko w 2 przypadkach:
   postanowi odrzuciæ wiadomo¶æ.
 \end{itemize}
 
-W praktyce jednak niektóre serwery nie dokonuj± weryfikacji odbiorcy przed
+W praktyce nieliczne serwery dokonuj± weryfikacji odbiorcy przed
 otrzymaniem ca³ej wiadomo¶ci. Nie jest to dobre zachowanie, gdy¿ je¿eli po
 zaakceptowaniu adresów odbiorców nagle po poleceniu DATA serwer odpowie ''550
 mailbox not found'' to klient nie jest w stanie okre¶liæ, który adresat jest
@@ -566,68 +710,45 @@ nieprawid³owy.
 Serwer nie powinien na tym etapie odrzucaæ wiadomo¶ci na podstawie nag³ówków
 przekazanych w tre¶ci wiadomo¶ci (po poleceniu DATA).
 
-Oto ca³a przyk³adowa, prawid³owa sesja protoko³u SMTP: 
-\newline
-Klient otwiera po³±czenie do serwera.
-\newline
-S: 220 smtp.example.com ESMTP Postfix
-\newline
-C: HELO relay.example.org
-\newline
-S: 250 Hello relay.example.org, I am glad to meet you
-\newline
-C: MAIL FROM:<bob@example.org>
-\newline
-S: 250 Ok
-\newline
-C: RCPT TO:<alice@example.com>
-\newline
-S: 250 Ok
-\newline
-C: RCPT TO:<theboss@example.com>
-\newline
-S: 250 Ok
-\newline
-C: DATA
-\newline
-S: 354 End data with <CR><LF>.<CR><LF>
-\newline
-C: From: "Bob Example" <bob@example.org>
-\newline
-C: To: Alice Example <alice@example.com>
-\newline
-C: Cc: theboss@example.com
-\newline
-C: Date: Tue, 15 Jan 2008 16:02:43 -0500
-\newline
-C: Subject: Test message
-\newline
-C:
-\newline
-C: Hello Alice.
-\newline
-C: This is a test message with 5 headers and 4 lines in the body.
-\newline
-C: Your friend,
-\newline
-C: Bob
-\newline
-C: .
-\newline
-S: 250 Ok: queued as 12345
-\newline
-C: QUIT
-\newline
-S: 221 Bye
-\newline
+Oto ca³a przyk³adowa, prawid³owa sesja protoko³u SMTP:
+\comboxnonl{Klient otwiera po³±czenie do serwera.\newline
+S: 220 smtp.example.com ESMTP Postfix\newline
+C: HELO relay.example.org\newline
+S: 250 Hello relay.example.org, I am glad to meet you\newline
+C: MAIL FROM:<bob@example.org>\newline
+S: 250 Ok\newline
+C: RCPT TO:<alice@example.com>\newline
+S: 250 Ok\newline
+C: RCPT TO:<theboss@example.com>\newline
+S: 250 Ok\newline
+C: DATA\newline
+S: 354 End data with <CR><LF>.<CR><LF>\newline
+C: From: "Bob Example" <bob@example.org>\newline
+C: To: Alice Example <alice@example.com>\newline
+C: Cc: theboss@example.com\newline
+C: Date: Tue, 15 Jan 2008 16:02:43 -0500\newline
+C: Subject: Test message\newline
+C:\newline
+C: Hello Alice.\newline
+C: This is a test message with 5 headers and 4 lines in the body.\newline
+C: Your friend,\newline
+C: Bob\newline
+C: .\newline
+S: 250 Ok: queued as 12345\newline
+C: QUIT\newline
+S: 221 Bye\newline
 Serwer zamyka po³±czenie.
+}
 
 \subsubsection{Polecenia do debugowania adresów}
 
 SMTP dostarcza poleceñ za pomoc± których mo¿na dokonaæ weryfikacji nazwy
 u¿ytkownika albo uzyskaæ zawarto¶æ listy mailingowej. Dokonuje siê tego przy
 pomocy poleceñ VRFY i EXPN, których wspacie powinno byæ zaimplementowane w
-serwerze SMTP. 
+serwerze SMTP. Warto nadmieniæ, ¿e dostêp do tych poleceñ jest na
+serwerach publicznych \textbf{wy³±czony}, ze wzglêdu na ochronê prywatno¶ci
+danych. Dane mog³yby byæ wykorzystane chocia¿by przez spamerów w celach
+ustalenia potencjalnych ofiar.
 
 Argumentem polecenia VRFY jest po prostu napisa, który sk³ada siê z nazwy
 u¿ytkownika lub te¿ dodatkowo domeny. Je¿eli w wyniku polecenia serwer zwróci
@@ -645,11 +766,18 @@ argumencie adresów. Dla przyk³adu odpowiedzi serwera na komendê VRFY mog±
 przyj±æ postaæ:
 
 \begin{itemize}
-  \item \framebox{530 User ambiguous}
-  \item \framebox{553- Ambiguous;  Possibilities are 553-Joe Smith
-  <jsmith@foo.com> 553-Harry Smith <hsmith@foo.com> 553 Melvin Smith <dweep@foo.com>}
-  \item \framebox{553-Ambiguous;  Possibilities 553- <jsmith@foo.com> 553-
-  <hsmith@foo.com> 553 <dweep@foo.com>}
+  \item \comboxinitemizenonl{530 User ambiguous}
+  \item \comboxinitemizenonl{553- Ambiguous;\newline 
+  	Possibilities are\newline
+  	553-Joe Smith <jsmith@foo.com>\newline
+  	553-Harry Smith <hsmith@foo.com>\newline
+  	553 Melvin Smith <dweep@foo.com>
+  	}
+  \item \comboxinitemizenonl{553-Ambiguous;\newline
+  	Possibilities\newline
+  	553-<jsmith@foo.com>\newline
+  	553- <hsmith@foo.com>\newline
+  	553 <dweep@foo.com>}
 \end{itemize}
 
 W normalnych okoliczno¶ciach klient, który otrzyma odpowied¼ 553 oczekuje, ¿e
@@ -669,26 +797,25 @@ weryfikacji takiego adresu poprzez VRFY, mo¿e udaæ siê jedynie gdy serwer SMTP
 umie obs³u¿yæ wiadomo¶æ wys³an± na ten adres poprzez dostarczenie jej do ka¿dej
 skrzynki z listy. Je¿eli nie jest on w stanie tego zrobiæ zwróci jeden z
 nastêpuj±cych b³êdów
-
-\framebox{550 That is a mailing list, not a user}
+\combox{550 That is a mailing list, not a user}
 lub te¿ 
-\framebox{252 Unable to verify members of mailing list}
-
+\combox{252 Unable to verify members of mailing list}
 W przypadku wielolinijkowej odpowiedzi serwera na polecenie EXPN dok³adnie
 jedna skrzynka mailowa powinna znale¼æ siê w lini. 
 
 Przyk³adowe polecenie EXPN i odpowiedzi na nie:
-
-\framebox{C: EXPN Example-People S: 250-Jon Postel <Postel@isi.edu> S: 250-Fred
-Fonebone <Fonebone@physics.foo-u.edu> S: 250 Sam Q. Smith <SQSmith@specific.generic.com>}
-
-\framebox{C: EXPN Executive-Washroom-List S: 550 Access Denied to You.}
+\combox{C: EXPN Example-People\newline
+S: 250-Jon Postel <Postel@isi.edu>\newline
+S: 250-Fred Fonebone <Fonebone@physics.foo-u.edu>\newline
+S: 250 Sam Q. Smith <SQSmith@specific.generic.com>} 
+\combox{C: EXPN Executive-Washroom-List\newline
+S: 550 Access Denied to You.}
 
 Serwerowi nie wolno w odpowiedzi na VRFY lub EXPN zwracaæ odpowiedzi 250 dopóki
 nie dokona faktycznej weryfikacji adresu. S± jednak przypadki, w których adres
 wydaje siê byæ prawid³owy, ale w czasie rzeczywistym nie mo¿e on zostaæ
-zweryfikowany. Jest tak np. kiedy serwer s³u¿y jako po¶redni dla innego serwera
-albo domeny. W takim przypadku serwer dokonuje jakby ''pozornej weryfikacji''.
+zweryfikowany. Jest tak na przyk³ad gdy serwer s³u¿y jako po¶redni dla innego
+serwera albo domeny. W takim przypadku serwer dokonuje jakby ''pozornej weryfikacji''.
 Sprawdza on poprawno¶æ sk³adniow± adresu, jak równie¿ mo¿e dokonaæ sprawdzenia
 domeny czy jest ona w zakresie domen do których maile mo¿e przekazywaæ.
 Odpowied¼ serwera powinna wiêc uwzglêdniæ, ¿e jest to tylko czê¶ciowa
@@ -727,14 +854,17 @@ Serwer SMTP powinien wspieraæ zarówno aliasy, jak i listy mailowe, które
 s³u¿± w celach dostarczenia wiadomo¶ci do wiêkszej ilo¶ci adresów. 
 
 Alias to inaczej pseudo-skrzynka, której nazwa przy odbieraniu maila t³umaczona
-jest na rzeczywisty adres (b±d¼ adresy). Zmieniane jest tylko pole (RCPT TO),
-reszta wiadomo¶ci (''koperta'' i cia³o wiadomo¶ci) pozostaje nietkniêta. 
+jest na rzeczywisty adres (b±d¼ adresy). Serwer SMTP obs³uguj±cy aliasy po
+odebraniu maila przesy³a go w formie niezmienionej na docelowy adres (lub
+adresy).
 
-Lista mailowa za¶ s³u¿y dostarczoniu albo przekazaniu maila do
-wszysktich adresów znajduj±cych siê na li¶cie. W wyniku tej operacji adres
-zwrotny na ''kopercie'' (MAIL FROM) musi byæ zmieniony na adres osoby albo innej
-jednostki, która sprawuje opiekê nad list±. Nag³ówki wiadomo¶ci (w
-szczególno¶ci pole From) pozostaj± nietkniête.
+Lista mailowa s³u¿y dostarczeniu albo przekazaniu maila do wszystkich adresów
+znajduj±cych siê na li¶cie. Program zajmuj±cy siê obs³ug± listy po odebraniu
+maila rozsy³a wiadomo¶æ o niezmienionej tre¶ci do wszystkich adresów na niej
+zapisanych. Modyfikacji w trakcie rozsy³ania ulega ''koperta'', a dok³adnie
+argument polecenia MAIL FROM, na podstawie, którego odbiorca determinuje
+ewentualny adres zwrotny. Adres ten powinien wskazywaæ na skrzynkê osoby
+odpowiedzialnej za administracjê list±.
 
 \subsubsection{Informace o trasie}
 
@@ -759,15 +889,14 @@ powinny mieæ przygotowan± linie Received do ''wstrzykniêcia'' do wiadomo¶ci.
 Nie wolno im zmieniaæ obecnych lini ani te¿ wpisywaæ swojej lini w innym ni¿
 przeznaczone miejscu.
 
-Przyk³adowa linia wygl±da nastêpuj±co:
-
-\framebox{Received: from mizar.astronet.pl ([127.0.0.1])
- by localhost (mizar [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 18935-01 for <zbychu@astronet.pl>; Fri, 29 Feb 2008 14:44:55 +0100 (CET)}
-
-
+Przyk³adowa linia ma nastêpuj±c± postaæ:
+\combox{Received: from mizar.astronet.pl ([127.0.0.1])\newline
+\hspace*{0.3cm}by localhost (mizar [127.0.0.1]) (amavisd-new, port 10024) with
+ESMTP\newline
+\hspace*{0.3cm}id 18935-01 for <zbychu@astronet.pl>; Fri, 29 Feb 2008 14:44:55
++0100 (CET)}
 W miarê rozwoju Internetu linie Received s± bardzo istotne w celach wykrywania
-wyst±pienia jakichkolwiek problemów. 
+wyst±pienia jakichkolwiek problemów.
 
 Kiedy wiadomo¶æ jest ostatecznie dostarczana, serwer SMTP wstawia nag³ówek
 ''Return-path'' na pocz±tku maila. Zachowanie to jest wymagane. Systemy mailowe
@@ -779,10 +908,10 @@ ona ostatecznie dostarczona. Mo¿e byæ transmitowana przez inny system mailowy.
 \subsubsection{Rozmiary i opó¼nienia}
 
 W protokole SMTP wystêpuj± obiekty, które maj± wymagane minimalne b±d¼ te¿
-maksymalne rozmiary. Ka¿da implementacja musi byæ w stanie odbieraæ o takich
-wielko¶ciach. Obiekty wiêksze powinny byæ unikane. Klient mo¿e liczyæ siê z
-tym, ¿e przy próbie transmisji zbyt du¿ych obiektów, mo¿e spotkaæ siê z odmow±
-ze strony serwera.
+maksymalne rozmiary. Ka¿da implementacja musi byæ w stanie odbieraæ obiekty
+takich wielko¶ciach. Obiekty wiêksze powinny byæ unikane. Klient mo¿e liczyæ
+siê z tym, ¿e przy próbie transmisji zbyt du¿ych obiektów, mo¿e spotkaæ siê z
+odmow± ze strony serwera.
 
 Obiekty o których mowa to:
 
@@ -791,7 +920,7 @@ Obiekty o których mowa to:
   \item domain - maksymalna d³ugo¶æ domeny. Wynosi to 255 znaków
   \item path - maksymalna d³ugo¶æ argumentu reverse-path albo forward-path.
   Wynosi ona 256 znaków (wliczaj±c w to interpunkcje i separatory elementów)
-  \item comman line - maksymalna d³ugo¶æ polecenia wraz z jego nazw± i znakiem
+  \item command line - maksymalna d³ugo¶æ polecenia wraz z jego nazw± i znakiem
   <CRLF>. Wynosi ona 512 znaków. Rozszerzenia SMTP mog± pos³u¿yæ w celach
   zwiêkszenia tego limitu
   \item reply line - maksymalna d³ugo¶æ lini odpowiedzi. Wynosia oan 512 znaków
@@ -801,32 +930,32 @@ Obiekty o których mowa to:
   SMTP.
   \item message content - d³ugo¶æ zawarto¶ci wiadomo¶ci (wliczaj±c
   w to nag³ówki wiadomo¶ci jak i jego cia³o). Musi mieæ ona co najmniej 64K
-  octets (czyli ile?). Odk±d wprowadzono standard Multipurpose Internet Mail
+  bajtów. Odk±d wprowadzono standard Multipurpose Internet Mail
   Extensions (MIME) wielko¶æ wiadomo¶ci wzros³a diametralnie, dlatego te¿
   zaleca siê obecnie aby serwery SMTP nie nak³ady ¿adnych ograniczeñ na wielko¶æ
   wiadomo¶ci
   \item recipients buffer - rozmiar buffora adresowego. Minimalna ca³kowita
   liczba odbiorców, która musi byæ zbuforowana to 100. Klient, który chce
   dostarczyæ wiadomo¶æ do wiêcej ni¿ 100 odbiorców powinien byæ przygotowany na
-  transmisjê maila w kawa³kach po 100 odbiorców (je¿eli oczywi¶ci serwer
-  akceptuje wiadomo¶ci z tak± ilo¶ci± odbiorców)
+  transmisjê maila w czê¶ciach po 100 odbiorców.
 \end{itemize}
 
 B³êdy zwi±zane z powy¿szymi ograniczeniami mog± byæ zg³oszone poprzez
 standardowe kody b³êdów. Przyk³ady takich b³êdów:
 
 \begin{itemize}
-  \item 500 Line too long
-  \item 501 Path too long
-  \item 452 Too many recipients
-  \item 552 Too much mail data
+  \item \comboxinitemizenonl{500 Line too long}
+  \item \comboxinitemizenonl{501 Path too long}
+  \item \comboxinitemizenonl{452 Too many recipients}
+  \item \comboxinitemizenonl{552 Too much mail data}
 \end{itemize}
 
 W ramach protoko³u SMTP nie mo¿emy tak¿e zapomnieæ o opó¼nieniach, które nale¿y
 wzi±æ pod uwagê przy implementacji klienta. Klient musi repektowaæ opó¼nienia
 zwi±zane z poleceniami. Powinny one byæ w prosty sposób w kliencie
 konfigurowalne (w celach ewentualnych zmian i próby dostosowanie opó¼nieñ do
-warunków panuj±cych w sieci). Proponowane opó¼nienia w kliencie:
+warunków panuj±cych w sieci). Proponowane opó¼nienia dla klienta zawarte
+w RFC przedstawiaj± siê nastêpuj±co:
 
 \begin{itemize}
   \item Pocz±tkowa wiadomo¶æ 220 od serwera: 5 minut
@@ -850,12 +979,12 @@ warunków panuj±cych w sieci). Proponowane opó¼nienia w kliencie:
   \item Zakoñczenie polecenia DATA: 10 minut
   \newline
   Potrzebne w celach oczekiwania na odpowied¼ 250 OK. Kiedy odbiorca otrzyma
-  ostatni znak oznaczaj±cy koniec wiadomo¶ci, przewa¿nie zaczyna on
-  procesowanie dostarczenia wiadomo¶ci do skrzynku u¿ytkownika. Nieodpowiednie
-  opó¼nienie tutaj mo¿e skutkowaæ dostarczeniem paru tego samego maila,
-  poniewa¿ klient za³o¿y, ¿e transakcja siê nie uda³a (minie odpowiedni czas),
-  a tak naprawde odbiorca zaakceptuje wiadomo¶æ, a jeszcze nie zd±¿y powiadomiæ
-  o tym klienta.
+  ostatni znak oznaczaj±cy koniec wiadomo¶ci, przewa¿nie zaczyna siê proces
+  przetwarzania w celu jej dostarczenia do konkretnej skrzynki u¿ytkownika.
+  Nieodpowiednie opó¼nienie tutaj mo¿e skutkowaæ dostarczeniem paru kopii tego
+  samego maila, poniewa¿ klient za³o¿y, ¿e transakcja siê nie uda³a (minie
+  odpowiedni czas) i j± ponowi, a tak naprawde odbiorca zaakceptuje wiadomo¶æ,
+  ale nie zd±¿y jeszcze powiadomiæ o tym klienta.
 \end{itemize}
 
 W przypadku opo¼nieñ serwera mo¿emy mówiæ o sta³ym opó¼nieniu 5 minut w
@@ -874,22 +1003,23 @@ obs³ugi du¿ego ruchu mailowego:
   \item Wysy³anie:
   \newline
   G³ównym modelem dla klienta SMTP jest jeden lub kilka procesów, które
-  cyklicznie próbuj± transmitowaæ maile wychodz±ce. W typowym systemie,
-  program, który komponuje wiadomo¶æ posiada odpowiednie metody, aby zwróciæ
-  natychmiastow± uwagê na nowy element w wiadomo¶ciach wychodz±cych. Maile,
-  które nie s± transmitowane od razu s± kolejkowane i cyklicznie wysy³ane.
-  Kolejka mailowa zawiera oprócz samej wiadomo¶ci ''kopertê'' czyli dodatkowe
-  informacje s³u¿±ce do wysy³ania. 
+  cyklicznie próbuj± transmitowaæ maile wychodz±ce. Typowy program kliencki,
+  który komponuje wiadomo¶æ, ma wbudowane odpowiednie mechanizmy, za pomoc±
+  których natychmiastowo informuje procesy wysy³aj±ce o pojawieniu siê nowego
+  elementu w wiadomo¶ciach do wys³ania. Maile, które nie s± transmitowane od
+  razu s± kolejkowane i cyklicznie wysy³ane. Kolejka mailowa zawiera oprócz
+  samej wiadomo¶ci ''kopertê'' czyli dodatkowe informacje s³u¿±ce do wysy³ania.
   \newline
-  Nadawca po nieudanym wys³aniu powinien odczekaæ pewn± jednostkê czasu zanim
-  ponowi próbê transmisji maila. Generalnie jednostka ta powinna wynosiæ oko³o
+  Nadawca po nieudanym wys³aniu powinien odczekaæ pewien kwant czasu
+  zanim ponowi próbê transmisji maila. Standardy RFC zalecaj± okres oko³o
   30 minut.
   \newline
   Ponawianie wys³ania nastêpuje dopóki zakoñczy siê ono sukcesem b±d¼ te¿
-  klient siê podda. Przyjmuje siê, ¿e po 4-5 dniach nieudanych próbach,
-  wiadomo¶æ zostaje uznana za niedorêczon±. 
+  klient siê stwierdzi po okre¶lonej ilo¶ci prób, ¿e wiadomo¶ci nie da siê
+  dostarczyæ. Przyjmuje siê, ¿e po 4-5 dniach nieudanych próbach, wiadomo¶æ
+  zostaje uznana za niedorêczon±.
   \newline
-  Klient powinien trzymaæ listê hostów do których nie mo¿e dotrzeæ i
+  Klient powinien przechowywaæ listê hostów do których nie mo¿e dotrzeæ i
   zapamiêtywaæ opó¼nienia do nich, zamiast nieustannie kolejkowaæ maile
   przeznaczone do tych hostów. W ten sposób szybciej odrzuci maile, które nie
   maj± szansy osi±gn±æ celu.
@@ -899,12 +1029,13 @@ obs³ugi du¿ego ruchu mailowego:
   prawdopodobne jest, ¿e maile kolejkowane dla tego adresu (domeny), mog±
   zostaæ wys³ane.
   \newline
-  Klient SMTP mo¿e mieæ kolejkê wielu wiadomo¶ci dla ka¿dego nieosi±galnego
-  hosta docelowego. Je¿eli ka¿da z tych wiadomo¶ci w cyklu ponawiania bêdzie
-  wysy³ana system zostanie zablokowany na d³ugi okres czasu, poniewa¿ klient
-  mo¿e stwierdziæ, ¿e dostarczenie siê nie uda³o jedynie po okre¶lonym czasie
-  (do kilku minut). Nawet zmniejszenie opó¼nienia do 1 minuty przy setkach
-  wiadomo¶ci powoduje zamro¿enie systemu. 
+  Klient SMTP mo¿e posiadaæ kolejkê niedostarczonych wiadomo¶ci dla ka¿dego
+  hosta, do którego nie uda³o siê po³±czyæ. Ponawianie wysy³ania takich
+  wiadomo¶ci mo¿e byæ niebezpiecznie, szczególnie w przypadku ich du¿ej ilo¶ci.
+  Niebezpieczeñstwo wi±¿ê siê z tym, ¿e klient, aby stwierdziæ, ¿e host jest
+  rzeczywi¶cie nieosi±galny potrzebuje odpowiedniego czasu. Wiele oczekuj±cych
+  tak procesów (lub w±tków) klienckich mo¿e spowodowaæ zamro¿enie na jaki¶ czas
+  ca³ego systemu.
   \newline   
   W przypadku wysy³ania wiadomo¶ci do wielu odbiorców z tego samego hosta klient
   powinien stosowaæ taktykê MAIL, RCPT, RCPT, \ldots RCPT, DATA zamiast MAIL,
@@ -925,16 +1056,18 @@ obs³ugi du¿ego ruchu mailowego:
 Zanim klient SMTP zidentyfikuje dok±d ma byæ pos³any mail, musi nast±piæ
 odpytanie serwera DNS o adres domeny. Oczekuje siê, ¿e podane w adresie nazwy
 domen s± w pe³ni akceptowanymi nazwami domen (fully qualified domain name,
-FQDN). Pierwsze odpytanie serwera to zapytanie o rekorkdy MX zwi±zane z nazw±.
+FQDN). Pierwsze odpytanie serwera to zapytanie o rekordy MX zwi±zane z nazw±.
 
-Rekord MX (Mail exchanger) to jeden z typów rekordów w serwerze domen DNS,
+Rekord MX (Mail eXchanger) to jeden z typów rekordów w serwerze domen DNS,
 który specyfikuje w jakis sposób maile powinny byæ routowane (przekazywane w
 sieci) przy u¿yciu protokolu SMTP. Ka¿dy rekord MX ma nastêpuj±c± postaæ:
-[name] [ttl] IN MX preference host
+[name] [ttl] IN MX [preference] [host]
 gdzie: 
 
 \begin{itemize}
-  \item name - nazwa komputera lub domeny czyli cel ostateczny naszego maila
+  \item name - nazwa komputera lub domeny - nale¿y my¶leæ tu o tym co
+  nastêpuje po znaku ''@'' w adresie. Poczta wysy³ana na wskazany adres bêdzie
+  kierowana na adres wskazany w polu host.
   \item ttl - czas ¿ycia rekordu
   \item preference - komputer lub domena mo¿e mieæ wiêcej ni¿ jeden komputer
   wskazany jako odbiorca poczty, wpisana w tym polu liczba okre¶la preferencjê
@@ -976,17 +1109,18 @@ kliencie ograniczona do okre¶lonej liczby albo w ogóle wy³±czona.
 
 \subsection{Konstrukcja wiadomo¶ci}
 
-G³ówne informacje na temat wygl±du wiadomo¶ci s± obecnie zebrane w kilku
+G³ówne informacje na temat postaci wiadomo¶ci s± obecnie zebrane w kilku
 dokumentach. Jednym z g³ównych opisuj±ych wygl±d wiadomo¶ci bez rozszerzeñ jest
-obecnie RFC 2822 (nastêpca ju¿ uznanego za przedawniony RFC 822). Rozszerzenia
+obecnie RFC 2822 (nastêpca przedawnionego RFC 822). Rozszerzenia
 wiadomo¶ci, które bêd± opisane pó¼niej, zdefiniowane s± w kolejnych dokumentach
-(seria dokumentów o MIME RFC2045, RFC2046, RFC2047, RFC2048, RFC2049).
+(seria dokumentów o MIME RFC2045 \cite{rfc-2045}, RFC2046 \cite{rfc-2046},
+RFC2047 \cite{rfc-2047}, RFC2048 \cite{rfc-2048}, RFC2049 \cite{rfc-2049}).
 
-Sama wiadomo¶æ, z punktu widzenia mocno niskopoziomowego, to po prostu seria
-znaków. Wiadomo¶æ zgodna ze standardem sk³ada siê ze znaków od 1 do 127
-interpretowanych jako znaki kodowania US-ASCII. Wynika to oczywi¶cie ze
-wzglêdów historycznych, gdy¿, jak to juz by³o wspomniane, to w Stanach zosta³y
-pos³ane pierwsze wiadomo¶ci i to na tamte potrzeby stworzono pierwsze standardy.
+Sama wiadomo¶æ to po prostu sekwencja znaków. Wiadomo¶æ zgodna ze standardem
+sk³ada siê ze znaków od 1 do 127 interpretowanych jako znaki kodowania US-ASCII.
+Wynika to oczywi¶cie ze wzglêdów historycznych, gdy¿, jak to juz by³o
+wspomniane, to w Stanach zosta³y pos³ane pierwsze wiadomo¶ci i to na tamte
+potrzeby stworzono pierwsze standardy.
 
 Wiadomo¶ci s± podzielone na linie. Linia to seria znaków, która jest
 ograniczona przez 2 znaki powrót karetki (CR - carriege return - w ASCII znak
@@ -1026,8 +1160,8 @@ których kody s± pomiêdzy 33, a 126 w³±cznie) bez przecinka '',''. Cia³o
 nag³ówka mo¿e zawieraæ wszystkie znaki oprócz CR i LF, chyba, ¿e przy
 konstrukcji nag³ówka u¿yto sk³adania (ang. folding) opisanego ni¿ej.
 
-Same nag³ówki mo¿na podzieliæ na posiadaj±ce (structered) lub nie posiadaj±ce
-dodatkowej struktury (unstructered).
+Same nag³ówki mo¿na podzieliæ na posiadaj±ce (structured) lub nie posiadaj±ce
+dodatkowej struktury (unstructured).
 
 Te drugie (unstructered) oprócz wcze¶niej na³o¿onych restrykcji co do
 wystêpowania okre¶lonych znaków, nie maj± dodatkowych obostrzeñ. Semantycznie
@@ -1049,30 +1183,23 @@ lini, przeniesione do nastêpnej. Linia koñczona jest normalnym znakiem CRLF,
 ale nowa linia musi byæ rozpoczêta znakiem WSP (white space czyli spacj± space
 [SP] - kod 32 lub tabulatorem horizontal-tab [HTAB] - kod 11). Przyk³adowo
 nag³ówek:
-\newline
-\newline
-Subject: This is a test
-\newline
-\newline
+\combox{Subject: This is a test}
 mo¿e byæ reprezentowany jako
-\newline
-\newline
-Subject: This
-\newline
-\vspace{10mm} is a test
+\combox{Subject: This\newline
+\hspace*{5mm} is a test}
  
 Dzielenie nag³ówka na wiele lini mo¿e nast±piæ w wielu miejscach jednak zaleca
 siê wstawianie znaku CRLF pomiêdzy tokenami, które znajduj± siê na najwy¿szym
-stopniu w semantyce nag³ówka. Dla przyk³adu kiedy cia³o nag³ówka sk³ada siê z
+stopniu w semantyce nag³ówka. Dla przyk³adu gdy cia³o nag³ówka sk³ada siê z
 podzielonych przecinkami warto¶ci, zaleca siê ³amanie lini po przecinku
 rozdzielaj±cym struktury.
 
 Jak ju¿ wcze¶niej by³o zaznaczone sk³adanie nag³ówka z wielu lini okre¶lane
 jest angieslkim s³owem ''unfolding''.
 
-\subsubsection{Opis niektórych nag³ówków}
+\subsubsection{Opis wybranych nag³ówków}
 
-Niektóre z nag³ówków wiadomo¶ci (jak to juz wcze¶niej wspomniano) posiadaj±
+Niektóre z nag³ówków wiadomo¶ci (jak to ju¿ wcze¶niej wspomniano) posiadaj±
 pewn± dodatkow± strukturê i s± przeznaczone do okre¶lonych celi. Dok³adny opis
 semantyki cia³a ''zaawansowanych'' nag³ówków umieszczony jest w RFC 2822 i nie
 bêdzie tutaj poruszany, jednak warto wspomnieæ jakie informacje nios± te
@@ -1081,8 +1208,8 @@ nag³ówki.
 \begin{description}
   \item[Date] - nag³ówek ten specyfikuje datê i czas, któr± to twórca
   wiadomo¶ci wskazuje, ¿e jest ona skoñczona i gotowa do wej¶cia w system
-  dostarczania poczty (czyli gotowa do wys³ania). Dla przyk³adu mo¿e byæ to
-  czas kiedy u¿ytkownik tworz±c maila klika przycisk ''wy¶lij''
+  dostarczania poczty (czyli gotowa do wys³ania). Przyk³adowo mo¿e byæ to czas
+  zarejestrowany w momencie klikania przez u¿ytkownika przycisku ''Wy¶lij''
   \item[From, Sender, Reply-to] - nag³ówki okre¶lane s± nag³ówkami autora
   wiadomo¶ci. Pola te wskazuj± na skrzynkê (skrzynki) ¼ród³a wiadomo¶ci. W
   szczególno¶ci pole From okre¶la autora (b±d¼ autorów) wiadomo¶ci czyli
@@ -1114,10 +1241,10 @@ nag³ówki.
     Bcc mamy kilka adresów. Niektóre implementacje modyfikuj± tak Bcc, ¿e
     zawiera on za ka¿dym razem tylko tego odbiorce do którego trafia mail.
     \item Ostatni sposób podobny jest do pierwszego tylko zamiast usuwania
-    lini Bcc jest ona s³ana bez ¿adnego adresu 
+    lini Bcc wiadomo¶æ jest wys³ana bez ¿adnego adresu 
   \end{itemize}
   Sposób u¿ycia Bcc zale¿y od implementacji klienta.
-  \item[Message-ID, In-Reply-To, Regerences] - chocia¿ opcjonalne pola te
+  \item[Message-ID, In-Reply-To, References] - chocia¿ opcjonalne pola te
   powinny byæ (i z regu³y s±) obecne w wiadomo¶ci. Message-ID zapewnia
   wiadomo¶ci unikalny identyfikator, który odnosi siê do danej wersji danej
   wiadomo¶ci. Unikalno¶æ gwarantowana jest przez host, który generuje to id.
@@ -1156,12 +1283,11 @@ nag³ówki.
 \end{description}
 
 Dodatkowo u¿ytkownik mo¿e sobie sam zdefiniowaæ i u¿ywaæ dodatkowych nag³ówków.
-Oczywi¶cie nazwy tych nag³ówkó nie mog± siê pokrywaæ z nazwami ju¿ u¿ywanymi.
+Oczywi¶cie nazwy tych nag³ówków nie mog± siê pokrywaæ z nazwami ju¿ u¿ywanymi.
 Dlatego przyjmuje siê, ¿e nag³ówki dodatkowo definiowane (nie objête
 specyfikacjami RFC 822 oraz RFC 2822) powinny byæ poprzedzane wyra¿eniem ''X-''
 jak na przyk³ad:
-
-\framebox{X-Mailer: Microsoft Windows Mail 6.0.6001.18000}
+\comboxnonl{X-Mailer: Microsoft Windows Mail 6.0.6001.18000}
 
 \subsubsection{Cia³o wiadomo¶ci}
 
@@ -1180,9 +1306,8 @@ Jak zosta³o wspomniane wy¿ej RFC 822 oraz RFC 2822 definiuj± w jaki sposób ma
 wygl±daæ cia³o wiadomo¶ci w bardzo zawê¿ony sposób. Nie uwzglêdniaj± one
 problemu zwi±zanego z obs³ug± wielu jêzyków (tylko znaki US-ASCII s± mo¿liwe w
 ramach cia³a wiadomo¶ci), nie wspominaj±c ju¿ o mo¿liwo¶ci przesy³ania plików
-audio, wideo czy zdjêæ. Dlatego te¿ w 1996 powsta³o pierwsze RFC (2045)
-wychodz±ce na przeciw tym wszystkim problemom. Specyfikacja tych rozszerzeñ
-znalaz³a siê w a¿ 4 RFC (2045-2048), które to zosta³y nazwane Multipurpose
+audio, wideo czy zdjêæ. Dlatego te¿ w 1996 powsta³o pierwsze RFC (2045) wychodz±ce na przeciw tym wszystkim problemom. Specyfikacja
+tych rozszerzeñ znalaz³a siê w a¿ 4 RFC (2045-2048), które to zosta³y nazwane Multipurpose
 Internet Mail Extensions w skrócie MIME. 
 
 MIME definiuje kilka dodatkowych nag³ówków, które s³u¿± do opisu cia³a
@@ -1197,18 +1322,16 @@ Pierwszy z dodatkowych nag³ówków to nag³ówek MIME-VERSION, który obowi±zkowo
 musi byæ zawarty w wiadomo¶ci (je¶li ma ona byæ zgodne ze standardem MIME) jako
 g³ówny nag³ówek, za¶ nie jest konieczny w przypadku nag³ówków w czê¶ci
 wiadomo¶ci. Przyk³adowo nag³ówek ten mo¿e wygl±daæ tak:
-
-\framebox{MIME-Version: 1.0}
-
+\combox{MIME-Version: 1.0}
 Kolejnym nag³ówkiem w ramach wiadomo¶ci typu MIME jest nag³ówek Content-Type,
 który definiuje w sposób zapisania danych w wiadomo¶ci. Argument wystêpuj±cy w
 nag³ówku Content-Type jest nazywany ''media type'' (w wolnym t³umaczeniu
 rodzaj/typ danych). Przyk³adowo typ ''image/xyz'' mówi nam, ¿e mamy do
 czynienia z danymi, które przedstawiaj± zdjêcie, nawet je¶li klient pocztowy
-nie jest w stanie rozpoznaæ typu xyz. 
-Dodatkowe parametry przy typie danych nie maj± wp³ywu na ich naturê, a jedynie
+nie jest w stanie rozpoznaæ typu ''xyz''. 
+Opcjonalne parametry przy typie danych nie maj± wp³ywu na ich naturê, a jedynie
 dodatkowo okre¶laj± te dane. Niektóre implementacje mog± nie rozpoznawaæ
-pewnych dodatkowych argumentów MIME i gdy taka sytuacja ma miejsce, argumenty
+pewnych argumentów MIME i gdy taka sytuacja ma miejsce, argumenty
 te powinny byæ pomijane. Przyk³adowym dodatkowym parametrem dla typu ''text'',
 mo¿e byæ ''charset'' okre¶laj±cy kodowanie tekstu w wiadomo¶ci.
 
@@ -1235,7 +1358,6 @@ G³ównymi typy MIME (zdefiniowanymi w RFC 2046) to:
   sposób nie s± czytelne.
   \item multipart - typ ten definiuje, ¿e wiadomo¶æ bêdzie z³o¿ona z kilku
   czê¶ci. Typ ten posiada 4 podtypy:
-  
   \begin{itemize}
     \item mixed - obecnie bardzo czêsto wykorzystywany w przypadku kiedy
     wiadomo¶æ sk³ada siê z kilku elementów ró¿nych od siebie np. tekstu oraz
@@ -1250,8 +1372,8 @@ G³ównymi typy MIME (zdefiniowanymi w RFC 2046) to:
    
   \item message - enkapsulacja wiadomo¶ci. Zawarto¶æ takiej wiadomo¶ci jest sama
   w sobie wiadomo¶ci±. Przyk³adowy podtyp ''rfc822'' definiuje wiadomo¶æ zgodn±
-  z RFC 822, za¶ ''partial'' s³u¿y do zdefiniowania czê¶ci wiadomo¶ci zgodnej z
-  RFC 822 w celach transmisji jej fragmentów ze wzglêdu na jej du¿± wielko¶ci
+  z RFC 822 \cite{rfc-822}, za¶ ''partial'' s³u¿y do zdefiniowania czê¶ci
+  wiadomo¶ci zgodnej z RFC 822 w celach transmisji jej fragmentów ze wzglêdu na jej du¿± wielko¶ci
   uniemo¿liwiaj±c± przekazanie w jednym kawa³ku.
 \end{itemize}
 
@@ -1297,27 +1419,25 @@ jej czê¶æ jest typu multipart, wtedy Content-Transfer-Encoding mo¿e przyjmowaæ
 tylko 7bit, 8bit lub binary.
 
 Content-Transfer Encoding jest bezpo¶rednio powi±zany z drugim nag³ówkiem jakim
-jest Content-Type, chocia¿ wydawa³oby siê, ¿e s± to ca³kowicie rozdzielne
-rzeczy. Po pierwsze niektóre kodowania mog± byæ stosowne w przypadku niektórych
-rodzajów typów MIME, jak choæby w przypadku 8bit-owego transportu (je¿eli
-serwer SMTP udostêpnia tak± mo¿liwo¶æ) nie wymagany jest jakiekolwiek kodowanie dla tekstu
-o okre¶lonym kodowaniu znaków, podczas gdy dla 7bit-owego transportu tekstu
-takie kodowanie jest ju¿ niezbêdne gdy¿ mog± wyst±piæ w nim znaki spoza
-US-ASCII. Po drugie niektóre typy MIME wymagaj± ró¿nych typów kodowania w
-zale¿no¶ci od warunków. Przyk³adowo wiele dokumentów PostScript posiada krótkie
-linie z 7bit-owymi danymi i dlatego te¿ nie wymagaj± one dodatkowego kodowania.
-Inne dokumenty PostScriptowe (szczególnie te u¿ywaj±ce mechanizmu kodowania
-binarnego 2 poziomu) mog± byæ przekazane tylko przy pomocy kodowania binary. I
-wreszcie po trzecie, ¶cis³a specyfikacja pomiêdzy typami MIME, a kodowaniem
-skutecznie ³±czy specyfikacjê protoko³u aplikacji z specyfikacj±
-niskopoziomowego transportu. Nie jest to jednak porz±dane, gdy¿
-zmusza³oby deweloperów typów MIME do posiadania znajomo¶ci rodzajów transportu
-i ich ograniczeñ.
+jest Content-Type, chocia¿ wydawa³oby siê, ¿e s± to ca³kowicie niezale¿ne
+nag³ówki. Po pierwsze niektóre kodowania mog± byæ stosowne w przypadku
+niektórych rodzajów typów MIME, jak choæby w przypadku 8bit-owego transportu
+(je¿eli serwer SMTP udostêpnia tak± mo¿liwo¶æ) nie wymagany jest jakiekolwiek
+kodowanie dla tekstu o okre¶lonym kodowaniu znaków, podczas gdy dla 7bit-owego
+transportu tekstu takie kodowanie jest ju¿ niezbêdne, gdy¿ mog± wyst±piæ w nim
+znaki spoza US-ASCII. Po drugie niektóre typy MIME wymagaj± ró¿nych typów
+kodowania w zale¿no¶ci od warunków. Przyk³adowo wiele dokumentów PostScript
+posiada krótkie linie z 7bit-owymi danymi i dlatego te¿ nie wymagaj± one
+dodatkowego kodowania. Inne dokumenty PostScriptowe (szczególnie te u¿ywaj±ce
+mechanizmu kodowania binarnego 2 poziomu) mog± byæ przekazane tylko przy pomocy
+kodowania binary. I wreszcie po trzecie, ¶cis³a specyfikacja pomiêdzy typami
+MIME, a kodowaniem skutecznie ³±czy specyfikacjê protoko³u aplikacji ze
+specyfikacj± niskopoziomowego transportu.
 
 Je¿eli jaka¶ wiadomo¶æ lub jej czê¶æ posiada nierozpoznawalny
 Content-Transfer-Encoding musi byæ traktowana jakby warto¶æ nag³ówka
-Content-Type wynosi³a ''application/octet-stream'' niezale¿nie od tego jak±
-warto¶æ rzeczywi¶cie posiada ten nag³ówek.
+Content-Type wynosi³a\newline''application/octet-stream'' niezale¿nie od tego
+jak± warto¶æ rzeczywi¶cie posiada ten nag³ówek.
 
 Kodowanie Quoted-Printable pozostawia wszystkie bajty o warto¶ci mniejszej od
 128, które nie s± znakami steruj±cymi ASCII (z wyj±tkiem znaku równo¶ci =) bez
@@ -1335,7 +1455,8 @@ bajtów poddawany kodowaniu dzielony jest na grupy po 3 bajty. Poniewa¿ bajt ma
 nastêpnie na 4 jednostki 6-bitowe. Istniej± wiêc dok³adnie 64 mo¿liw warto¶ci
 ka¿dej takiej jednostki. Wszystkim tym jednostkom s± przypisywane znaki na
 podstawie podanego ni¿ej arbitralnie ustalonego przypisania.
-
+\newlines{
+\begin{center}
 \begin{tabular}{ | c | c | c | c | c | c | }
 \hline
 Warto¶æ & Znak & Warto¶æ & Znak & Warto¶æ & Znak \\ \hline
@@ -1364,7 +1485,8 @@ Warto¶æ & Znak & Warto¶æ & Znak & Warto¶æ & Znak \\ \hline
 21 & V & 43 & r & pad & = \\
 \hline
 \end{tabular}
-
+\end{center}
+}
 Je¶li rozmiar wej¶ciowego ci±gu bajtów nie jest wielokrotno¶ci± liczby 3, to
 stosowane jest dope³nianie (na koñcu wynikowego ci±gu dodawana jest taka ilo¶æ
 symboli dope³nienia (pad), aby ten mia³ d³ugo¶æ podzieln± przez 4).
@@ -1405,27 +1527,21 @@ charset=US-ASCII. Linia dziel±ca za³±czniki wiadomo¶ci nie mo¿e pojawiæ siê w
 tek¶cie cia³a za³±cznika. Dlatego te¿ jest niezwykle istotne, aby
 oprogramowanie klienckie tworzy³o wiadomo¶ci zawieraj±ce bardzo unikalne linie
 podzia³u. Przyk³adowa linia podzia³u mo¿e wygl±daæ nastêpuj±co:
-\newline
-\newline
-- - - -=\_NextPart\_001\_0064\_01C82582.9D9EB7E0
-\newline
-\newline
-
+\combox{- - - -=\_NextPart\_001\_0064\_01C82582.9D9EB7E0}
 Poni¿ej przyk³adowa wiadomo¶æ (ze wzglêdu na czytelno¶æ wiadomo¶ci niektóre
 nag³ówki zosta³y usuniête, a za³±czniki zosta³y zmniejszone). Sk³ada siê ona z 2
 za³±czników:
 
 \begin{itemize}
   \item multipart/mixed z boundary \newline 
-  - - - -=\_NextPart\_000\_0063\_01C82582.9D9C6DF0), który sam w sobie
+  - - - -=\_NextPart\_000\_0063\_01C82582.9D9C6DF0, który sam w sobie
   jest typu multipart/alternative (text/plain i text/html) z boundary \newline 
   - - - -=\_NextPart\_001\_0064\_01C82582.9D9EB7E0
   \item image/jpeg - zdjêcie w formacie jpeg
 \end{itemize}
 
-Tre¶æ wiadomo¶ci:\newline
-\newline
-Date: Mon, 12 Nov 2007 23:20:30 +0100\newline
+Tre¶æ wiadomo¶ci:
+\comboxnonl{Date: Mon, 12 Nov 2007 23:20:30 +0100\newline
 From: "jerzy\_bielecki" <jbielecki@klc.vectranet.pl>\newline
 To: <redakcja@astronet.pl>\newline
 MIME-Version: 1.0\newline
@@ -1457,31 +1573,27 @@ Content-Transfer-Encoding: quoted-printable\newline
 \newline
 Witam!\newline
 \newline
-mentu fotografii) !\newline
 Powi=EAkszy=B3em dodatkowo jasn=B1 "plamk=EA" i uczytelni=B3em filtrem grafi=\newline
 cznym - interesuj=B1cy efekt ...\newline
 Pomo=BFecie ?\newline
 \newline
 Pozdrawiam - Jerzy W. Bielecki\newline
-\_\_\_\_\_\_\_\_\_\_\_\_\newline
-Poczta sprawdzona przez G DATA AntiVirus\newline
+\_\_\_\_\_\_\_\_\_\_\_\_}
+\comboxnonl{Poczta sprawdzona przez G DATA AntiVirus\newline
 Wersja: AVK 18.584 z 12.11.2007\newline
 Informacje: www.gdata.pl\newline
 \newline
-\newline
-\newline
 - - - - - -=\_NextPart\_001\_0064\_01C82582.9D9EB7E0\newline
 Content-Type: text/html;\newline
-\hspace*{1cm}charset="iso-8859-2"\newline
+\hspace*{1cm}charset=''iso-8859-2''\newline
 Content-Transfer-Encoding: quoted-printable\newline
 \newline
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">\newline
+<!DOCTYPE HTML PUBLIC ''-//W3C//DTD HTML 4.0 Transitional//EN''>\newline
 <HTML><HEAD>\newline
-<META http-equiv=3DContent-Type content=3D"text/html; charset=3Diso-8859-2">\newline
-<META content=3D"MSHTML 6.00.6000.16544" name=3DGENERATOR>\newline
-<STYLE></STYLE>\newline
-</HEAD>\newline
-<BODY bgColor=3D\#ffffff>\newline
+<META http-equiv=Content-Type content=text/html;>\newline
+<META content=''MSHTML 6.00.6000.16544'' name=GENERATOR>\newline
+<STYLE></STYLE>\newline </HEAD>\newline
+<BODY bgColor=\#ffffff>\newline
 Witam!<BR>\newline
 Powi=EAkszy=B3em dodatkowo jasn=B1 "plamk=EA" i uczytelni=B3em filtrem
 grafi=<BR>\newline
@@ -1498,22 +1610,24 @@ Informacje: www.gdata.pl<BR>\newline
 </BODY></HTML>\newline
 \newline
 - - - - - -=\_NextPart\_001\_0064\_01C82582.9D9EB7E0- -\newline
+}
+\comboxnonl{
 \newline
 - - - - - -=\_NextPart\_000\_0063\_01C82582.9D9C6DF0
 \newline
 Content-Type: image/jpeg;\newline
-\hspace*{1cm}name="IMG\_7661xLunaPlusAJW9plusResizeLunaPlusUczytelnienia.jpg"\newline
+\hspace*{1cm}name="IMG\_7661xLunaPlus.jpg"\newline
 Content-Transfer-Encoding: base64\newline
 Content-Disposition: attachment;\newline
-\hspace*{1cm}filename="IMG\_7661xLunaPlusAJW9plusResizeLunaPlusUczytelnienia.jpg"\newline
+\hspace*{1cm}filename="IMG\_7661xLunaPlus.jpg"\newline
 \newline
 /9j/4AAQSkZJRgABAQEASABIAAD/4RAXRXSSTaS\newline
 hpZgAASUkqAAgAAAAJAA8BAgAGAAAAegAASasS\newline
 AAAAgAAAABIBAwABAAAAAQAAABoBBQABAAS\newline
 AgAUAAAAsAAAABMCAwABAAAAAQAAAGmHBA\newline
 \newline
-- - - - - -=\_NextPart\_000\_0063\_01C82582.9D9C6DF0- -\newline
-\newline
+- - - - - -=\_NextPart\_000\_0063\_01C82582.9D9C6DF0- -
+}
 
 \subsection{Obecne wykorzystanie protoko³u i jego forma}
 
@@ -1527,25 +1641,21 @@ pod³±czony, w celach przekazania wiadomo¶ci (ang. relay). Serwer po przyjêciu
 tej wiadomo¶ci jest odpowiedzialny za jej dostarczenie. Autoryzacja zapobiega m.in.
 przed relay-owaniem poczty od nieautoryzowanych u¿ytkowników czyli tzw.
 spammerów. Przyk³adowa sesja SMTP z poprawn± autoryzacj±:
-
-S: 220 smtp.example.com ESMTP server ready
-C: EHLO jgm.example.com
-S: 250-smtp.example.com
-S: 250 AUTH CRAM-MD5 DIGEST-MD5
-C: AUTH FOOBAR
-S: 504 Unrecognized authentication type.
-C: AUTH CRAM-MD5
-S: 334
-PENCeUxFREJoU0NnbmhNWitOMjNGNndAZWx3b29kLmlubm9zb2Z0LmNvbT4=
-C: ZnJlZCA5ZTk1YWVlMDljNDBhZjJiODRhMGMyYjNiYmFlNzg2ZQ==
+\combox{S: 220 smtp.example.com ESMTP server ready\newline
+C: EHLO jgm.example.com\newline
+S: 250-smtp.example.com\newline
+S: 250 AUTH CRAM-MD5 DIGEST-MD5\newline
+C: AUTH FOOBAR\newline
+S: 504 Unrecognized authentication type.\newline
+C: AUTH CRAM-MD5\newline
+S: 334 PENCeUxFREJoU0NnbmhNWitOMjNGNndAZWx3b29kLmlubm9zb=\newline
+C: ZnJlZCA5ZTk1YWVlMDljNDBhZjJiODRhMGMyYjNiYmFlNzg2ZQ==\newline
 S: 235 Authentication successful.
-
+}
 Widaæ wiêc, ¿e w ca³ej komunikacji pojawia siê dodatkowe polecenie AUTH. Serwer
 najpierw informuje klienta, ¿e autoryzacja jest obs³ugiwana. Nastêpnie klient
 korzysta z polecenia AUTH, którego sk³adnia jest nastêpuj±ca:
-
-\framebox{AUTH SPACE auth\_type [SPACE (base64 / "=")] *(CRLF [base64]) CRLF}
-
+\combox{AUTH SPACE auth\_type [SPACE (base64 / "=")] *(CRLF [base64]) CRLF}
 i próbuje dowiedzieæ siê jaka forma autoryzacji jest dostêpna. Serwer odpowiada
 kodem 334 je¿eli dany typ autoryzacji obs³uguje lub 504 w przeciwnym wypadku. W
 przypadku poprawnej odpowiedzi wysy³a on zakodowany base64 ci±g znaków, na
@@ -1561,11 +1671,11 @@ dan± osobê.
 
 \subsubsection{Phishing i obrona przed nieautoryzowanymi mailami}
 
-Coraz czêstszym problemem jest te¿ phishing (zwany te¿ spoofingiem). Polega on
-na konstruowaniu wiadomo¶ci, w których adres nadawcy (podany w nag³ówku) oraz
+Coraz czêstszym problemem jest te¿ phishing (zwany te¿ spoofingiem
+\cite{e-mail-spoofing}). Polega on na konstruowaniu wiadomo¶ci, w których adres nadawcy (podany w nag³ówku) oraz
 jej inne czê¶ci s± tak spreparowane jakby wydawa³y siê mailem z innego ¼ród³a.
 Najczê¶ciej zmienianymi nag³ówkami s± From, Return-Path, Reply-To. Maile takie
-najczêsciej powi±zane s± z tzw. phishingiem webowym. Polega to na spreparowaniu
+najczê¶ciej powi±zane s± z tzw. phishingiem webowym. Polega to na spreparowaniu
 wiadomo¶ci i zawarciu w niej odniesienia do strony internetowej, która
 przypomina nam znan± strone internetow±, któr± jest równie¿ odpowiednio
 spreparowana. Czêsto wiadomo¶ci te próbuj± podszywaæ siê pod wiadomo¶ci
@@ -1618,7 +1728,13 @@ Wa¿nym rozszerzeniem protoko³u SMTP jest opisany w RFC 1854 tzw. pipelining.
 Pipeling jest cech± komunikacji w ramach protoko³u polegaj±c± na wykonaniu
 kilku ¿±dañ na raz, bez czekania na poszczególne odpowiedzi z serwera. 
 
-\includegraphics[scale=0.6]{pipelining.png}
+\begin{center}
+\includegraphics[scale=0.6]{pipelining_.png}
+\begin{small}
+\newline
+\textit{Porównanie normalnej komunikacji z komunikacj± z pipeliningiem}
+\end{small}
+\end{center}
 
 Serwer SMTP informuje klienta, ¿e obs³uguje rozszerzenie pipeliningu poprzez
 zawarcie s³owa kluczowego PIPELINING w odpowiedzi na EHLO klienta. Klient, je¿eli
@@ -1637,9 +1753,7 @@ DATA. Nie mo¿e on zak³adaæ, ¿e polecenie DATA nie zostanie zaakceptowane w
 wyniku braku akceptacji polecenia RCPT TO. 
 
 Przyk³adowa sesja z u¿yciem pipeliningu ma nastêpuj±c± postaæ:
-\newline
-\newline
-S: <wait for open connection>\newline
+\combox{S: <wait for open connection>\newline
 C: <open connection to server>\newline
 S: 220 innosoft.com SMTP service ready\newline
 C: EHLO dbc.mtview.ca.us\newline
@@ -1660,10 +1774,11 @@ C: .\newline
 C: QUIT\newline
 S: 250 message sent\newline
 S: 221 goodbye\newline
+}
 
 \subsubsection{Szyfrowanie}
 
-Komuniakcja pomiêdzy klientem, a serwerem w protokole SMTP odbywa siê za pomoc±
+Komunikacja pomiêdzy klientem, a serwerem w protokole SMTP odbywa siê za pomoc±
 komend przesy³anych otwartym tekstem. W wielu przypadkach wiadomo¶æ
 transportowana jest przez wiele routerów i serwerów, co do których mo¿emy nie
 mieæ zaufania. Mo¿e nast±piæ przechwycenie informacji, albo jej zmiana.
@@ -1673,30 +1788,28 @@ bardziej znany jako SSL, który rozszerza komunikacjê TCP o ochronê prywatno¶ci
 i autentykacjê.
 
 W celu obs³u¿enia TLS-u stworzono rozszerzenie do protoko³u SMTP i wprowadzono
-dodatkowe polecenie STARTTLS. Odpowiedzi klienta na tê komendê mog± byæ
-nastêpuj±ce:
+dodatkowe polecenie STARTTLS (RFC 2487 \cite{rfc-2487}). Odpowiedzi klienta na
+tê komendê mog± byæ nastêpuj±ce:
 
 \begin{itemize}
-  \item 220 Ready to start TLS
-  \item 501 Syntax Error (no parameters allowed) w przypadku gdy do
-  bezparametrowego polecenia STARTTLS klint poda³ parametr
-  \item 454 TLS not available due to temporary reason
+  \item \comboxinitemizenonl{220 Ready to start TLS}
+  \item \comboxinitemizenonl{501 Syntax Error (no parameters allowed) w
+  przypadku gdy do bezparametrowego polecenia STARTTLS klint poda³ parametr}
+  \item \comboxinitemizenonl{454 TLS not available due to temporary reason}
 \end{itemize}
 
 W przypadku otrzymania odpowiedzi 220 klient powinien zacz±æ negocjacje TLS
 przed wszystkimi innymi poleceniami. Po negocjacji TLS (szczegó³y dzia³ania
-rozszerzenia TLS w wersji 1.0 zwarte jest w RFC 2246, obecnie rozwijana jest
-wersja 1.1 opisana w RFC 4346) obie strony uzgadniaj± czy kontynuowaæ dalsz±
-komunikacjê. W przypadku niepowodzenia autentykacji lub szyfrowania i tak mo¿e
+rozszerzenia TLS w wersji 1.0 zwarte jest w RFC 2246 \cite{rfc-2246}, obecnie
+rozwijana jest wersja 1.1 opisana w RFC 4346 \cite{rfc-4346}) obie strony uzgadniaj± czy
+kontynuowaæ dalsz± komunikacjê. W przypadku niepowodzenia autentykacji lub szyfrowania i tak mo¿e
 nast±piæ do dalszej komunikacji klient-serwer i akceptacji przez serwer
 wiadomo¶ci. Je¿eli serwer stwierdzi, ¿e wynegocjowany poziom zaufania jest zbyt
 niski powinien przes³aæ klientowi komendê SMTP QUIT. 
 
 Przyk³adowa sesja z uwzglêdnieniem negocjacji TLS mo¿e przyjmowaæ nastêpuj±c±
 postaæ:
-\newline
-\newline
-S: <waits for connection on TCP port 25>\newline
+\combox{S: <waits for connection on TCP port 25>\newline
 C: <opens connection>\newline
 S: 220 mail.imc.org SMTP service ready\newline
 C: EHLO mail.ietf.org\newline
@@ -1708,9 +1821,8 @@ C: <starts TLS negotiation>\newline
 C \& S: <negotiate a TLS session>\newline
 C \& S: <check result of negotiation>\newline
 C: <continues by sending an SMTP command>\newline
-. . .\newline
-\newline
-
+. . .
+}
 Nale¿y jednak zaznaczyæ, ¿e je¿eli komunikacja pomiêdzy klientem, a serwer by³a
 przeprowadzona przy u¿yciu TLS-u, nie oznacza to, ¿e ca³y transport wiadomo¶ci
 by³ szyfrowany. Po drodze niestety mo¿e doj¶æ do nieszyfrowanego lub
@@ -1718,12 +1830,33 @@ nieautoryzowanego przekazywania wiadomo¶ci.
 
 \newpage
 
-\section{Dzisiejsze narzêdzia do filtracji protoko³u SMTP}
+\section{Wspó³czesne narzêdzia filtracji protoko³u SMTP}
 
 \subsection{Konieczno¶æ wprowadzenia filtracji}
 
-Co¶ o spamie ilo¶ci spamu procentowo konieczno¶ci zarz±dzaniem mailami w
-firmach itd. itp.
+Konieczno¶æ wprowadzenia filtracji w pierwszej kolejno¶ci zauwa¿ono w
+organizacjach, w których maile by³y wa¿nym kana³em wymiany informacji. Pierwsz±
+niedogodno¶ci, która sta³a siê odczuwalna przy korzystanie z protoko³u SMTP
+by³a oczywi¶cie niechciana poczta. \textbf{Spam}, bo o nim mowa,
+rozprzestrzeni³ siê na tak± skalê, ¿e brak jego filtracji powodowa³ i¿
+u¿ytkownicy tonêli w mailach o nieporz±danej tre¶ci. 
+
+Przy du¿ych ilo¶ciach wiadomo¶ci istotnym w organizacjach sta³o siê równie¿
+\textbf{zarz±dzanie} poczt± czyli m.in. odpowiednia segregacja maili w celach
+u³atwienia ich przegl±dania, archiwizacja wiadomo¶ci czy backupowanie skrzynek.
+
+Kolejnym wa¿nym elementem w organizacjach jest mo¿liwo¶æ spojrzenia na
+wiadomo¶ci e-mail z szerszej perspektywy. Umo¿liwiaj± to modu³y/oprogramowanie do
+\textbf{raportowania}. Raporty nie tylko daj± wgl±d w historie i aktualny stan
+poczty w organizacji, ale pozwalaj± przewidywaæ przysz³o¶æ poczty w firmie i
+pomagaj± wcze¶niej podj±æ strategiczne decyzje. 
+
+Wspó³cze¶nie niezbêdnym elementem ka¿dej organizacji jest ochrona danych
+znajduj±cych siê wewn±trz firmy (ang. DLP - Data Loss Prevention \cite{dlp}). W
+ramach protoko³u SMTP DLP polega m.in. na blokowaniu wiadomo¶ci wychodz±cych z
+organizacji uznanych za poufne. Przyk³adowa wiadomo¶æ, która mo¿e byæ
+zakwalifikowana jako poufna to taka, które w stopce zawiera tre¶æ ''Company
+Confidential''.
 
 \subsection{Produkty komercyjne}
 
@@ -1733,12 +1866,11 @@ zaprojektowane tylko w tym celu.
 
 \subsubsection{Clearswift - MIME sweeper for SMTP}
 
-MIMEsweeper for SMTP e-mail software to bardzo wyrafinowany system do
-zarz±dzania poczt± email. Wed³ug twórców systemu ¿aden inny system nie oferuje
-tak obszernych mo¿liwo¶ci kompleksowego zarz±dzania infrastruktur± maili.
-Dziêki rozwojowi przez ponad 20 lat systemów do zarz±dzania e-mailami,
-obecny produkt firmy Clearswift sta³ siê idealnym rozwi±zaniem dla firm, które
-pragn± w pe³ni ochroniæ komunikacjê e-mail.
+MIMEsweeper for SMTP to bardzo wyrafinowany system do zarz±dzania poczt± email.
+Wed³ug twórców systemu ¿aden inny system nie oferuje tak obszernych mo¿liwo¶ci
+kompleksowego zarz±dzania infrastruktur± maili. Obecny produkt firmy Clearswift
+sta³ siê idealnym rozwi±zaniem dla firm, które pragn± w pe³ni ochroniæ
+komunikacjê e-mail.
 
 Firma Clearswift zajmuje siê sektorem zabezpieczeñ komunikacyji i dostarcza
 filtry emailowe i webowe dla oko³o 25 milionów u¿ytkowników skupionych wokó³ 17
@@ -1809,47 +1941,29 @@ realizacjê wcze¶niej wymienionych zadañ. Serwisy te to:
   których wcze¶niej zosta³y zdefiniowane w systmie do ¶ledzenia
 \end{itemize}
 
-\includegraphics[scale=0.6]{mimesweeper_services.png}
+\begin{center}
+\hspace*{1.5cm}\includegraphics[scale=0.6]{mimesweeper_services.png}
+\begin{small}
+\newline
+\textit{Schemat przetwarzania wiadomo¶ci w programie MIMEsweeper}
+\end{small}
+\end{center}
 
 \subsubsection{Aladdin - eSafe Mail}
 
-eSafe firmy Aladdin to bardzo elastyczne i ³atwe w zarz±dzaniu rozwi±zanie dla
-mniejszych i wiêkszych systemów informatycznych. Pozwala na instalacjê w wielu
-konfiguracjach w zale¿no¶ci od potrzeb klienta. Sam produkt eSafe zawiera
-w sobie:
+eSafe firmy Aladdin \cite{aladdin-esafe} to bardzo elastyczne i ³atwe w
+zarz±dzaniu rozwi±zanie dla mniejszych i wiêkszych systemów informatycznych. Pozwala na instalacjê w wielu
+konfiguracjach w zale¿no¶ci od potrzeb klienta. eSafe zawiera wiele modu³ów w
+tym 2 istotne dotycz±ce protoko³u SMTP:
 \begin{itemize}
-  \item eSafe Gateway - wprowadza dodatkowo warstwê bezpieczeñstwa. W
-  przyk³adowym modelu mo¿e ona byæ umieszczona za firewallem przed serwerem
-  proxy. Chroni sieæ przed atakami, wirusami, botami czy trojanami.
-  \item eSafe Web - ochrona przed wszystkimi atakami zwi±zanymi z technologiami
-  webowymi. Poza standardow± ochron± przed wirusami, oprogramowaniem ¶ledz±cym
-  u¿ytkowników (spyware) czy filtrowaniem adresów URL, rozwi±zanie to dostarcza
-  chocia¿by blokowanie znanych exploitów, politykê bezpieczeñstwa obiektów
-  ActiveX czy blokowanie stron HTML zawieraj±cymi zdefiniowane s³owa kluczowe
-  \item eSafe Web SSL - analiza szyfrowanych zawarto¶ci webowych czyli m.in.
-  inspekcja szyfrowanego ruchu (HTTPS, SSL, TLS), automatyczne uniewa¿nianie
-  cerfytikatów na podstawie CRL (Certificate Revocation List) czy obs³uga
-  blacklist i whitelist dla administratorów.
   \item eSafe Mail - kompleksowa ochrona wiadomo¶ci email
-  \item eSafe Modules - dodatkowe modu³u rozszerzaj±ce oprogramowanie eSafe
-  takie jak:
-  \begin{itemize}
-    \item AppliFilter - monitoruje i blokuje nieautoryzowany ruch internetowy
-    aplikacji z grup takich jak P2P (peer-to-peer), IM (instant messaging) czy
-    Spyware.
-    \item URL Filtering - monitoruje i blokuje dostêp do zdefiniowanych jako
-    nieodpowiednie stron internetowych
-    \item Advanced Antispam - filtr niechcianej poczty. Wysy³a na bie¿±co
+  \item Advanced Antispam - filtr niechcianej poczty. Wysy³a na bie¿±co
     zapytania o weryfikacjê reputacji nadawcy, klasyfikuj±c na tej podstawie
     pocztê oraz nadawców i ewentualnie blokuj±c przes³anie szkodliwej
     zawarto¶ci do adresata. Uzyskiwana skuteczno¶æ osi±gnê³a w tym wzglêdzie
     poziom 98\% przy czym badania nowego rozwi±zania wykazuj±, ¿e zakres
     b³êdu (np. zatrzymanie oczekiwanej poczty lub poczty nie bêd±cej spamem)
     wynosi 0,05\%.
-    \item SpywareNeutralizer - skaner oprogramowania typu spyware
-    \item Advanced Reporter - modul do tworzenia raportów na podstawie logów z
-    eSafe
-  \end{itemize}
 \end{itemize}
 
 Produktem zwi±zanym z filtracj± SMTP w ramach projektu eSafe, pomijaj±c
@@ -1873,8 +1987,8 @@ email.
 
 \subsubsection{Surfcontrol - E-mail Filter}
 
-Pakietu E-mail Filter firmy Surfcontrol to system kompleksowego zarz±dzania
-poczt± elektroniczn±. Dostêpny jest jako samodzielna brama SMTP lub jako
+Pakietu E-mail Filter firmy Surfcontrol \cite{surfcontrol} to system
+kompleksowego zarz±dzania poczt± elektroniczn±. Dostêpny jest jako samodzielna brama SMTP lub jako
 rozszerzenie do serwera poczty Exchange firmy Microsoft. Oprogramowanie to
 umo¿liwia:
 \begin{itemize}
@@ -1909,7 +2023,7 @@ zastrze¿onych lub innych tre¶ci wysokiego ryzyka.
 Firma Surfcontrol udostêpnia dodatkowe modu³y do oprogramowania E-Mail Filter.
 S± nimi:
 \begin{itemize}
-  \item Anti-Spam Agent (poprzednio: RiskFilter) - chroni firmê przed spamem
+  \item Anti-Spam Agent - chroni firmê przed spamem
   \item Virtual Learning Agent - chroni przed przypadkowym lub zamierzonym
   wys³aniem poczty zawieraj±cej zastrze¿one dane
   \item Virtual Image Agent - w oparciu o wprowadzone kryteria, filtruje
@@ -1918,14 +2032,36 @@ S± nimi:
   przed plag± wirusów w przesy³kach pocztowych
 \end{itemize}
 
+\subsubsection{Oprogramowanie antywirusowe z modu³ami do filtracji SMTP}
+
+Obecnie du¿a czê¶æ oprogramowania antywirusowego udostêpnia modu³y, które s±
+odpowiedzialne za ochronê poczty e-mail. Jednym z producentów oprogramowania
+antywirusowego z takimi modu³ami jest firma TrendMicro, która udostêpnia
+produkty \textbf{InterScan VirusWall} oraz dla ma³ych i ¶rednich przedsiêbiorstw
+\textbf{InterScan VirusWall for Small and Medium Business}. Zapewniaj± one
+kompletn± ochronê antywirusow± i antyspamow± dla poczty (POP3, SMTP), dla
+bramki internetowej (HTTP, FTP) oraz filtrowanie tre¶ci wiadomo¶ci oraz stron WWW. Drugim produktem firmy TrendMicro dotycz±cym poczty jest 
+program \textbf{InterScan Messaging Security Suite}. Udostêpnia on ochronê przed
+wirusami rozprzestrzeniaj±cymi siê za po¶rednictwem poczty elektronicznej.
+Skanuje w czasie rzeczywistym ruch SMTP i POP3 przechodz±cy przez bramkê
+internetow±. InterScan Messaging Security Suite chroni ¶rodowisko poczty
+elektronicznej przed wszystkimi rodzajami wirusów, w tym przed wirusami
+powoduj±cymi masowe, niekontrolowane rozsy³anie poczty elektronicznej, jak
+równie¿ przed przedostawaniem siê wa¿nych informacji na zewn±trz.
+
+Innym producentem antywirusowego oprogramowania, o którym warto wspomnieæ jest
+firma F-Secure. W¶ród jej licznych produktów znajduje siê program \textbf{F-Secure
+Anti-Virus Client Security} zawieraj±cy prze¼roczysty dla u¿ytkownika skaner
+ruchu SMTP i POP3 \textbf{F-Secure E-mail Scanning}.
+
 \subsection{Produkty open-source}
 
 Oprócz produktów komercyjnych na rynku znajduj± siê te¿ produkty darmowe. 
 
 \subsubsection{Amavisd-new i dodatkowe filtry}
 
-Amavisd-new to wysokiej jako¶ci interfejs pomiêdzy MTA, a filtrami zawarto¶ci:
-skanerem wirusów i filtrem spamu. Oprogramowanie napisane jest w jêzyku Perl.
+Amavisd-new \cite{amavisd} to wysokiej jako¶ci interfejs pomiêdzy MTA, a
+filtrami zawarto¶ci: skanerem wirusów i filtrem spamu. Oprogramowanie napisane jest w jêzyku Perl.
 Komunikuje siê z MTA poprzez (E)SMTP lub LMTP (Local Mail Transfer Protocol)
 albo przy pomocy innego dodatkowego oprogramownia. 
 Czêstymi filtrami zawarto¶ci u¿ytymi wraz z amavisd-new s± chocia¿by
@@ -1995,7 +2131,7 @@ Ogólny schemat przep³ywu wiadomo¶ci w filtrze jest nastêpuj±cy:
 \begin{enumerate}
   \item Wiadomo¶æ jest odbierana przez modu³ do odbierania wiadomo¶ci, a
   nastêpnie trafia do kolejki przychodz±cej
-  \item Wiadomo¶ci z kolejki wyjmowane s± i przekazywane do analizatora.
+  \item Wiadomo¶ci z kolejki pobierane s± i przekazywane do analizatora.
   Wiadomo¶ci analizowane s± wspó³bie¿nie, a ilo¶æ ich jednocze¶nie
   procesowanych zale¿y od konfiguracji filtra.
   \item Analizator jest ¶cisle zwi±zany z parserem wiadomo¶ci oraz parserem
@@ -2019,7 +2155,13 @@ Ogólny schemat przep³ywu wiadomo¶ci w filtrze jest nastêpuj±cy:
   próby wys³ania wiadomo¶ci nie s± obs³ugiwane.
 \end{enumerate}
 
-Rysunek jak to wygl±da.
+\begin{center}
+\includegraphics[scale=0.32]{filtr.png}
+\begin{small}
+\newline
+\textit{Schemat modu³owy filtra}
+\end{small}
+\end{center}
 
 \subsubsection{Parser wiadomo¶ci}
 
@@ -2076,12 +2218,12 @@ Algorytm przyjmuje za³o¿enie, ¿e miêdzy d³ugo¶ci± tekstu (n), a wzorcem (m),
 zachodzi zale¿no¶æ n>=m.
 
 Skanowanie w tym algorytmie odbywa siê od prawej strony wzorca. W przypadku
-niespasowania danego znaku b±d¼ dopsaowania ca³ego wzorca stosuje siê dwie
+niespasowania danego znaku b±d¼ dopasowania ca³ego wzorca stosuje siê dwie
 funkcje z wcze¶niej wyliczonymi warto¶ciami. S± t±: ''good-suffix shift'' oraz
-''bad-character shift''. ³anie na przyk³adach. Za³ó¿my, ¿e czê¶æ wzorca i
-teskstu zaznaczona jako u pasuje do siebie. Natomiast na kolejnej pozycji wystêpuje
-ró¿nica. W zale¿no¶ci od sytuacji mo¿emy przesun±æ siê w poszukiwaniu o ró¿n±
-warto¶æ:
+''bad-character shift''. Najlepiej przeanalizowaæ ich dzia³anie na przyk³adach.
+Za³ó¿my, ¿e czê¶æ wzorca i teskstu zaznaczona jako u pasuje do siebie.
+Natomiast na kolejnej pozycji wystêpuje ró¿nica. W zale¿no¶ci od sytuacji
+mo¿emy przesun±æ siê w poszukiwaniu o ró¿n± warto¶æ:
 \begin{itemize}
   \item ''good-suffix shift'' - je¿eli wzorzec zawiera w sobie kolejne
   wyst±pienie u to przesuwamy siê aby pokrywa³o siê ono z tekstem
@@ -2093,7 +2235,7 @@ warto¶æ:
   \newline
   Niedopasowanie wystêpuje na 4 znaku licz±c od koñca, ale wzorzec zawiera w
   sobie fragment juz dopasowany (bba), zatem przesuwamy siê tak by kolejny taki
-  fragment we wzrocu spasowa³ siê z tekstem.\newline
+  fragment we wzorcu spasowa³ siê z tekstem.\newline
   \newline
   tekst: cccccccbbabbaababbacc\newline
   wzorzec:\hspace*{0.665cm}abbaabba
@@ -2140,7 +2282,7 @@ warto¶æ:
   wzorzec: \hspace*{0.1cm}cbcaabba\newline
   \newline
   Niedopasowanie wystêpuje na 4 znaku licz±c od koñca (w tek¶cie mamy ''e'' we
-  wzorcu mamy ''a''), we wzorcu "e" nie wystêpuje zatem przesuwamy siê tak by
+  wzorcu mamy ''a''), we wzorcu ''e'' nie wystêpuje zatem przesuwamy siê tak by
   wzorzec by³ bezpo¶rednio za nim\newline
   \newline
   tekst: ccccccebbabbaababbacc\newline
@@ -2204,7 +2346,7 @@ przed analiz± trafiaj± do kolejki wiadomo¶ci przychodz±cych. Nastêpnie ka¿da
 wiadomo¶æ wyjmowana z kolejki trafia do parsera i jest poddawana analizie. Po
 analizie wiadomo¶ci, je¿eli nie s± one odrzucone, trafiaj± do kolejki
 wychodz±cej i tam czekaj± na dalsz± transmisjê. Kolejka udostêpnia API
-umo¿liwiaj±ce wyjmowanie i wk³adanie do niej wiadomo¶ci. Reprezentowana jest
+umo¿liwiaj±ce pobieranie i dodawanie do niej wiadomo¶ci. Reprezentowana jest
 ona przez klasê Queue. Kolejki uzyskujemy z menad¿era kolejek (QueueManager),
 który na podstawie klucza (nazwy kolejki) zwraca nam instancjê obiektu Queue.
 QueueManager jest singletonem. W filtrze stworzone zosta³y dwie kolejki o
@@ -2212,16 +2354,17 @@ nazwach ''in\_queue'' i ''out\_queue''.
 
 \subsubsection{Modu³ odbieraj±cy i wysy³aj±cy}
 
-Modu³ odbieraj±cy odbiera wiadomo¶ci, które maj± trafiæ do filtra to serwer
-SMTP, który s³ucha na okre¶lonym porcie przychodz±cych po³±czeñ. Serwer ten nie
-obs³uguje autoryzacji. Ka¿de pod³±czenie siê nowego klienta powoduje
-uruchomienie kolejnego w±tku odbieraj±cego. Serwer reprezentowany jest przez
-klasê SMTPServer, za¶ po³±czenie (w±tek po³±czeniowy) przez klasê
-SMTPConnection.
-Modu³ wysy³aj±cy to daemon, który sprawdza cyklicznie czy w kolejce wychodz±cej
+Modu³ odbieraj±cy przyjmuje wiadomo¶ci, które maj± trafiæ do filtra. Jest to
+serwer SMTP, który nas³uchuje na okre¶lonym porcie przychodz±cych po³±czeñ.
+Serwer ten nie obs³uguje autoryzacji (planowany jest rozwój filtra o t±
+funkcjonalno¶æ). Ka¿de pod³±czenie siê nowego klienta powoduje uruchomienie
+kolejnego w±tku odbieraj±cego. Serwer reprezentowany jest przez klasê
+SMTPServer, za¶ po³±czenie (w±tek po³±czeniowy) przez klasê SMTPConnection.
+Modu³ wysy³aj±cy to demon, który sprawdza cyklicznie czy w kolejce wychodz±cej
 znajduj± siê wiadomo¶ci. Je¿eli tak jest, wiadomo¶æ usuwana jest z kolejki i
-uruchamiany jest klient SMTP, który stara siê wys³aæ wiadomo¶æ. Nie obs³ugiwane
-jest ponawianie wysy³ania wiadomo¶æ w przypadku nieudanej próby.
+uruchamiany jest klient SMTP, który stara siê wys³aæ wiadomo¶æ. Obs³uga
+ponawianie wysy³ania wiadomo¶ci w przypadku nieudanego jej dorêczenia bêdzie
+rozwiniêta w kolejnych wersjach filtra.
 
 \subsection{Kompilacja, konfiguracja i uruchomienie projektu}
 
@@ -2267,11 +2410,7 @@ które ant mo¿e uruchamiaæ. G³ówne zadania to:
 \end{itemize}
 
 Wszystkie polecenia uruchamiane s± w nastêpuj±cy sposób:
-\newline
-\newline
-ant nazwa\_zadania np. ant compile
-\newline
-
+\combox{ant nazwa\_zadania np. \textbf{ant compile} }
 Przed uruchomieniem projektu nale¿y go skompilowaæ.
 
 Przyk³ad ka¿dej regu³y filtruj±cej wiadomo¶æ (wraz ze szczegó³owym opisem)
@@ -2292,8 +2431,8 @@ zachowania w przypadku coraz wiêkszej liczby wiadomo¶ci parsowanych
 jednocze¶nie.
 
 Poni¿sza tabela przedstawia czas parsowania pojedynczej wiadomo¶ci w
-filtrze w zale¿no¶ci od typu wiadomo¶ci i jej wielko¶ci.\newline
-\newline
+filtrze w zale¿no¶ci od typu wiadomo¶ci i jej wielko¶ci.
+\newlines{\begin{center}
 \begin{tabular}{ | c | c | c | }
 \hline
 Wielko¶æ [KB] & Typ & Czas parsowania [ms]\\
@@ -2306,7 +2445,8 @@ Wielko¶æ [KB] & Typ & Czas parsowania [ms]\\
 3400 & multipart mixed (text+image) & 922 \\
 \hline
 \end{tabular}
-
+\end{center}
+}
 Ca³kowita d³ugo¶æ parsowania wiadomo¶ci czyli czas mierzony pomiêdzy pocz±tkiem
 parsowania pierwszej wiadomo¶ci, a koñcem parsowania ostatniej wyniós³
 \textbf{3988} ms. W czasie tym zawarty jest tak¿e czas wysy³ania wiadomo¶ci z wy³±czeniem
@@ -2318,8 +2458,7 @@ czas.
 
 Kolejna tabela przedstawia czas parsowania pojedynczej wiadomo¶ci w przypadku
 równoleg³ego przetwarzania wiadomo¶ci od klientów.
-\newline
-\newline
+\newlines{\begin{center}
 \begin{tabular}{ | c | c | c | }
 \hline
 Wielko¶æ [KB] & Typ & Czas parsowania [ms]\\
@@ -2332,7 +2471,8 @@ Wielko¶æ [KB] & Typ & Czas parsowania [ms]\\
 3400 & multipart mixed (text+image) & 1011 \\
 \hline
 \end{tabular}
-
+\end{center}
+}
 Ca³kowita d³ugo¶æ parsowania wiadomo¶ci czyli czas mierzony pomiêdzy pocz±tkiem
 parsowania pierwszej wiadomo¶ci, a koñcem parsowania ostatniej wyniós³
 \textbf{1089} ms. W czasie tym zawarty jest tak¿e czas wysy³ania wiadomo¶ci z
@@ -2348,11 +2488,10 @@ ponad trzykrotnie.
 
 Poni¿sza tabela przedstawia czasy przebywania wiadomo¶ci w poszczególnych
 modu³ach.
-\newline
-\newline
-\begin{tabular}{ | c | c | c | c | c | c | }
+\newlines{\begin{tabular}{ | c | c | c | c | c | c | }
 \hline
-Lp & Odbieranie & Kolejka 1 & Parsowanie & Analiza & Kolejka 2 \\
+Lp & Odbieranie [ms]& Kolejka 1 [ms]& Parsowanie [ms]& Analiza [ms]& Kolejka
+2 [ms]\\
 \hline
 \hline
 1 & 174 & 2585 & 1 & 7 & 2795 \\
@@ -2362,7 +2501,7 @@ Lp & Odbieranie & Kolejka 1 & Parsowanie & Analiza & Kolejka 2 \\
 5 & 988 & 2887 & 240 & 4 & -  \\
 \hline
 \end{tabular}
-
+}
 Kolejka 1 okre¶la czas przebywania odebranej wiadomo¶ci w kolejce wiadomo¶ci
 przychodz±cych, za¶ kolejka 2 okre¶la czas przebywania wiadomo¶ci w kolejce
 wiadomo¶ci wychodz±cych. Brak warto¶ci w kolumnie ''Kolejka 2'' oznacza
@@ -2374,7 +2513,7 @@ zosta³y uwzglêdnione, gdy¿ zale¿± od systemów zewnêtrznych (w przypadku
 
 Tabela jednoznacznie pokazuje, ¿e oprócz modu³ów odbieraj±cego i wysy³aj±cego
 spory czas wiadomo¶æ spêdza w kolejkach. W przypadku testowanym zwi±zane jest
-to z usypianiem na 3000 ms daemonów analizuj±cych kolejkê w przypadku braku w
+to z usypianiem na 3000 ms demonów analizuj±cych kolejkê w przypadku braku w
 niej elementów. Najkrótsze czasy widoczne s± w kolumnie ''Analiza''.
 Bezpo¶rednio zwi±zane jest to z konfiguracj± regu³ wiadomo¶ci, a konkretnie
 okre¶leniem jednej regu³y wyszukuj±cej w polu ''Subject'' okre¶lonego s³owa. W
@@ -2386,9 +2525,9 @@ wp³yn±æ na wydajno¶æ ca³ego filtra.
 
 \newpage
 
-\section{Spostrze¿enia, wnioski}
+\section{Podsumowanie i wnioski}
 
-Stworzenie filtra protoko³u SMTP nie jest prostym zadaniem. Wymaga obszernej
+Stworzenie filtra protoko³u SMTP jest z³o¿onym zadaniem. Wymaga obszernej
 wiedzy na temat protoko³u SMTP i jego rozszerzeñ, które s± nieustannie
 rozwijane i zmieniane. Konieczne jest stworzenie serwera i klienta SMTP, które
 stanowi± swoistego rodzaju API do komunikacji pomiêdzy filtrem, a systemami
@@ -2399,19 +2538,43 @@ komercyjnych serwerów brak otwarto¶ci, mo¿e byæ to du¿ym problemem i dostêp do
 filtra z wykorzystaniem protoko³u SMTP wydaje siê najlepszym rozwi±zaniem.
 
 Kolejny problem zwi±zany jest z niezgodno¶ci± niektórych
-implementacji SMTP ze standardami opisanymi w RFC. Ma to wp³yw na postaæ
-wiadomo¶ci przesy³anej przez klienty do filtra i wymusza konieczno¶æ
+implementacji klientów SMTP ze standardami opisanymi w RFC. Ma to wp³yw na
+postaæ wiadomo¶ci przesy³anej przez klientów do filtra i wymusza konieczno¶æ
 dodatkowych zmian w jego implementacji. Dotyczy to oczywi¶cie odpowiednich zmian
 w parserze wiadomo¶ci (obecnie akceptuje on jedynie wiadomo¶ci zgodne z RFC),
-od którego to poprawnego dzia³ania uzale¿nione jest dalsza analiza wiadomo¶ci. 
+od którego to poprawnego dzia³ania uzale¿nione jest dalsza analiza wiadomo¶ci.
+Wprowadzenie usprawnieñ w parszerze mo¿liwe jest oczywi¶cie po obszernych
+testach ró¿nych klientów dostêpnych obecnie na rynku, przez których tworzone
+wiadomo¶ci nie spe³niaj± wszystkich standardów opisanych w RFC. Przyk³adowym
+problemem jest chocia¿by brak jakichkolwiek zmian w boundary w ciele wiadomo¶ci
+w stosunku do boundary z nag³ówka Content-type. Zgodnie z RFC linia ta powinna
+zostaæ zmodyfikowana o dodatkowe dwa znaki ''-'' z przodu.
 
-Du¿ym problemem jest tak¿e ¶rodowisko do testowania, szczególnie je¶li chodzi o
-testowanie wydajno¶ciowe na du¿± skalê. Musi ono umo¿liwiaæ jednoczesne
+Du¿ym problemem jest tak¿e ¶rodowisko do testowania, szczególnie gdy
+chcieliby¶my przeprowadziæ testy na du¿a skalê. Musi ono umo¿liwiaæ jednoczesne
 uruchomienie wielu klientów wysy³aj±cych wiadomo¶ci ró¿nego typu. Potrzebny
 jest tak¿e serwer docelowy, a najlepiej kilka z ró¿nymi czasami dostêpu, do
 którego wiadomo¶ci powinny byæ s³ane po przej¶ciu przez filtr.
 
 Pomimo wszelkich trudno¶ci otwarty projekt filtra protoko³u SMTP jest ciekawym
-zagadnieniem wartym rozwoju.
+zagadnieniem wartym rozwoju. 
+
+W autorskim filtrze planowane jest rozszerzenie funkcjonalno¶ci o:
+\begin{itemize}
+  \item ponawianie wysy³ania w przypadku nieudanego dorêczenia wiadomo¶ci
+  \item mechanizmy zapisywania wiadomo¶ci trafiaj±cych do kolejek na dysk w
+  celach mo¿liwo¶ci odtworzenia ich zawarto¶ci w przypadku nieoczekiwanego
+  zatrzymania dzia³ania systemu
+  \item obs³ugê autoryzacji, pipeliningu, szyfrowania w serwerze SMTP w module
+  odbieraj±cym oraz wysy³aj±cym
+  \item dodatkowe regu³y filtruj±ce w analizatorze:
+  	\begin{itemize}
+      \item rozpoznawanie plików binarnych (exe) przesy³anych w za³±cznikach
+      nawet w przypadku zmienionego rozszerzenia za³±cznika
+      \item analiza adresów internetowych zawartych w wiadomo¶ciach (mo¿liwo¶æ
+      odrzucenia wiadomo¶ci z adresami z okre¶lonych domen)
+    \end{itemize}
+  \item mo¿liwo¶æ parsowania wiadomo¶ci nie do koñca zgodnych z RFC 
+\end{itemize} 
 
 \newpage
