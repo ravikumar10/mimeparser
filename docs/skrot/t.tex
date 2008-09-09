@@ -1,0 +1,76 @@
+\documentclass[a4paper,onecolumn,12pt]{article}
+%% Innym formatem, który poznawczo warto przetestowaæ, ale który nie zosta³
+%% przyjêty dla sprawozdañ, móg³by byæ klasyczny format dwukolumnowy:
+%% \documentclass[a4paper,twocolumn]{article}
+%%
+%% Je¿eli za¶ z za³o¿enia chcemy generowaæ po dwie strony na jednej kartce,
+%% warto wtedy zwiêkszyæ rozmiar czcionki i z mo¿liwych 10pt,11pt,12pt wybraæ
+%% 12pt.
+
+%% Tak w³±cza siê obs³ugê jêzyka polskiego i rozpoznawania kodowania znaków
+%% zgodnego z ISO-8859-2.
+\usepackage[polish]{babel}
+\usepackage[latin2]{inputenc}
+
+%% Uwaga, proszê nie zmieniaæ ani rozmiaru czcionki ani marginesów. S±
+%% dobrane tak a nie inaczej nieprzypadkowo, zgodnie z zasadami dobrego 
+%% sk³adu tekstu. 
+%%
+%% - maksymalna liczba znaków w linii nie powinna byæ za du¿a, nie wiêcej ni¿
+%%   sze¶ædziesi±t kilka znaków, zbyt d³ugie linie mêcz± wzrok, dlatego
+%%   w³a¶nie tworzy siê przy drobnym druku szpalty wielokolumnowe,
+%% - oko potrzebuje pustych marginesów z obu stron tekstu,
+%% - czcionka nie powinna byæ za du¿a, tekst wygl±da³by wtedy nietypowo a
+%%   mo¿e i wrêcz infantylnie.
+
+
+%% Aby uzyskaæ dobre polskie czcionki w PDF i Postscript:
+%\usepackage{qtimes,qcourier}
+\usepackage[QX]{fontenc}
+
+%% Gdy nie ma zainstalowanych fontów quasi (qfonts), nale¿y u¿yæ poni¿szej
+%% linii z T1 zamiast dwóch powy¿szych - wtedy jednak fonty w PDF mog± nie
+%% byæ wektorowe - bêd± ¼le wy¶wietlane przez AcrobatReader, choæ dobrze
+%% drukowane i dobre w postaci Postscript. 
+%% Do edycji tekstów polskich zaleca siê jednak w razie braku doinstalowanie
+%% do dystrybucji Latexa fontów quasi (qfonts) np. spod adresu: 
+%% http://sunsite.icm.edu.pl/pub/CTAN/fonts/psfonts/polish/qfonts/
+%%
+\usepackage[T1]{fontenc}
+%%\usepackage{pslatex}
+\usepackage{times}
+
+\usepackage{floatflt}
+%% Dla tekstów pisanych jedynie w jêzyku angielskim, zamiast powy¿szych
+%% komend usepackage wystarcz± dwa poni¿sze, zbêdne s± te¿ czcionki quasi.
+%%
+%% \usepackage[english]{babel}
+%% \usepackage[T1]{fontenc}
+
+\linespread{1.25}
+%% W³±czenie dodatkowych pakietów. epsfig w³±cza te¿ graphicx i graphics.
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{epsfig}
+\usepackage{color}
+
+\usepackage[left=3.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+%% do grafiki
+\usepackage{graphicx}
+
+%% Tu w³±czane s± nasze makra z xdefs.tex
+\input{xdefs.tex}
+
+\begin{document}
+\bibliographystyle{plain}
+
+%% Tu w³±czany jest w³a¶ciwy dokument. Dziêki separacji x.tex od t.tex
+%% standardowe nag³ówki latexa z t.tex nie odci±gaj± naszej uwagi od meritum
+%% zagadnienia opisywanego w x.tex. 
+\input{x}
+
+\nocite{*}
+\bibliography{t}
+
+\end{document}
